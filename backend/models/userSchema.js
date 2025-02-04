@@ -4,7 +4,7 @@ const { type } = require('os')
 const Schema = mongoose.Schema
 
 const userSchema = new Schema({
-    userName: {
+    name: {
         type: String,
         required: true
     },
@@ -16,11 +16,17 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    verifyToken:{
+    passwordResetToken: {
         type: String
     },
-    verifyStatus:{
-        type:Boolean,
+    passwordResetTokenExpire: {
+        type: Date
+    },
+    passwordUpdateDate: {
+        type: Date
+    },
+    verifyToken:{
+        type: String
     }
 },{timestamps:true})
 

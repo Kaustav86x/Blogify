@@ -1,17 +1,18 @@
 const User = require('../models/userSchema')
 const bcrypt = require('bcrypt')
+const crypto = require('crypto')
 const validator = require('validator')
 const helper = require('../utility/helper')
+const {Resend} = require('resend')
+
+// resend instantiation 
+const resendInstance = new Resend(process.env.RESEND_API_KEY)
 
 const SignUp = async(req, res) => {
 
     const {name, email, password} = req.body
 
-    try {
-        // validating the input payload
-        if(!email || !password || !name) {
-            throw Error('All fields must be filled')
-        }
+    try {   
 
         const mail = await User.findOne({email})
 
@@ -23,7 +24,7 @@ const SignUp = async(req, res) => {
             throw Error('Email is not valid')
         }
 
-        if(!validator.isStrongPassword(email)) {
+        if(!validator.isStrongPassword(password)) {
             throw Error('Password is not strong')
         }
 
@@ -33,21 +34,48 @@ const SignUp = async(req, res) => {
 
         const user = await User.create({email, password: hash, name})
 
+        // token without expiration time
         const token = helper.createToken(user._id)
 
-        await User.findByIdAndUpdate(user._id, {verifyToken: token, verifyStatus: false})
+        // update the existing userSchema values
+        await User.findByIdAndUpdate(user._id, {verifyToken: token})
+
+        // user verification
+        var link = `http://localhost:8080/verify-user/${token}`
+
+        //sending signup verification mail
+        await resendInstance.emails.send({
+            from: 'deyk905@gmail.com',
+            to: 'deyk905@gmail.com',
+            subject: 'Verify your email address',
+            html: `<html>
+            <head>
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+            </head>
+            <body>
+            <p><span>Hi ${user.name},</span></p>
+            <p><span>Welcome to Blogify. Please Verify your email here:</span></p>
+            <a href="${link}"><button style="border-radius: 7px; background: #9333ea; 
+            color: white; width: 10rem; height: 2rem; border: none; font-weight: bold; 
+            font-size: 16px; cursor: pointer">Verify Email</button></a>
+            <p>If you have not Signed up, just ignore and delete this message.
+            </body>
+            </html>`
+        })
         
-        res.status(200).json({user,token})
+        res.status(200).json({user,token,})
     }
-        
         catch (error) {
-            res.status(400).json({error: error.message})
+            res.status(400).json({error: error.message}) 
         }
     }
 
 const verifySignUp = async(req,res) => {
 
-    const {token} = req.body
+    // fetching the token from the parameter
+    const {token} = req.params
 
     try {
         // fetching the user from the token
@@ -92,7 +120,97 @@ const login = async(req,res) => {
 
         const token = helper.createToken(user._id)
         
-        res.status(200).json({user, token, status: false})
+        res.status(200).json({user, token})
+    }
+    catch(error) {
+        res.status(400).json({error: error.message})
+    }
+}
+
+const forgetPassword = async(req,res) => {
+
+    const {email} = req.body
+    var token = ''
+     
+    try {
+        if(!email) {
+            throw Error('Email is required')
+        }
+        
+        const user = await User.findOne({email})
+
+        if(!user) {
+            throw Error('Email not found!')
+        }
+
+        else {
+            // token with expiration time
+            token = helper.createToken_time(user._id)
+            const hash_token = crypto.createHash('sha256').update(token).digest('hex')
+            // new hash_token and with and without expiration time have been added and the user has been updated.
+            await User.findByIdAndUpdate(user._id, {passwordResetToken: hash_token, passwordResetTokenExpire: Date.now() + 20 * 60 * 1000})
+        }
+
+        var link = `http://localhost:8080/reset-password/${token}`
+
+        // sending mail for password reset
+        await resendInstance.emails.send({
+            from: 'deyk905@gmail.com',
+            to: 'deyk905@gmail.com',
+            subject: 'Password Reset',
+            html: `<html>
+            <head>
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+            </head>
+            <body>
+            <p><span>Hi ${user.name},</span></p>
+            <p><span>Someone recently requested a password change for your Blogify account.<br/>If it was you, 
+            you can reset your password here:</span></p>
+            <a href="${link}"><button style="border-radius: 7px; background: #9333ea; color: white; width: 10rem; height: 2rem; 
+            border: none; font-weight: bold; font-size: 16px; cursor: pointer">Reset Password</button></a>
+            <p>The link is valid for only 20 minutes.</p>
+            </body>
+            </html>`
+        })
+    }
+    catch(err)
+    {
+        res.status(400).json({error: err.message})
+    }
+}
+
+const resetPassword = async(req,res) => {
+    const {token} = req.params
+    const{password} = req.body
+
+    try {
+
+        const hash_token = crypto.createHash('sha256').update(token).digest('hex')
+        const user = await User.findOne({passwordResetToken: hash_token, passwordResetTokenExpire:{$gt: Date.now()}})
+
+        if(!user) {
+            throw Error('Token has either expired or is invalid!')
+        }
+
+        else {
+            user.passwordResetToken = undefined
+            user.passwordResetTokenExpire = undefined
+            user.passwordUpdateDate = Date.now()
+
+            if(!validator.isStrongPassword(password)) {
+                throw Error('Password is not strong')
+            }
+
+            // updating the user with new password
+            const salt = await bcrypt.genSalt()
+            const hash = await bcrypt.hash(password, salt)
+            user.password = hash
+            await user.save()
+        }
+
+        res.status(200).json({user})
     }
     catch(error) {
         res.status(400).json({error: error.message})
@@ -100,5 +218,4 @@ const login = async(req,res) => {
 }
 
 
-
-module.exports = {SignUp, verifySignUp, login}
+module.exports = {SignUp, verifySignUp, login, forgetPassword, resetPassword}
