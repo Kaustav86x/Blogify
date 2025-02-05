@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const { type } = require('os')
 
 const Schema = mongoose.Schema
 
@@ -13,14 +12,15 @@ const blogSchema = new Schema({
     required: true 
   },
   author: { 
-    type: mongoose.Schema.Types.ObjectId, ref: "User", 
+    type: String, 
     required: true 
   },
   likes: { 
     type: Number, default: 0 
   },
-  views: { 
-    type: Number, default: 0 
+  category: {
+    type: String,
+    required: true
   }
 },{timestamps:true})
 
