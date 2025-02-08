@@ -3,6 +3,11 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const blogSchema = new Schema({
+  BlogId: {
+    type: String,
+    default: uuidv4,
+    unique: true
+  },
   title: { 
     type: String, 
     required: true 
@@ -17,6 +22,10 @@ const blogSchema = new Schema({
   },
   likes: { 
     type: Number, default: 0 
+  },
+  tags: {
+    type: Array,
+    required: true
   },
   category: {
     type: String,
