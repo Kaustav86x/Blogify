@@ -15,6 +15,9 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    profilePicture: {
+        type: String
+    },
     passwordResetToken: {
         type: String
     },

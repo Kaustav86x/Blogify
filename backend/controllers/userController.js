@@ -2,14 +2,30 @@ const User = require('../models/userSchema')
 const bcrypt = require('bcrypt')
 const crypto = require('crypto')
 const validator = require('validator')
+const multer = require('multer') // middlewire for handling file uploads
+const path = require('path')
 const helper = require('../utility/helper')
+
+// using Multer to store pics in local
+const picStorage = multer.diskStorage({
+    destination: "../uploads/profile_pics",
+    filename: (req,file,cb) => {
+        cb(null, `${Date.now()}${path.extname(file.originalname)}`)
+    }
+})
+
+const upload = multer ({picStorage})
 
 
 const SignUp = async(req, res) => {
 
+    upload.single("profilePicture")
+
     const {name, email, password} = req.body
 
     try {   
+
+        const profPic = req.file ? `../uploads/profile_pics/${req.file.filename}` : null
 
         const mail = await User.findOne({email})
 
@@ -29,7 +45,7 @@ const SignUp = async(req, res) => {
         const salt = await bcrypt.genSalt(10)
         const hash = await bcrypt.hash(password,salt)
 
-        const user = await User.create({email, password: hash, name})
+        const user = await User.create({email, password: hash, name, profPic})
 
         // token without expiration time
         const token = helper.createToken(user._id)

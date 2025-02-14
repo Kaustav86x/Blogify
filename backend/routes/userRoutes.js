@@ -1,7 +1,11 @@
 const express = require('express')
+const requireAuth = require('../middleware/requireAuth')
 const {SignUp, login, verifySignUp, forgetPassword, resetPassword} = require('../controllers/userController')
 
 const router = express.Router()
+
+//middlewire
+router.use(requireAuth)
 
 // routes
 router.post('/signup', SignUp)

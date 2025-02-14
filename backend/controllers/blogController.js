@@ -6,7 +6,7 @@ const helper = require('../utility/helper')
 
 const createBlog = async(req, res) => {
 
-    const { title, content, userId, likes, tags } = req.body
+    const { title, content, userId, tags } = req.body
 
     try { 
         const findTitle = await Blog.findOne({title})
@@ -15,7 +15,7 @@ const createBlog = async(req, res) => {
             throw Error('Blog with this title already exists!')
 
         // creating a new blog
-        const blog = await Blog.create({title, content, userId, likes, tags})
+        const blog = await Blog.create({title, content, userId, tags})
 
         res.status(200).json({blog})
     }
@@ -61,6 +61,7 @@ const updateBlogById = async(req,res) => {
         if(!updateBlog) {
             throw Error('Blog not found!')
         }
+        // returning the updated blog
         res.status(200).json(updateBlog)
     }
     catch(error) {
@@ -71,14 +72,31 @@ const updateBlogById = async(req,res) => {
 const deleteBlogbyId = async(req,res) => {
     const {id} = req.params
     try {
-        const deleteBlog = Blog.findByIdAndDelete(id)
+        const deleteBlog = await Blog.findByIdAndDelete(id)
         if(!deleteBlog)
             throw Error('Blog not found!')
-        res.status(200).json({message:"Deleted blog - "},deleteBlog)
+        res.status(200).json(deleteBlog)
      }
      catch(error) {
         res.status(400).json({error: error.message})
      }
 }
 
-module.exports = {createBlog,getAllBlog,getBlogById,updateBlogById,deleteBlogbyId}
+const mostLikedBlog = async(req,res) => {
+    // const {likes} = req.body
+    try {
+        //sorting the likes in descending order
+        const popularBlog = await Blog.findOne().sort({ likes:-1 }).exec()
+        if(!popularBlog)
+            throw Error('No blog found!')
+
+        res.status(200).json(popularBlog)
+    }
+    catch(error) {
+        res.status(400).json({error: error.message})
+    }
+}
+
+
+
+module.exports = {createBlog,getAllBlog,getBlogById,updateBlogById,deleteBlogbyId,mostLikedBlog}
