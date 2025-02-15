@@ -1,7 +1,10 @@
 const express = require('express')
+const requireAuth = require('../middleware/requireAuth')
 const {createBlog,getAllBlog,getBlogById,updateBlogById,deleteBlogbyId,mostLikedBlog} = require('../controllers/blogController')
 
 const router = express.Router()
+
+router.use(requireAuth)
 
 // routes
 router.post('/create', createBlog)

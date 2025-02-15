@@ -5,27 +5,33 @@ const validator = require('validator')
 const multer = require('multer') // middlewire for handling file uploads
 const path = require('path')
 const helper = require('../utility/helper')
+const { console } = require('inspector')
 
 // using Multer to store pics in local
 const picStorage = multer.diskStorage({
-    destination: "../uploads/profile_pics",
+    destination: "./uploads/profile_pics",
     filename: (req,file,cb) => {
         cb(null, `${Date.now()}${path.extname(file.originalname)}`)
     }
 })
 
-const upload = multer ({picStorage})
+const upload = multer ({storage: picStorage})
 
 
 const SignUp = async(req, res) => {
 
-    upload.single("profilePicture")
+    // only the profilepicture field is getting involved
+    upload.single("profilePicture")(req,res,async (err) => {
 
+        if (err) {
+            return res.status(400).json({ error: "File upload failed" });
+    }
     const {name, email, password} = req.body
 
     try {   
 
-        const profPic = req.file ? `../uploads/profile_pics/${req.file.filename}` : null
+        const profPic = req.file ? `./uploads/profile_pics/${req.file.filename}` : null
+        console.log(profPic)
 
         const mail = await User.findOne({email})
 
@@ -45,7 +51,9 @@ const SignUp = async(req, res) => {
         const salt = await bcrypt.genSalt(10)
         const hash = await bcrypt.hash(password,salt)
 
-        const user = await User.create({email, password: hash, name, profPic})
+        // returning the user along with the profilepicture
+        const user = await User.create({email, password: hash, name, profilePicture: profPic})
+        console.log(user)
 
         // token without expiration time
         const token = helper.createToken(user._id)
@@ -58,11 +66,12 @@ const SignUp = async(req, res) => {
 
         helper.verificationMailForSignUp(user,link)
 
-        res.status(200).json({user,token,})
+        res.status(200).json({user,token})
     }
         catch (error) {
             res.status(400).json({error: error.message}) 
         }
+    })
     }
 
 const verifySignUp = async(req,res) => {
