@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken')
 const nodemailer = require('nodemailer')
 const {Resend} = require('resend')
+const multer = require('multer')
 
 // instatiation of resend
 const resendInstance = new Resend(process.env.RESEND_API_KEY)
@@ -163,4 +164,46 @@ function verificationMailforResetPassword_resend() {
     })
 }
 
-module.exports = {createToken,createToken_time,verificationMailForSignUp,verificationMailForResetPassword}
+// upload files to cloudinary
+const uploadToCloudinary = async (file, folder) => {
+    return new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        { folder },
+        (error, result) => {
+          if (error) reject(error);
+          else resolve(result);
+        }
+      );
+      stream.end(file.buffer);
+    });
+  };
+
+
+// stetting storage engine
+const storage = multer.memoryStorage()
+
+//initializing upload
+const upload = multer({
+    storage: storage,
+    limits: { fileSize: 2 * 1024 * 1024}, // 2MB max file size
+    fileFilter: function (req, res, cb) {
+        checkFileType(file, cb)
+    }
+}).fields([{ name: 'image', maxCount: 1}])  
+
+// checking file type
+function checkFileType(file, cb) {
+    // allowed extensions
+    const fileTypes = /jpeg|jpg|png|/
+    //check extension 
+    const extname = fileTypes.test(path.extname(file.originalname).toLowerCase())
+
+    if(extname) {
+        return cb(null, true)
+    }
+    else {
+        cb('Error: Only Image files are accepted !')
+    }
+}
+
+module.exports = {createToken,createToken_time,verificationMailForSignUp,verificationMailForResetPassword,uploadToCloudinary,upload}

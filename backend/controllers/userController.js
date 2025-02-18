@@ -6,32 +6,51 @@ const multer = require('multer') // middlewire for handling file uploads
 const path = require('path')
 const helper = require('../utility/helper')
 const { console } = require('inspector')
+const cloudinary = require('cloudinary').v2
+const { CloudinaryStorage } = require('multer-storage-cloudinary')
 
-// using Multer to store pics in local
-const picStorage = multer.diskStorage({
-    destination: "./uploads/profile_pics",
-    filename: (req,file,cb) => {
-        cb(null, `${Date.now()}${path.extname(file.originalname)}`)
-    }
+// using Multer to store media in local
+// const picStorage = multer.diskStorage({
+//     destination: "./uploads/profile_pics",
+//     filename: (req,file,cb) => {
+//         cb(null, `${Date.now()}${path.extname(file.originalname)}`)
+//     }
+// }
+
+// using cloudinary to store media in cloud
+// configure cloudinary
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET_KEY
 })
 
-const upload = multer ({storage: picStorage})
+// const picStorage = new CloudinaryStorage({
+//     cloudinary: cloudinary.config,
+//     params: {
+//         folder: "userProfilePics",
+//         allowed_formats: ["jpg","png","jpeg","webp"],
+//     },
+// })
 
+// const upload = multer ({storage: picStorage})
 
 const SignUp = async(req, res) => {
 
     // only the profilepicture field is getting involved
-    upload.single("profilePicture")(req,res,async (err) => {
-
-        if (err) {
-            return res.status(400).json({ error: "File upload failed" });
-    }
+    // upload.single("profilePicture") async(req,res) => {
+        
     const {name, email, password} = req.body
 
-    try {   
+    let profilePicture = null
 
-        const profPic = req.file ? `./uploads/profile_pics/${req.file.filename}` : null
-        console.log(profPic)
+    try {  
+        
+        if(req.file) {
+            const result = await helper.uploadToCloudinary(req.file, "userProfilePics");
+            //res.json({ imageUrl: result.secure_url }); // Return Cloudinary image URL
+            profilePicture = result.secure_url // set profile picture url
+        }
 
         const mail = await User.findOne({email})
 
@@ -71,7 +90,6 @@ const SignUp = async(req, res) => {
         catch (error) {
             res.status(400).json({error: error.message}) 
         }
-    })
     }
 
 const verifySignUp = async(req,res) => {
