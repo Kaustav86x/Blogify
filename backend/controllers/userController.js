@@ -7,7 +7,7 @@ const path = require('path')
 const helper = require('../utility/helper')
 const { console } = require('inspector')
 const cloudinary = require('cloudinary').v2
-const { CloudinaryStorage } = require('multer-storage-cloudinary')
+//const { CloudinaryStorage } = require('multer-storage-cloudinary')
 
 // using Multer to store media in local
 // const picStorage = multer.diskStorage({
@@ -36,9 +36,6 @@ cloudinary.config({
 // const upload = multer ({storage: picStorage})
 
 const SignUp = async(req, res) => {
-
-    // only the profilepicture field is getting involved
-    // upload.single("profilePicture") async(req,res) => {
         
     const {name, email, password} = req.body
 
@@ -48,7 +45,6 @@ const SignUp = async(req, res) => {
         
         if(req.file) {
             const result = await helper.uploadToCloudinary(req.file, "userProfilePics");
-            //res.json({ imageUrl: result.secure_url }); // Return Cloudinary image URL
             profilePicture = result.secure_url // set profile picture url
         }
 

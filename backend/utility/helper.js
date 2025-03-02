@@ -182,11 +182,12 @@ const uploadToCloudinary = async (file, folder) => {
 // stetting storage engine
 const storage = multer.memoryStorage()
 
-//initializing upload
+// multer is a middleware for handling file uploads
+// initializing upload
 const upload = multer({
     storage: storage,
     limits: { fileSize: 2 * 1024 * 1024}, // 2MB max file size
-    fileFilter: function (req, res, cb) {
+    fileFilter: function (req, file, cb) {
         checkFileType(file, cb)
     }
 }).fields([{ name: 'image', maxCount: 1}])  

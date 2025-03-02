@@ -4,7 +4,7 @@ const {createBlog,getAllBlog,getBlogById,updateBlogById,deleteBlogbyId,mostLiked
 
 const router = express.Router()
 
-router.use(requireAuth)
+// router.use(requireAuth)
 
 // routes
 router.post('/create', createBlog)
