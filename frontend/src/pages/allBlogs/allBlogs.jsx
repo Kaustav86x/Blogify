@@ -24,9 +24,9 @@ export default function BlogShowcase() {
   }, []);
 
   return (
-    <div className="p-6 max-w-5xl mx-auto">
+    <div className="p-6 max-w-5xl mx-auto font-['Manrope']">
       <h1 className="text-4xl font-bold text-center mb-6">Latest Blogs</h1>
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex items-center justify-center min-h-screen gap-10">
       {/* flex items-center justify-center min-h-screen */}
       {/* grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-6  */}
         {loading ? (
@@ -44,7 +44,13 @@ export default function BlogShowcase() {
               <Card className="rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition duration-30 relative blog">
                 <CardBody className="p-4 blogBody">
                   <h2 className="text-xl font-semibold mb-2 title">{blog.title}</h2>
-                  <div className="text-gray-600 content">{blog.content}</div>
+                  { !blog.mainContent ? (
+                    <div className="flex justify-center items-center text-black">
+                    <div>
+
+                    </div>
+                    </div>
+                    ) : (<div className="text-gray-600 content">{blog.mainContent}</div>)}
                   {/* <a href={`/blog/${blog._id}`} className="text-blue-500 mt-2 inline-block">Read More</a> */}
                 </CardBody>
               </Card>

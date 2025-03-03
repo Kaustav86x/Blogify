@@ -7,8 +7,8 @@ import Blogs from './pages/allBlogs/allBlogs'
 
 const AllBlogs = () => {
   return useRoutes([
-    { path: "/", element: <Blogs/> },
-    {path: "*", element: <>error</>}
+    { path: "/", element: <Blogs/> }
+    // {path: "/blog/:id", element: }
   ]);
 };
 
