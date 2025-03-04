@@ -46,11 +46,16 @@ export default function BlogShowcase() {
                   <h2 className="text-xl font-semibold mb-2 title">{blog.title}</h2>
                   { !blog.mainContent ? (
                     <div className="flex justify-center items-center text-black">
-                    <div>
-
+                      <div>
+                        {blog.subHeadings.map((sub, index) => (
+                          <div key={index}>
+                            <h1 className="col-span-2 text-xl font-semibold mb-2 title">{sub.title}</h1>
+                            <div className="text-gray-600 col-span-2 line-clamp-3 content">{sub.content}</div>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                    </div>
-                    ) : (<div className="text-gray-600 content">{blog.mainContent}</div>)}
+                    ) : (<div className="text-gray-600 line-clamp-3 content ">{blog.mainContent}</div>)}
                   {/* <a href={`/blog/${blog._id}`} className="text-blue-500 mt-2 inline-block">Read More</a> */}
                 </CardBody>
               </Card>

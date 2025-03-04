@@ -7,7 +7,7 @@ const helper = require('../utility/helper')
 const createBlog = async(req, res) => {
 
     const { title, mainContent, subHeadings, userId, tags } = req.body
-    console.log(req.body)
+    // console.log(req.body)
 
     try { 
         const findTitle = await Blog.findOne({title})
