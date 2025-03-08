@@ -1,7 +1,7 @@
 const express = require('express')
 // const requireAuth = require('../middleware/requireAuth')
 const {SignUp, login, verifySignUp, forgetPassword, resetPassword} = require('../controllers/userController')
-const helper = require('../utility/helper')
+const upload = require('../utility/upload')
 
 const router = express.Router()
 
@@ -9,7 +9,7 @@ const router = express.Router()
 // router.use(requireAuth)
 
 // routes
-router.post('/signup', helper.upload, SignUp)
+router.post('/signup', upload.single('profilePicture'), SignUp)
 router.post('/login', login)
 router.post('/forget-password',forgetPassword)
 router.post('/verify-user/:token', verifySignUp)

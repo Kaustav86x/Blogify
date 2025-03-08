@@ -1,51 +1,39 @@
+const { rejects } = require('assert')
 const User = require('../models/userSchema')
 const bcrypt = require('bcrypt')
 const crypto = require('crypto')
+const { resolve } = require('path')
 const validator = require('validator')
-const multer = require('multer') // middlewire for handling file uploads
-const path = require('path')
+const cloudinary = require('../utility/cloudinary')
 const helper = require('../utility/helper')
-const { console } = require('inspector')
-const cloudinary = require('cloudinary').v2
-//const { CloudinaryStorage } = require('multer-storage-cloudinary')
 
-// using Multer to store media in local
-// const picStorage = multer.diskStorage({
-//     destination: "./uploads/profile_pics",
-//     filename: (req,file,cb) => {
-//         cb(null, `${Date.now()}${path.extname(file.originalname)}`)
-//     }
-// }
 
-// using cloudinary to store media in cloud
-// configure cloudinary
-cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET_KEY
-})
-
-// const picStorage = new CloudinaryStorage({
-//     cloudinary: cloudinary.config,
-//     params: {
-//         folder: "userProfilePics",
-//         allowed_formats: ["jpg","png","jpeg","webp"],
-//     },
-// })
-
-// const upload = multer ({storage: picStorage})
 
 const SignUp = async(req, res) => {
+
+    var profilePictureUrl = ''
+    var profilePictureId = ''
         
     const {name, email, password} = req.body
-
-    let profilePicture = null
 
     try {  
         
         if(req.file) {
-            const result = await helper.uploadToCloudinary(req.file, "userProfilePics");
-            profilePicture = result.secure_url // set profile picture url
+            const result = await new Promise((resolve, reject) => {
+                cloudinary.uploader.upload_stream(
+                    {folder: 'profilePictures'},
+                    (error, result) => {
+                        if(error) {
+                            reject(error)
+                        }
+                        else {
+                            resolve(result)
+                        }
+                    }
+                ).end(req.file.buffer)
+            })
+            profilePictureId = result.public_id,
+            profilePictureUrl = result.secure_url
         }
 
         const mail = await User.findOne({email})
@@ -67,7 +55,7 @@ const SignUp = async(req, res) => {
         const hash = await bcrypt.hash(password,salt)
 
         // returning the user along with the profilepicture
-        const user = await User.create({email, password: hash, name, profilePicture: profPic})
+        const user = await User.create({email, password: hash, name, profilePictureUrl: profilePictureUrl, profilePictureId: profilePictureId})
         console.log(user)
 
         // token without expiration time

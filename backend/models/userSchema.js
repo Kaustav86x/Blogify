@@ -7,6 +7,9 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    userName: {
+        type: String,
+    },
     email:{
         type: String,
         required: true
@@ -15,7 +18,10 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    profilePicture: {
+    profilePictureUrl : {
+        type: String
+    },
+    profilePictureId : {
         type: String
     },
     passwordResetToken: {
