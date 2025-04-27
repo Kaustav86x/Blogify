@@ -1,8 +1,9 @@
-import { BrowserRouter, useRoutes} from 'react-router-dom'
+import { BrowserRouter, useRoutes, Routes, Route} from 'react-router-dom'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import Blogs from './pages/allBlogs/allBlogs'
+import SignUp from './pages/SignUp/SignUp'
 
 
 const AllBlogs = () => {
@@ -16,7 +17,9 @@ const AllBlogs = () => {
 function App() {
   return (
     <BrowserRouter>
-      <AllBlogs/>
+      <Routes>
+        <Route path='/sign-up' element={<SignUp/>}/>
+      </Routes>
     </BrowserRouter>
   )
 }
