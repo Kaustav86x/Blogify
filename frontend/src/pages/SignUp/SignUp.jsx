@@ -124,8 +124,8 @@ const SignUp = () => {
         </div>
 
         {/* sign up button */}
-        <div className="flex w-[400px] rounded-[18px] h-16 relative cursor-pointer bg-black justify-center items-center mt-10 [text-shadow:_0px_4px_4px_rgb(0_0_0_/_0.25)]">
-        <button className="flex justify-center items-center w-20 h-10 opacity-80 text-center text-white text-md font-normal font-'Poor_Story' [text-shadow:_0px_4px_4px_rgb(0_0_0_/_0.25)] ">
+        <div className="flex w-[400px] rounded-[18px] outline-1 outline-offset-[-1px] h-16 relative cursor-pointer bg-black justify-center items-center mt-10 [text-shadow:_0px_4px_4px_rgb(0_0_0_/_0.25)]">
+        <button className="flex justify-center items-center w-20 h-10 opacity-80 text-center text-white text-md font-normal font-'Poor_Story' [text-shadow:_0px_4px_4px_rgb(0_0_0_/_0.25)] cursor-pointer">
         Sign Up
         </button>
         </div>

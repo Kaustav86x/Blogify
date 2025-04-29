@@ -18,11 +18,9 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    profilePictureUrl : {
-        type: String
-    },
-    profilePictureId : {
-        type: String
+    profilePicture : {
+        url:  { type: String },
+        id: { type: String }
     },
     passwordResetToken: {
         type: String

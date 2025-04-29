@@ -1,27 +1,27 @@
 const jwt = require('jsonwebtoken')
-const blog = require('../controllers/blogController')
+const asyncHandler = require('express-async-handler')
+const { UserModel } = require('../models/userSchema')
 
-const requireAuth = async (req,res,next) => {
+const protect = asyncHandler(async(req, res, next) => {
     // authorization header from request header
-    const { authorization } = req.headers
-
-    if(!authorization) {
-        return res.status(401).json({error:'Authorization token required !'})
+    let token;
+    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+        try {
+            token = req.headers.authorization.split(' ')[1]
+            const decoded = jwt.verify(token, process.env.SECRET)
+            req.user = await UserModel.findById(decoded.id).select('-password')
+            next();
+        }
+        catch(error) {
+            res.status(401)
+            throw new Error(error.message || 'Not authorized, token failed')
+        }
     }
 
-    // extracting the jwt token
-    const { token } = authorization.split(' ')[1]
-
-    try {
-        const {_id} = jwt.verify(token, process.env.SECRET)
-
-        // only the id form the DB will get fetchedr
-        req.user = await blog.findOne({_id}).select('_id')
-        next()
+    if(!token) {
+        res.status(401)
+        throw new Error('Not authorized, no token')
     }
-    catch(error) {
-        res.status(401).json({error:'Request is not authorized'})
-    }
-}
+})
 
-module.exports = requireAuth
+module.exports = { protect }
