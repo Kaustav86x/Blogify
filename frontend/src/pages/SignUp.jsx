@@ -1,12 +1,12 @@
 import React, { useState} from "react";
-import cloud from '../../assets/cloud.svg'
-import round_think from '../../assets/round_think.svg'
-import bulb from '../../assets/bulb.svg'
-import book from '../../assets/book.svg'
-import scenario from '../../assets/scenario.svg'
-import eyeIcon from '../../assets/eye.svg'
-import emailIcon from '../../assets/email.svg'
-import profileIcon from '../../assets/profile.svg'
+import cloud from '../assets/cloud.svg'
+import round_think from '../assets/round_think.svg'
+import bulb from '../assets/bulb.svg'
+import book from '../assets/book.svg'
+import scenario from '../assets/scenario.svg'
+import eyeIcon from '../assets/eye.svg'
+import emailIcon from '../assets/email.svg'
+import profileIcon from '../assets/profile.svg'
 
 const SignUp = () => {
 

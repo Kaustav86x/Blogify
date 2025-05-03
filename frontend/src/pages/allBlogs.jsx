@@ -3,7 +3,6 @@ import  { Card, CardBody } from 'react-bootstrap';
 import Placeholder from "react-bootstrap/Placeholder";
 import { motion } from "framer-motion";
 import axios from "axios";
-import './allBlogs.css';
 
 export default function BlogShowcase() {
   const [blogs, setBlogs] = useState([]);
