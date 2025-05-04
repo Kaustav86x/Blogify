@@ -12,14 +12,14 @@ const Welcome = () => {
     {/* toaster */}
     
     {/* navbar */}
-  <div className="w-full flex justify-start ">
+  {/* <div className="w-full flex justify-start ">
   <div className="flex items-center gap-2 rounded-[10px] p-1">
     <div className="w-16 h-6 left-[128px] top-[2px] text-black text-2xl font-normal font-['Poor_Story']">blogs</div>
     <div className="w-28 h-6 left-[128px] top-[2px] text-black text-2xl font-normal font-['Poor_Story']">Accounts</div>
     <div className="w-28 h-6 left-[270px] top-[2px] text-black text-2xl font-normal font-['Poor_Story']">About us</div>
     <div className="w-32 h-7 left-[429px] top-[3px] text-black text-2xl font-normal font-['Poor_Story']">Contact Us</div>
     </div>
-  </div>  
+  </div>   */}
   {/*login/signup button  */}
   <div className="w-full flex justify-end pr-6 pt-5">
   <div className="flex items-center gap-2 rounded-[10px] p-1">

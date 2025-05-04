@@ -95,7 +95,7 @@ const SignUp = () => {
           </div>
         
         <div className="flex w-full h-11 justify-center text-center "><div class="text-black text-xl text-center font-normal font-'Poor_Story' [text-shadow:_0px_4px_4px_rgb(0_0_0_/_0.25)]">Already a Member?</div>
-        <div class="text-lime-500 text-center text-xl font-normal font-'Poor_Story' [text-shadow:_0px_4px_4px_rgb(0_0_0_/_0.25)] ml-3">
+        <div class="bg-gradient-to-b from-[#2A6F97] via-[#2C7DA0] to-[#61A5C2] text-transparent bg-clip-text text-center text-xl font-normal font-'Poor_Story' [text-shadow:_0px_4px_4px_rgb(0_0_0_/_0.25)] ml-3">
         <a href="/" target="_blank">Login</a>
         </div>
         </div>
