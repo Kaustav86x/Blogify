@@ -38,7 +38,8 @@ const SignUp = () => {
 
     return (
       <div className="flex">
-        <div className=" flex-1 w-[600px] h-[630px] bg-lime-400 rounded-[10px]">
+        <div className=" flex-1 w-[600px] h-[630px] bg-gradient-to-b
+    from-[#2A6F97] via-[#2C7DA0] to-[#61A5C2] text-transparent rounded-[10px]">
             {/* first section */}
         <div className="flex flex-col items-center justify-start mt-6">
         <img
