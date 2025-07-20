@@ -8,18 +8,12 @@ const Welcome = () => {
 
     return(
     <div className="absolute inset-0 w-full h-fit min-h-screen bg-gradient-to-b from-[#2A6F97] via-[#2C7DA0] to-[#61A5C2] bg-repeat z-[-1]">
+    
     <div className="w-full min-h-screen overflow-x-hidden">
     {/* toaster */}
     
     {/* navbar */}
-  {/* <div className="w-full flex justify-start ">
-  <div className="flex items-center gap-2 rounded-[10px] p-1">
-    <div className="w-16 h-6 left-[128px] top-[2px] text-black text-2xl font-normal font-['Poor_Story']">blogs</div>
-    <div className="w-28 h-6 left-[128px] top-[2px] text-black text-2xl font-normal font-['Poor_Story']">Accounts</div>
-    <div className="w-28 h-6 left-[270px] top-[2px] text-black text-2xl font-normal font-['Poor_Story']">About us</div>
-    <div className="w-32 h-7 left-[429px] top-[3px] text-black text-2xl font-normal font-['Poor_Story']">Contact Us</div>
-    </div>
-  </div>   */}
+    <Navbar/>
   {/*login/signup button  */}
   <div className="w-full flex justify-end pr-6 pt-5">
   <div className="flex items-center gap-2 rounded-[10px] p-1">
