@@ -7,7 +7,6 @@ const helper = require('../utility/helper')
 const createBlog = async(req, res) => {
 
     const { title, mainContent, subHeadings, userId, tags } = req.body
-    // console.log(req.body)
 
     try { 
         const findTitle = await Blog.findOne({title})
@@ -104,7 +103,32 @@ const mostLikedBlog = async(req,res) => {
         res.status(400).json({error: error.message})
     }
 }
+// utility to convert text to audio
+
+const convertToAudio = async (req, res) => {
+    try {
+  const user = await User.findById(req.user.id);
+  const blog = await Blog.findById(req.params.id);
+
+  if (!blog) throw new Error('Blog not found');
+
+  if (user.audiobookConversions >= 2) {
+    return res.status(402).json({ message: "Limit reached. Please purchase more conversions." });
+  }
+
+  const audioUrl = await generateAudio(blog.content);
+
+  user.audiobookConversions += 1;
+  user.audiobookHistory.push({ blogId: blog._id, createdAt: new Date() });
+  await user.save();
+
+    res.json({ audioUrl });
+}
+catch(error) {
+    res.status(400).json({error: error.message})
+}
+
+}
 
 
-
-module.exports = {createBlog,getAllBlog,getBlogById,updateBlogById,deleteBlogbyId,mostLikedBlog}
+module.exports = {createBlog,getAllBlog,getBlogById,updateBlogById,deleteBlogbyId,mostLikedBlog,convertToAudio}

@@ -24,7 +24,7 @@ const blogSchema = new Schema({
     type: Types.ObjectId, ref: "User", 
     required: true
   },
-  likes: { 
+  likes: {
     type: Number, 
     default: 0
   },
