@@ -6,6 +6,7 @@ import Blogs from './pages/allBlogs'
 import SignUp from './pages/SignUp'
 import Welcome from './pages/welcome'
 import AboutAuthor from './pages/AboutAuthor'
+import BlogDetails from './pages/BlogDetails'
 
 
 const AllBlogs = () => {
@@ -23,6 +24,7 @@ function App() {
         <Route path='/sign-up' element={<SignUp/>}/>
         <Route path='/welcome' element={<Welcome/>}/>
         <Route path='/' element={<AboutAuthor/>}/>
+        <Route path="/blog/:id" element={<BlogDetails/>}/>
       </Routes>
     </BrowserRouter>
   )

@@ -1,24 +1,25 @@
 import React from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
 const AboutAuthor = () => {
 
+  const navigate = useNavigate();
   return (
     <>
   <div className="min-h-screen w-full bg-sky-100">
   <nav className="w-full px-4 shadow-md bg-sky-100 py-10">
-  <div className="max-w-[1356px] w-full mx-auto flex flex-wrap items-center justify-between gap-y-4">
+  <div className="max-w-[1356px] w-full mx-auto flex flex-wrap items-center justify-center gap-y-4">
 
-    <div className="flex items-center gap-4">
+    {/* <div className="flex items-center gap-4">
       <div className="w-12 h-12 relative overflow-hidden">
         <div className="w-7 h-9 absolute left-[10px] top-[6.12px] outline-4 outline-offset-[-2px]" />
       </div>
       <span className="text-4xl text-black font-normal font-poor-story">BLOGIFY</span>
-    </div>
+    </div> */}
 
     <div className="flex flex-wrap gap-25 items-center text-black text-2xl font-poor-story">
       <a href="#">Home</a>
-      <a href="#">Blog</a>
-      <a href="#">From Author</a>
+      <a href="#">Blogs</a>
       <a href="#">About</a>
       <a href="#">Contact</a>
     </div>
@@ -107,14 +108,11 @@ const AboutAuthor = () => {
         <div className="text-black text-xl font-normal font-'Poor_Story' items-center">
           May 20, 2023  .  5 min read
         </div>
+        <div className="text-black text-4xl font-normal font-'Poor_Story' items-center">
+          <Link to={`/blog/${blog._id}`}>Invisible</Link>
+        </div>
         <div className="text-black text-xl font-normal font-'Poor_Story' items-center">
           This isn’t just a story. It’s not a cry for help. It’s not even mine alone. This is a voice....
-        </div>
-        <div className="text-black text-4xl font-normal font-'Poor_Story' items-center">
-          Invisible
-        </div>
-        <div className="text-black text-2xl font-normal font-'Poor_Story' items-center">
-          Leave a comment
         </div>
         </div>
       </div>
