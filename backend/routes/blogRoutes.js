@@ -8,7 +8,7 @@ const router = express.Router()
 
 // routes
 // router.post('/create', createBlog)
-router.get('/all', getAllBlog)
+router.get('/blogs', getAllBlog)
 router.get('/:id', getBlogById)
 router.put('/update/:id', updateBlogById)
 router.delete('/delete/:id', deleteBlogbyId)

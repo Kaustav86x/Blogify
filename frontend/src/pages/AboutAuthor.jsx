@@ -1,21 +1,48 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios';
 
 const AboutAuthor = () => {
 
   const navigate = useNavigate();
+
+  const[blogs, setBlogs] = useState(null);
+  const[name, setName] = useState("");
+  const[email, setEmail] = useState("");
+  const[message, setMessage] = useState("");
+
+  const [loading, setLoading] = useState(false)
+
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+    try {
+      setLoading(true);
+
+      if(!name || !email ) {
+        throw new Error("Please fill the mandatory fields")
+      }
+
+      const response = await axios.post('http://localhost:8080/api/contact/contact-us')
+      .then(() => {})
+
+    }
+
+  useEffect(() => {
+    axios.get('http://localhost:8080/api/blogs/blogs')
+    .then((res) => {
+      setBlogs(res.data);
+      // console.log(res.data[0])
+    }) // storing all the blogs
+    .catch((err) => {
+      console.log(err);
+    })
+  })
+
   return (
     <>
   <div className="min-h-screen w-full bg-sky-100">
   <nav className="w-full px-4 shadow-md bg-sky-100 py-10">
   <div className="max-w-[1356px] w-full mx-auto flex flex-wrap items-center justify-center gap-y-4">
-
-    {/* <div className="flex items-center gap-4">
-      <div className="w-12 h-12 relative overflow-hidden">
-        <div className="w-7 h-9 absolute left-[10px] top-[6.12px] outline-4 outline-offset-[-2px]" />
-      </div>
-      <span className="text-4xl text-black font-normal font-poor-story">BLOGIFY</span>
-    </div> */}
 
     <div className="flex flex-wrap gap-25 items-center text-black text-2xl font-poor-story">
       <a href="#">Home</a>
@@ -94,9 +121,10 @@ const AboutAuthor = () => {
   {/* Blog Section */}
   <div className="w-full max-w-4xl flex flex-col items-center gap-10">
     {/* Blog Entry */}
-    {[1, 2, 3].map((_, idx) => (
+    {blogs && blogs.length > 0 && blogs.map((blog) => (
+      // console.log(blogs)
       <div
-        key={idx}
+        key={blog._id}
         className="w-full flex flex-row items-center gap-4 p-4 border border-gray-300 rounded-lg bg-sky-100 shadow-sm"
       >
         <img
@@ -109,10 +137,10 @@ const AboutAuthor = () => {
           May 20, 2023  .  5 min read
         </div>
         <div className="text-black text-4xl font-normal font-'Poor_Story' items-center">
-          <Link to={`/blog/${blog._id}`}>Invisible</Link>
+          {blog.title}
         </div>
-        <div className="text-black text-xl font-normal font-'Poor_Story' items-center">
-          This isn’t just a story. It’s not a cry for help. It’s not even mine alone. This is a voice....
+        <div className="w-1/7 text-black text-xl font-normal font-'Poor_Story' items-center line-clamp-3 leading-relaxed">
+          {blog.mainContent}
         </div>
         </div>
       </div>

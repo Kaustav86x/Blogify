@@ -9,14 +9,6 @@ import AboutAuthor from './pages/AboutAuthor'
 import BlogDetails from './pages/BlogDetails'
 
 
-const AllBlogs = () => {
-  return useRoutes([
-    { path: "/", element: <Blogs/> }
-    // {path: "/blog/:id", element: }
-  ]);
-};
-
-
 function App() {
   return (
     <BrowserRouter>
