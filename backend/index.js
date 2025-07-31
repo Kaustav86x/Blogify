@@ -12,6 +12,9 @@ const contactRoutes = require('./routes/contactRoutes')
 // express app creation
 const app = express()
 
+// middlewares
+app.use(express.json())
+
 // cors
 const allowedOrigins = [
     'http://localhost:5173', process.env.CLIENT_URL
@@ -28,9 +31,6 @@ app.use(cors({
     },
     credentials:true,
 }))
-
-// middlewares
-app.use(express.json())
 
 app.use((req, res, next) => {
     console.log(req.method, req.url)

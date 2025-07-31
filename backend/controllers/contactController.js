@@ -18,8 +18,11 @@ const contactUs = async(req, res) => {
 
         const user = await Contact.create({ name: name, email: email, message: message });
 
+        // await contactUs(user)
+
         //saving the user data
-        res.status(201).json({ message: 'Details saved'}, user);
+        res.status(200).json({ message: 'Details saved'});
+
     } catch(error) {
         res.status(400).json({ message: error.message })
     }

@@ -1,15 +1,44 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
+import img1 from '../assets/1st Image.png';
+import img2 from '../assets/2nd Image.png';
+import img3 from '../assets/3rd Image.png';
+import img4 from '../assets/4th Image.png';
+import img5 from '../assets/5th Image.png';
+import img6 from '../assets/6th Image.png';
+import { useRef } from 'react';
+import { toast, ToastContainer } from "react-toastify"
 
 const AboutAuthor = () => {
 
   const navigate = useNavigate();
 
+  const blogSectionRef = useRef(null);
+  const contactSectionRef = useRef(null);
+  const aboutSectionRef = useRef(null);
+
+  const blogScrollToSection = () => {
+    blogSectionRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const contactScrollToSection = () => {
+    contactSectionRef.current.scrollIntoView({behavior: "smooth" });
+  }
+
+  const aboutScrollToSection = () => {
+    aboutSectionRef.current.scrollIntoView({behavior: "smooth" });
+  }
+
+    useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const[blogs, setBlogs] = useState(null);
   const[name, setName] = useState("");
   const[email, setEmail] = useState("");
   const[message, setMessage] = useState("");
+  const [showMore, setShowMore] = useState(false);
 
   const [loading, setLoading] = useState(false)
 
@@ -22,33 +51,53 @@ const AboutAuthor = () => {
         throw new Error("Please fill the mandatory fields")
       }
 
-      const response = await axios.post('http://localhost:8080/api/contact/contact-us')
-      .then(() => {})
+      const response = await axios.post('http://localhost:8080/api/contact/contact-us', {
+        name,
+        email,
+        message,
+      });
 
+      if(response.status != 200) {
+        throw new Error("An error occured !!!", response.status)
+      }
+      setName("")
+      setEmail("")
+      setMessage("")
+
+      toast.success("Your details have been saved !")
+
+      await new Promise((resolve) => setTimeout(resolve, 2000))
     }
+    catch(err) {
+      toast.error(err.message)
+    } finally {
+      setLoading(false);
+    }
+  }
 
   useEffect(() => {
     axios.get('http://localhost:8080/api/blogs/blogs')
     .then((res) => {
       setBlogs(res.data);
       // console.log(res.data[0])
-    }) // storing all the blogs
+    }) 
     .catch((err) => {
       console.log(err);
     })
-  })
+  },[]);
 
   return (
     <>
   <div className="min-h-screen w-full bg-sky-100">
+  <ToastContainer/>
   <nav className="w-full px-4 shadow-md bg-sky-100 py-10">
   <div className="max-w-[1356px] w-full mx-auto flex flex-wrap items-center justify-center gap-y-4">
 
     <div className="flex flex-wrap gap-25 items-center text-black text-2xl font-poor-story">
       <a href="#">Home</a>
-      <a href="#">Blogs</a>
-      <a href="#">About</a>
-      <a href="#">Contact</a>
+      <button className='cursor-pointer' onClick={blogScrollToSection}>Blogs</button>
+      <button className='cursor-pointer' onClick={aboutScrollToSection}>About</button>
+      <button className='cursor-pointer' onClick={contactScrollToSection}>Contact</button>
     </div>
   </div>
 </nav>
@@ -59,8 +108,8 @@ const AboutAuthor = () => {
   {/* Left section */}
   <div className="md:w-1/2 w-full flex justify-start items-center mb-10">
     <img
-      className="w-full max-w-[636px] h-auto object-cover shadow-md border border-black"
-      src="https://placehold.co/636x700"
+      className="w-full max-w-[636px] h-auto object-cover shadow-md"
+      src={img1}
       alt="Left section"
     />
   </div>
@@ -69,10 +118,8 @@ const AboutAuthor = () => {
   <div className="w-full lg:w-1/2 flex flex-col items-center px-4 py-6 relative">
 
   {/* Top border */}
-  {/* <div className="w-full border-t border-black mb-6" /> */}
 
   {/* Side border on large screens */}
-  {/* <div className="hidden lg:block absolute top-24 left-0 h-[80%] border-l border-black"/> */}
 
   <div className="w-[622px] h-0 left-0 top-0 absolute border-t border-black mb-6"></div>
   <div className="w-[622px] h-0 left-[640px] top-[105px] absolute origin-top-left rotate-90 border-t border-black"></div>
@@ -85,7 +132,7 @@ const AboutAuthor = () => {
   {/* Image */}
   <img
     className="w-[80%] max-w-md h-auto mb-6 shadow-md"
-    src="https://placehold.co/354x266"
+    src={img2}
     alt="Main Visual"
   />
 
@@ -112,7 +159,7 @@ const AboutAuthor = () => {
 
 
 {/* recent blogs */}
-<div className="w-full px-4 py-10 flex flex-col items-center bg-sky-100">
+<div className="w-full px-4 py-10 flex flex-col items-center bg-sky-100" ref={blogSectionRef}>
   {/* Section Title */}
   <div className="text-black text-5xl font-normal font-'Poor_Story' mb-8 text-center">
     Recent blogs
@@ -121,26 +168,24 @@ const AboutAuthor = () => {
   {/* Blog Section */}
   <div className="w-full max-w-4xl flex flex-col items-center gap-10">
     {/* Blog Entry */}
-    {blogs && blogs.length > 0 && blogs.map((blog) => (
-      // console.log(blogs)
+    {blogs && blogs.length > 0 && blogs
+    .slice(0, showMore ? 5 : 2)
+    .map((blog) => (
       <div
         key={blog._id}
         className="w-full flex flex-row items-center gap-4 p-4 border border-gray-300 rounded-lg bg-sky-100 shadow-sm"
       >
         <img
           className="w-full max-w-sm h-auto object-cover rounded"
-          src="https://placehold.co/355x340"
+          src={img3}  
           alt="Blog thumbnail"
         />
         <div className='flex flex-col items-start justify-center gap-10 px-2'>
         <div className="text-black text-xl font-normal font-'Poor_Story' items-center">
-          May 20, 2023  .  5 min read
+          {new Date(blog.createdAt).toLocaleDateString()}  .  5 min read
         </div>
         <div className="text-black text-4xl font-normal font-'Poor_Story' items-center">
           {blog.title}
-        </div>
-        <div className="w-1/7 text-black text-xl font-normal font-'Poor_Story' items-center line-clamp-3 leading-relaxed">
-          {blog.mainContent}
         </div>
         </div>
       </div>
@@ -148,9 +193,12 @@ const AboutAuthor = () => {
   </div>
 </div>
 
-<button className="px-8 py-3 bg-sky-200 border border-black shadow-[inset_0px_4px_4px_0px_rgba(0,0,0,0.25)] text-lg mx-auto block cursor-pointer">
-  Explore More
+{blogs && blogs.length > 2 && (
+<button onClick={() => setShowMore(!showMore)} 
+className="px-8 py-3 bg-sky-200 border border-black shadow-[inset_0px_4px_4px_0px_rgba(0,0,0,0.25)] text-lg mx-auto block cursor-pointer">
+  {showMore ? 'Show Less' : 'Explore More'}
 </button>
+)}
 
 <div className="w-11/12 flex flex-col h-0 border-t border-black ml-20 mt-10 mb-20"></div>
 
@@ -173,12 +221,10 @@ const AboutAuthor = () => {
     <div className="w-px h-170 bg-black mr-[-118px]" />
   </div>
 
-{/* <div className="w-11/12 flex flex-col h-0 border-t rotate-90 border-black"></div> */}
-
 <div className="h-[700px] flex justify-end w-1/2">
   <img
     className="max-w-3xl shadow-md object-cover"
-    src="https://placehold.co/570x400"
+    src={img4}
     alt="Visual"
   />
 </div>
@@ -194,7 +240,7 @@ const AboutAuthor = () => {
   <div className="absolute inset-0 flex items-center justify-center">
     <img
       className="w-[419px] h-[448px] object-cover"
-      src="https://placehold.co/419x448"
+      src={img5}
       alt="Placeholder"
     />
   </div>
@@ -211,7 +257,7 @@ const AboutAuthor = () => {
   </div>
 
   {/* Right section: text content */}
-  <div className="flex flex-col justify-center items-center w-[35%] px-6 space-y-10">
+  <div className="flex flex-col justify-center items-center w-[35%] px-6 space-y-10" ref={aboutSectionRef}>
     <div className="text-black text-4xl font-'Poor_Story'">Hi, I’m Kaustav</div>
     <div className="text-black text-3xl font-'Poor_Story'">
       A software engineer by profession and blogger by passion. I write on complex human thoughts
@@ -232,17 +278,17 @@ const AboutAuthor = () => {
 <div className="w-full flex flex-col justify-center items-center gap-20">
   <div className='w-full flex flex-row justify-center gap-5'>
     {/* clickable images */}
-    <img className="w-72 h-56 cursor-pointer" src="https://placehold.co/288x228" />
-    <img className="w-72 h-56 cursor-pointer" src="https://placehold.co/288x228" />
-    <img className="w-72 h-56 cursor-pointer" src="https://placehold.co/288x228" />
-    <img className="w-72 h-56 cursor-pointer" src="https://placehold.co/288x228" />
+    <img className="w-72 h-56 cursor-pointer" src={img6} />
+    <img className="w-72 h-56 cursor-pointer" src={img6} />
+    <img className="w-72 h-56 cursor-pointer" src={img6} />
+    <img className="w-72 h-56 cursor-pointer" src={img6} />
   </div>
   {/* clickable images */}
     <div className='w-full flex flex-row justify-center gap-5'>
-    <img className="w-72 h-56 cursor-pointer" src="https://placehold.co/288x228" />
-    <img className="w-72 h-56 cursor-pointer" src="https://placehold.co/288x228" />
-    <img className="w-72 h-56 cursor-pointer" src="https://placehold.co/288x228" />
-    <img className="w-72 h-56 cursor-pointer" src="https://placehold.co/288x228" />
+    <img className="w-72 h-56 cursor-pointer" src={img6} />
+    <img className="w-72 h-56 cursor-pointer" src={img6} />
+    <img className="w-72 h-56 cursor-pointer" src={img6} />
+    <img className="w-72 h-56 cursor-pointer" src={img6} />
     </div>
 </div>
 </div>
@@ -251,8 +297,7 @@ const AboutAuthor = () => {
 
 {/* contact me */}
 
-{/* <div className='flex justify-start items-start'> */}
-<div className="w-full px-4 py-10 flex flex-col items-center bg-sky-100 gap-15">
+<div className="w-full px-4 py-10 flex flex-col items-center bg-sky-100 gap-15" ref={contactSectionRef}>
   {/* Heading */}
   <div className="text-black text-5xl font-normal font-'Poor_Story' mb-8 text-center">
     Drop a thought, comment or anything you’d like to say!
@@ -263,28 +308,34 @@ const AboutAuthor = () => {
     <label className="text-black text-xl font-'Poor_Story' mb-[-25px]" htmlFor="name">Name</label>
     <input
       id="name"
+      value={name}
       type="text"
+      onChange={(e) => setName(e.target.value)} required
       className="w-full border-b border-black bg-transparent focus:outline-none text-black placeholder:text-gray-500 mb-[-10px]"
     />
 
     <label className="text-black text-xl font-'Poor_Story' mb-[-25px]" htmlFor="name">Email</label>
     <input
       id="name"
+      value={email}
       type="email"
+      onChange={(e) => setEmail(e.target.value)} required
       className="w-full border-b border-black bg-transparent focus:outline-none text-black placeholder:text-gray-500 mb-[-10px]"
     />
 
     <label className="text-black text-xl font-'Poor_Story' mb-[-25px]" htmlFor="name">Message</label>
     <input
       id="name"
+      value={message}
       type="text"
+      onChange={(e) => setMessage(e.target.value)}
       className="w-full border-b border-black bg-transparent focus:outline-none text-black placeholder:text-gray-500 mb-[-10px]"
     />
   </div>
 
   {/* Submit Button */}
-  <button className="mt-8 px-10 py-1 bg-sky-200 border border-black shadow-[inset_0px_4px_4px_0px_rgba(0,0,0,0.25)] text-lg cursor-pointer">
-    Submit
+  <button className="mt-8 px-10 py-1 bg-sky-200 border border-black shadow-[inset_0px_4px_4px_0px_rgba(0,0,0,0.25)] text-lg cursor-pointer" onClick={handleSubmit} disabled={loading}>
+    {loading ? `Loading...` : `Submit`}
   </button>
 </div>
 {/* </div> */}
