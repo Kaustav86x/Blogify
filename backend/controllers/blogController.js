@@ -58,6 +58,21 @@ const getBlogById = async(req, res) => {
         
 }
 
+const getBlogByName = async(req, res) => {
+
+    const { title } = req.params;
+
+    try {
+        const blog = await Blog.findOne({title});
+        if(!blog)
+            throw Error('Blog with this title is not found !');
+        res.status(200).json(blog);
+    }
+    catch(error) {
+        res.status(400).json({error: error.message})
+    }
+}
+
 const updateBlogById = async(req,res) => {
 
     const {id} = req.params
@@ -131,4 +146,4 @@ catch(error) {
 }
 
 
-module.exports = {createBlog,getAllBlog,getBlogById,updateBlogById,deleteBlogbyId,mostLikedBlog,convertToAudio}
+module.exports = {createBlog,getAllBlog,getBlogById,updateBlogById,deleteBlogbyId,mostLikedBlog,convertToAudio, getBlogByName}

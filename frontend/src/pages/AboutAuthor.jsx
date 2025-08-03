@@ -10,6 +10,7 @@ import img6 from '../assets/6th Image.png';
 import { useRef } from 'react';
 import { toast, ToastContainer } from "react-toastify"
 
+
 const AboutAuthor = () => {
 
   const navigate = useNavigate();
@@ -38,9 +39,10 @@ const AboutAuthor = () => {
   const[name, setName] = useState("");
   const[email, setEmail] = useState("");
   const[message, setMessage] = useState("");
-  const [showMore, setShowMore] = useState(false);
+  const [showMoreBlogs, setShowMoreBlogs] = useState(false);
+  const [showMorePics, setShowMorePics] = useState(false);
 
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
   e.preventDefault();
@@ -75,8 +77,15 @@ const AboutAuthor = () => {
     }
   }
 
+  const EstimatedReadTime = (content) => {
+    const wordsPerMinute = 200; // average for an adult
+    const words = content.trim().split(/\s+/).length;
+    const time = Math.ceil(words / wordsPerMinute)
+    return time;
+  }
+
   useEffect(() => {
-    axios.get('http://localhost:8080/api/blogs/blogs')
+    axios.get('http://localhost:8080/api/blog/blogs')
     .then((res) => {
       setBlogs(res.data);
       // console.log(res.data[0])
@@ -85,6 +94,11 @@ const AboutAuthor = () => {
       console.log(err);
     })
   },[]);
+
+  // const handleClick = () => {
+  //   const encodedTitle = encodeURIComponent(blog.title);
+  //   navigate(`/blogs/title/${encodedTitle}`);
+  // };
 
   return (
     <>
@@ -168,8 +182,9 @@ const AboutAuthor = () => {
   {/* Blog Section */}
   <div className="w-full max-w-4xl flex flex-col items-center gap-10">
     {/* Blog Entry */}
-    {blogs && blogs.length > 0 && blogs
-    .slice(0, showMore ? 5 : 2)
+    {blogs && blogs.length > 0 && 
+     blogs
+    .slice(0, showMoreBlogs ? 5 : 2)
     .map((blog) => (
       <div
         key={blog._id}
@@ -182,11 +197,17 @@ const AboutAuthor = () => {
         />
         <div className='flex flex-col items-start justify-center gap-10 px-2'>
         <div className="text-black text-xl font-normal font-'Poor_Story' items-center">
-          {new Date(blog.createdAt).toLocaleDateString()}  .  5 min read
+          {new Date(blog.createdAt).toLocaleDateString()}  .  {EstimatedReadTime(blog.mainContent)} min read
         </div>
-        <div className="text-black text-4xl font-normal font-'Poor_Story' items-center">
+        <div className="text-black text-4xl font-normal font-'Poor_Story' items-center cursor-pointer" onClick={() => {
+          const encodedTitle = encodeURIComponent(blog.title);
+          navigate(`/blog/${encodedTitle}`);
+        }}>
           {blog.title}
         </div>
+        <p className="text-black text-xl font-normal font-'Poor_Story' line-clamp-3">
+          {blog.mainContent}
+        </p>
         </div>
       </div>
     ))}
@@ -194,9 +215,9 @@ const AboutAuthor = () => {
 </div>
 
 {blogs && blogs.length > 2 && (
-<button onClick={() => setShowMore(!showMore)} 
+<button onClick={() => setShowMoreBlogs(!showMoreBlogs)} 
 className="px-8 py-3 bg-sky-200 border border-black shadow-[inset_0px_4px_4px_0px_rgba(0,0,0,0.25)] text-lg mx-auto block cursor-pointer">
-  {showMore ? 'Show Less' : 'Explore More'}
+  {showMoreBlogs ? 'Show Less' : 'Explore More'}
 </button>
 )}
 
@@ -221,7 +242,7 @@ className="px-8 py-3 bg-sky-200 border border-black shadow-[inset_0px_4px_4px_0p
     <div className="w-px h-170 bg-black mr-[-118px]" />
   </div>
 
-<div className="h-[700px] flex justify-end w-1/2">
+<div className="h-[650px] flex justify-end w-1/2">
   <img
     className="max-w-3xl shadow-md object-cover"
     src={img4}
@@ -273,23 +294,58 @@ className="px-8 py-3 bg-sky-200 border border-black shadow-[inset_0px_4px_4px_0p
 {/* things stir up my thoughts */}
 
 <div className="w-full px-4 py-10 flex flex-col items-center bg-sky-100">
-<div className="text-center justify-start text-black text-4xl font-normal font-'Poor_Story' mb-15">Things stir up my thoughts</div>
+<div className="text-center justify-start text-black text-4xl font-normal font-'Poor_Story' mb-15">
+  Every picture tells a story, tell me which one you like the most !
+</div>
 
-<div className="w-full flex flex-col justify-center items-center gap-20">
+<div className="w-full flex flex-col justify-center items-center gap-20 transition-all duration-700 ease-in-out">
   <div className='w-full flex flex-row justify-center gap-5'>
-    {/* clickable images */}
-    <img className="w-72 h-56 cursor-pointer" src={img6} />
-    <img className="w-72 h-56 cursor-pointer" src={img6} />
-    <img className="w-72 h-56 cursor-pointer" src={img6} />
-    <img className="w-72 h-56 cursor-pointer" src={img6} />
-  </div>
-  {/* clickable images */}
-    <div className='w-full flex flex-row justify-center gap-5'>
-    <img className="w-72 h-56 cursor-pointer" src={img6} />
-    <img className="w-72 h-56 cursor-pointer" src={img6} />
-    <img className="w-72 h-56 cursor-pointer" src={img6} />
-    <img className="w-72 h-56 cursor-pointer" src={img6} />
+    <div className="flex flex-row justify-center gap-5">
+    {[...Array(4)].map((_, i) => (
+    <img key={i} className="w-72 h-56 cursor-pointer" src={img6} />
+    ))}
     </div>
+  </div>
+  
+  <div className='w-full flex flex-row justify-center gap-5'>
+    <div className="flex flex-row justify-center gap-5">
+    {[...Array(4)].map((_, i) => (
+    <img key={i} className="w-72 h-56 cursor-pointer" src={img6} />
+    ))}
+    </div>
+  </div>
+
+  {/* <div
+    className={`transition-all duration-700 ease-in-out overflow-hidden ${
+      showMorePics ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'
+    }`}
+  > */}
+  {showMorePics &&
+  <>
+  <div className='w-full flex flex-row justify-center gap-5'>
+    <div className="flex flex-row justify-center gap-5">
+    {[...Array(4)].map((_, i) => (
+    <img key={i} className="w-72 h-56 cursor-pointer" src={img6} />
+    ))}
+    </div>
+  </div>
+
+  <div className='w-full flex flex-row justify-center gap-5'>
+    <div className="flex flex-row justify-center gap-5">
+    {[...Array(4)].map((_, i) => (
+    <img key={i} className="w-72 h-56 cursor-pointer" src={img6} />
+    ))}
+    </div>
+  </div>
+  </>
+}
+{/* </div> */}
+
+  {/* toggle button */}
+<button onClick={() => setShowMorePics(!showMorePics)} 
+className="px-8 py-3 bg-sky-200 border border-black shadow-[inset_0px_4px_4px_0px_rgba(0,0,0,0.25)] text-lg mx-auto block cursor-pointer">
+  {showMorePics ? 'Show Less' : 'Explore More'}
+</button>
 </div>
 </div>
 
