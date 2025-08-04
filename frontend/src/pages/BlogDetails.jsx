@@ -95,7 +95,11 @@ const BlogDetails = () => {
 
   {/* Author Note */}
   <div className="mt-12 text-center text-black text-base md:text-xl font-normal font-'Poor_Story'">
-    Written and sketched by <span className='underline-offset-2 cursor-pointer'>Kaustav</span>
+    Written and sketched by 
+    <span className='relative ml-1 cursor-pointer group'>
+      Kaustav
+      <span className="absolute left-0 -bottom-0.5 h-[2px] w-0 bg-black transition-all duration-300 group-hover:w-full"></span>
+      </span>
   </div>
 </div>
 

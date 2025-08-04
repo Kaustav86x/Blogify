@@ -4,12 +4,12 @@ import Placeholder from "react-bootstrap/Placeholder";
 import { motion } from "framer-motion";
 import axios from "axios";
 
-export default function BlogShowcase() {
+const AllBlogs = () => {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get("http://localhost:8080/api/blogs/all") // Replace with actual API URL
+    axios.get("http://localhost:8080/api/blog/blogs") // Replace with actual API URL
       .then((response) => {
         setBlogs(response.data)
         // console.log(response.data)
@@ -23,7 +23,7 @@ export default function BlogShowcase() {
   }, []);
 
   return (
-    <div className="p-6 max-w-5xl mx-auto font-['Manrope']">
+    <div className="p-6 max-w-5xl mx-auto font-poor-story">
       <h1 className="text-4xl font-bold text-center mb-6">Latest Blogs</h1>
       <div className="flex items-center justify-center min-h-screen gap-10">
       {/* flex items-center justify-center min-h-screen */}
@@ -66,3 +66,5 @@ export default function BlogShowcase() {
     </div>
   );
 }
+
+export default AllBlogs

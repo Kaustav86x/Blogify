@@ -109,7 +109,7 @@ const AboutAuthor = () => {
 
     <div className="flex flex-wrap gap-25 items-center text-black text-2xl font-poor-story">
       <a href="#">Home</a>
-      <button className='cursor-pointer' onClick={blogScrollToSection}>Blogs</button>
+      <button className='cursor-pointer' onClick={() => navigate('/blog/all-blogs')}>Blogs</button>
       <button className='cursor-pointer' onClick={aboutScrollToSection}>About</button>
       <button className='cursor-pointer' onClick={contactScrollToSection}>Contact</button>
     </div>
@@ -173,18 +173,23 @@ const AboutAuthor = () => {
 
 
 {/* recent blogs */}
-<div className="w-full px-4 py-10 flex flex-col items-center bg-sky-100" ref={blogSectionRef}>
+<div className="w-full px-4 py-15 flex flex-col items-center bg-sky-100" ref={blogSectionRef}>
   {/* Section Title */}
   <div className="text-black text-5xl font-normal font-'Poor_Story' mb-8 text-center">
     Recent blogs
   </div>
 
+  <div
+  className={`w-full max-w-4xl flex flex-col items-center gap-10 transition-all duration-700 ease-in-out transform origin-top ${
+    showMoreBlogs ? 'scale-y-100 opacity-100' : 'scale-y-0 opacity-100'
+  }`}
+>
   {/* Blog Section */}
-  <div className="w-full max-w-4xl flex flex-col items-center gap-10">
+  {/* <div className=""> */}
     {/* Blog Entry */}
     {blogs && blogs.length > 0 && 
      blogs
-    .slice(0, showMoreBlogs ? 5 : 2)
+    .slice(0, showMoreBlogs ? 3 : 2)
     .map((blog) => (
       <div
         key={blog._id}
@@ -211,6 +216,7 @@ const AboutAuthor = () => {
         </div>
       </div>
     ))}
+  {/* </div> */}
   </div>
 </div>
 
@@ -252,7 +258,7 @@ className="px-8 py-3 bg-sky-200 border border-black shadow-[inset_0px_4px_4px_0p
 </div>
 
 {/* kaustav's section */}
-<div className="flex flex-row w-full py-10">
+<div className="flex flex-row w-full">
   {/* Left section: 50% of screen */}
   <div className="w-1/2 h-[666px] relative">
   {/* Background Box */}
@@ -279,7 +285,7 @@ className="px-8 py-3 bg-sky-200 border border-black shadow-[inset_0px_4px_4px_0p
 
   {/* Right section: text content */}
   <div className="flex flex-col justify-center items-center w-[35%] px-6 space-y-10" ref={aboutSectionRef}>
-    <div className="text-black text-4xl font-'Poor_Story'">Hi, I’m Kaustav</div>
+    <div className="text-black text-4xl font-'Poor_Story'">Hi, I'm Kaustav</div>
     <div className="text-black text-3xl font-'Poor_Story'">
       A software engineer by profession and blogger by passion. I write on complex human thoughts
       and random topics people find “weird” and “different”.
@@ -293,16 +299,16 @@ className="px-8 py-3 bg-sky-200 border border-black shadow-[inset_0px_4px_4px_0p
 
 {/* things stir up my thoughts */}
 
-<div className="w-full px-4 py-10 flex flex-col items-center bg-sky-100">
+<div className="w-full px-4 py-15 flex flex-col items-center bg-sky-100">
 <div className="text-center justify-start text-black text-4xl font-normal font-'Poor_Story' mb-15">
   Every picture tells a story, tell me which one you like the most !
 </div>
 
-<div className="w-full flex flex-col justify-center items-center gap-20 transition-all duration-700 ease-in-out">
+<div className="w-full flex flex-col justify-center items-center gap-10 transition-all duration-700 ease-in-out">
   <div className='w-full flex flex-row justify-center gap-5'>
     <div className="flex flex-row justify-center gap-5">
     {[...Array(4)].map((_, i) => (
-    <img key={i} className="w-72 h-56 cursor-pointer" src={img6} />
+    <img key={i} className="w-72 h-56 cursor-pointer rounded-sm" src={img6} />
     ))}
     </div>
   </div>
@@ -310,36 +316,35 @@ className="px-8 py-3 bg-sky-200 border border-black shadow-[inset_0px_4px_4px_0p
   <div className='w-full flex flex-row justify-center gap-5'>
     <div className="flex flex-row justify-center gap-5">
     {[...Array(4)].map((_, i) => (
-    <img key={i} className="w-72 h-56 cursor-pointer" src={img6} />
+    <img key={i} className="w-72 h-56 cursor-pointer rounded-sm" src={img6} />
     ))}
     </div>
   </div>
 
-  {/* <div
+  <div
     className={`transition-all duration-700 ease-in-out overflow-hidden ${
       showMorePics ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'
     }`}
-  > */}
-  {showMorePics &&
+  > 
+  {/* {showMorePics && */}
   <>
   <div className='w-full flex flex-row justify-center gap-5'>
     <div className="flex flex-row justify-center gap-5">
     {[...Array(4)].map((_, i) => (
-    <img key={i} className="w-72 h-56 cursor-pointer" src={img6} />
+    <img key={i} className="w-72 h-56 cursor-pointer rounded-sm" src={img6} />
     ))}
     </div>
   </div>
 
-  <div className='w-full flex flex-row justify-center gap-5'>
+  <div className='w-full flex flex-row justify-center gap-5 mt-10'>
     <div className="flex flex-row justify-center gap-5">
     {[...Array(4)].map((_, i) => (
-    <img key={i} className="w-72 h-56 cursor-pointer" src={img6} />
+    <img key={i} className="w-72 h-56 cursor-pointer rounded-sm" src={img6} />
     ))}
     </div>
   </div>
   </>
-}
-{/* </div> */}
+</div>
 
   {/* toggle button */}
 <button onClick={() => setShowMorePics(!showMorePics)} 
@@ -353,7 +358,7 @@ className="px-8 py-3 bg-sky-200 border border-black shadow-[inset_0px_4px_4px_0p
 
 {/* contact me */}
 
-<div className="w-full px-4 py-10 flex flex-col items-center bg-sky-100 gap-15" ref={contactSectionRef}>
+<div className="w-full px-4 py-15 flex flex-col items-center bg-sky-100 gap-15" ref={contactSectionRef}>
   {/* Heading */}
   <div className="text-black text-5xl font-normal font-'Poor_Story' mb-8 text-center">
     Drop a thought, comment or anything you’d like to say!

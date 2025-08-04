@@ -7,6 +7,7 @@ import SignUp from './pages/SignUp'
 import Welcome from './pages/welcome'
 import AboutAuthor from './pages/AboutAuthor'
 import BlogDetails from './pages/BlogDetails'
+import AllBlogs from './pages/allBlogs'
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route path='/welcome' element={<Welcome/>}/>
         <Route path='/' element={<AboutAuthor/>}/>
         <Route path="/blog/:title" element={<BlogDetails/>}/>
+        <Route path="/blog/all-blogs" element={<AllBlogs/>}/>
       </Routes>
     </BrowserRouter>
   )
