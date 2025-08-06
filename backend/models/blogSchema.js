@@ -4,8 +4,8 @@ const Schema = mongoose.Schema
 const {Types} = mongoose
 
 const subHeadingSchema = new Schema({
-  title: { type: String, required: true }, // Subheading title
-  content: { type: String, required: true } // Content under subheading
+  title: { type: String, required: true } // Subheading title
+  //content: { type: String, required: true } // Content under subheading
 });
 
 const blogSchema = new Schema({
