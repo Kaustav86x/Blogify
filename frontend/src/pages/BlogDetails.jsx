@@ -47,6 +47,28 @@ const BlogDetails = () => {
     return time;
   }
 
+  const formatMainContent = (content, subHeadings) => {
+  if (!subHeadings || subHeadings.length === 0) return content;
+
+  let formatted = content;
+
+  subHeadings.forEach((sub) => {
+    const headingText = sub.heading; // ✅ Change this to match your object structure
+    if (typeof headingText === 'string') {
+      const escapedSub = headingText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(escapedSub, 'g');
+
+      formatted = formatted.replace(
+        regex,
+        `<br/><br/><strong>${headingText}</strong><br/><br/>`
+      );
+    }
+  });
+
+  return formatted;
+};
+
+
     useEffect(() => {
         axios.get(`http://localhost:8080/api/blog/${title}`)
         .then((res) => setBlog(res.data))
@@ -89,9 +111,17 @@ const BlogDetails = () => {
   </div>
 
   {/* Blog Content */}
-  <div className="text-justify text-black text-base md:text-lg leading-7 font-'Poor_Story'">
-    {blog.mainContent}
-  </div>
+  {/* {blog.mainContent && blog.subHeadings.length > 0 && 
+  blog.subHeadings.map((sub) => ( */}
+  <div className="text-justify text-black text-base md:text-lg leading-7 font-'Poor_Story'"
+  dangerouslySetInnerHTML={{
+    __html: formatMainContent(blog.mainContent, blog.subHeadings),
+  }}
+  />
+    {/* {blog.mainContent} */}
+  {/* </div> */}
+  {/* ))} */}
+  
 
   {/* Author Note */}
   <div className="mt-12 text-center text-black text-base md:text-xl font-normal font-'Poor_Story'">

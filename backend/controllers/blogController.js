@@ -6,7 +6,7 @@ const helper = require('../utility/helper')
 
 const createBlog = async(req, res) => {
 
-    const { title, mainContent, subHeadings, userId, tags } = req.body
+    const { title, content, userId, tags } = req.body
 
     try { 
         const findTitle = await Blog.findOne({title})
@@ -17,8 +17,9 @@ const createBlog = async(req, res) => {
         // creating a new blog
         const newBlog = await Blog.create({
             title, 
-            mainContent: mainContent || "",
-            subHeadings: subHeadings || [],
+            // mainContent: mainContent || "",
+            // subHeadings: subHeadings || [],
+            content, // this is Editor.js output
             userId, 
             tags
         })
