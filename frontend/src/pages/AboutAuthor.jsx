@@ -188,26 +188,27 @@ const AboutAuthor = () => {
   {/* <div className=""> */}
     {/* Blog Entry */}
     {blogs && blogs.length > 0 && 
-     blogs
-    .slice(0, showMoreBlogs ? 3 : 2)
-    .map((blog) => (
-      <div
-        key={blog._id}
-        className="w-full flex flex-row items-center gap-4 p-4 border border-gray-300 rounded-lg bg-sky-100 shadow-sm"
-      >
+     blogs.slice(0, 2).map((blog) => (
+    <div
+      key={blog._id}
+      className="w-full flex flex-row items-center gap-4 p-4 border border-gray-300 rounded-lg bg-sky-100 shadow-sm transition-all duration-500"
+    >
         <img
-          className="w-full max-w-sm h-auto object-cover rounded"
-          src={img3}  
-          alt="Blog thumbnail"
-        />
-        <div className='flex flex-col items-start justify-center gap-10 px-2'>
+        className="w-full max-w-sm h-auto object-cover rounded"
+        src={img3}
+        alt="Blog thumbnail"
+      />
+        <div className="flex flex-col items-start justify-center gap-10 px-2">
         <div className="text-black text-xl font-normal font-'Poor_Story' items-center">
           {new Date(blog.createdAt).toLocaleDateString()}  .  {EstimatedReadTime(blog.mainContent)} min read
         </div>
-        <div className="text-black text-4xl font-normal font-'Poor_Story' items-center cursor-pointer" onClick={() => {
-          const encodedTitle = encodeURIComponent(blog.title);
-          navigate(`/blog/${encodedTitle}`);
-        }}>
+        <div
+          className="text-black text-4xl font-normal font-'Poor_Story' items-center cursor-pointer"
+          onClick={() => {
+            const encodedTitle = encodeURIComponent(blog.title);
+            navigate(`/blog/${encodedTitle}`);
+          }}
+        >
           {blog.title}
         </div>
         <p className="text-black text-xl font-normal font-'Poor_Story' line-clamp-3">
@@ -216,7 +217,44 @@ const AboutAuthor = () => {
         </div>
       </div>
     ))}
-  {/* </div> */}
+
+  {/* 3rd Container */}
+  <div
+    className={`transition-all duration-700 ease-in-out overflow-hidden ${
+      showMoreBlogs ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'
+    }`}
+  >
+    {blogs && blogs.length > 0 && 
+     blogs.slice(2).map((blog) => (
+      <div
+        key={blogs[2]._id}
+        className="mt-6 w-full flex flex-row items-center gap-4 p-4 border border-gray-300 rounded-lg bg-sky-100 shadow-sm"
+      >
+        <img
+          className="w-full max-w-sm h-auto object-cover rounded"
+          src={img3}
+          alt="Blog thumbnail"
+        />
+        <div className="flex flex-col items-start justify-center gap-10 px-2">
+          <div className="text-black text-xl font-normal font-'Poor_Story' items-center">
+            {new Date(blogs[2].createdAt).toLocaleDateString()}  .  {EstimatedReadTime(blogs[2].mainContent)} min read
+          </div>
+          <div
+            className="text-black text-4xl font-normal font-'Poor_Story' items-center cursor-pointer"
+            onClick={() => {
+              const encodedTitle = encodeURIComponent(blogs[2].title);
+              navigate(`/blog/${encodedTitle}`);
+            }}
+          >
+            {blogs[2].title}
+          </div>
+          <p className="text-black text-xl font-normal font-'Poor_Story' line-clamp-3">
+            {blogs[2].mainContent}
+          </p>
+        </div>
+      </div>
+    ))}
+  </div>
   </div>
 </div>
 
