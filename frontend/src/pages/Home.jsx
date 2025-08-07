@@ -9,6 +9,7 @@ import img5 from '../assets/5th Image.png';
 import img6 from '../assets/6th Image.png';
 import { useRef } from 'react';
 import { toast, ToastContainer } from "react-toastify"
+import Footer from '../components/Footer';
 
 
 const Home = () => {
@@ -441,9 +442,7 @@ className="px-8 py-3 bg-sky-200 border border-black shadow-[inset_0px_4px_4px_0p
 
 <div className="w-11/12 flex flex-col h-0 border-t border-black ml-20"></div>
 
-<div className="w-full border-t border-black mt-10" />
-
-<span className='flex justify-center'>@Blogify. All rights reserved</span>
+<Footer/>
 
 </div>
     </>

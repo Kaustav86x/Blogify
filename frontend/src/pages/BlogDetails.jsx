@@ -11,6 +11,7 @@ import img4 from '../assets/4th Image.png';
 import img5 from '../assets/5th Image.png';
 import img6 from '../assets/6th Image.png';
 import { Link, useNavigate } from 'react-router-dom'
+import Footer from '../components/Footer'
 
 
 const BlogDetails = () => {
@@ -135,9 +136,8 @@ const BlogDetails = () => {
 
 <div className="w-11/12 flex flex-col h-0 border-t border-black ml-20"></div>
 
-<div className="w-full border-t border-black mt-10" />
+<Footer/>
 
-<span className='flex justify-center'>@Blogify. All rights reserved</span>
 </div>
     </>
   )

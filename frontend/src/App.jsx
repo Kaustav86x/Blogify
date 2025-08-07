@@ -5,9 +5,9 @@ import './App.css'
 import Blogs from './pages/allBlogs'
 import SignUp from './pages/SignUp'
 import Welcome from './pages/welcome'
-import AboutAuthor from './pages/AboutAuthor'
 import BlogDetails from './pages/BlogDetails'
 import AllBlogs from './pages/allBlogs'
+import Home from './pages/Home'
 
 
 function App() {
@@ -16,7 +16,7 @@ function App() {
       <Routes>
         <Route path='/sign-up' element={<SignUp/>}/>
         <Route path='/welcome' element={<Welcome/>}/>
-        <Route path='/' element={<AboutAuthor/>}/>
+        <Route path='/' element={<Home/>}/>
         <Route path="/blog/:title" element={<BlogDetails/>}/>
         <Route path="/blog/all-blogs" element={<AllBlogs/>}/>
       </Routes>
