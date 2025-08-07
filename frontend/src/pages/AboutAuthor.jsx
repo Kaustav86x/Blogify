@@ -11,7 +11,7 @@ import { useRef } from 'react';
 import { toast, ToastContainer } from "react-toastify"
 
 
-const AboutAuthor = () => {
+const Home = () => {
 
   const navigate = useNavigate();
 
@@ -450,4 +450,4 @@ className="px-8 py-3 bg-sky-200 border border-black shadow-[inset_0px_4px_4px_0p
   )
 }
 
-export default AboutAuthor
+export default Home
