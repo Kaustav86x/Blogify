@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import img1 from '../assets/1st Image.png';
 import img2 from '../assets/2nd Image.png';
@@ -10,11 +10,13 @@ import img6 from '../assets/6th Image.png';
 import { useRef } from 'react';
 import { toast, ToastContainer } from "react-toastify"
 import Footer from '../components/Footer';
+import { NavLink } from 'react-router-dom';
 
 
 const Home = () => {
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const blogSectionRef = useRef(null);
   const contactSectionRef = useRef(null);
@@ -28,9 +30,17 @@ const Home = () => {
     contactSectionRef.current.scrollIntoView({behavior: "smooth" });
   }
 
-  const aboutScrollToSection = () => {
-    aboutSectionRef.current.scrollIntoView({behavior: "smooth" });
-  }
+  useEffect(() => {
+    if (location.hash) {
+      const element = document.querySelector(location.hash);
+      if (element) {
+        // Delay the scroll to wait for page render
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }, 200);
+      }
+    }
+  }, [location]);
 
     useEffect(() => {
     window.scrollTo(0, 0);
@@ -96,11 +106,6 @@ const Home = () => {
     })
   },[]);
 
-  // const handleClick = () => {
-  //   const encodedTitle = encodeURIComponent(blog.title);
-  //   navigate(`/blogs/title/${encodedTitle}`);
-  // };
-
   return (
     <>
   <div className="min-h-screen w-full bg-sky-100">
@@ -111,8 +116,8 @@ const Home = () => {
     <div className="flex flex-wrap gap-25 items-center text-black text-2xl font-poor-story">
       <a href="#">Home</a>
       <button className='cursor-pointer' onClick={() => navigate('/blog/all-blogs')}>Blogs</button>
-      <button className='cursor-pointer' onClick={aboutScrollToSection}>About</button>
-      <button className='cursor-pointer' onClick={contactScrollToSection}>Contact</button>
+      <Link to='/#about' className='cursor-pointer'>About</Link>
+      <Link to='/#contact' className='cursor-pointer'>Contact</Link>
     </div>
   </div>
 </nav>
@@ -323,7 +328,7 @@ className="px-8 py-3 bg-sky-200 border border-black shadow-[inset_0px_4px_4px_0p
   </div>
 
   {/* Right section: text content */}
-  <div className="flex flex-col justify-center items-center w-[35%] px-6 space-y-10" ref={aboutSectionRef}>
+  <div className="flex flex-col justify-center items-center w-[35%] px-6 space-y-10" id='about' ref={aboutSectionRef}>
     <div className="text-black text-4xl font-'Poor_Story'">Hi, I'm Kaustav</div>
     <div className="text-black text-3xl font-'Poor_Story'">
       A software engineer by profession and blogger by passion. I write on complex human thoughts
@@ -397,7 +402,7 @@ className="px-8 py-3 bg-sky-200 border border-black shadow-[inset_0px_4px_4px_0p
 
 {/* contact me */}
 
-<div className="w-full px-4 py-15 flex flex-col items-center bg-sky-100 gap-15" ref={contactSectionRef}>
+<div className="w-full px-4 py-15 flex flex-col items-center bg-sky-100 gap-15" id='contact' ref={contactSectionRef}>
   {/* Heading */}
   <div className="text-black text-5xl font-normal font-'Poor_Story' mb-8 text-center">
     Drop a thought, comment or anything you’d like to say!

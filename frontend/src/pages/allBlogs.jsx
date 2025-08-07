@@ -6,6 +6,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
 import Footer from "../components/Footer";
+import { Link } from "react-router-dom";
 
 const AllBlogs = () => {
   const [blogs, setBlogs] = useState([]);
@@ -55,8 +56,8 @@ const AllBlogs = () => {
     <div className="flex flex-wrap gap-25 items-center text-black text-2xl font-poor-story">
       <button className='cursor-pointer' onClick={() => navigate('/')}>Home</button>
       <button className='cursor-pointer' onClick={() => navigate('/blog/all-blogs')}>Blogs</button>
-      <button className='cursor-pointer' onClick={aboutScrollToSection}>About</button>
-      <button className='cursor-pointer' onClick={contactScrollToSection}>Contact</button>
+      <Link to='/#about' className='cursor-pointer'>About</Link>
+      <Link to='/#contact' className='cursor-pointer'>Contact</Link>
     </div>
   </div>
   </nav>
