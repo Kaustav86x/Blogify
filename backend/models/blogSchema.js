@@ -12,13 +12,6 @@ const blogSchema = new Schema({
     type: String, 
     required: true 
   },
-  mainContent: { 
-    type: String,
-  },
-  subHeadings: {
-    type: [subHeadingSchema],
-    validate: [arr => arr.length <= 10, "Can't have more than 10 subheadings"]
-  },
   userId: {
     type: Types.ObjectId, ref: "User", 
     required: true
