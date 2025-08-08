@@ -5,6 +5,7 @@ import EditorJS from "@editorjs/editorjs";
 import Header from "@editorjs/header";
 import List from "@editorjs/list";
 import ImageTool from "@editorjs/image";
+import Code from "@editorjs/code"
 
 const CreateBlog = () => {
     
@@ -16,7 +17,34 @@ const CreateBlog = () => {
   const [loading, setLoading] = useState(false);
 
   const editorInstance = useRef(null);
-  
+
+  // editor js instance gets booted up, when the component is loaded !
+  useEffect(() => {
+    if(!editorInstance.current) {
+        editorInstance.current = new EditorJS({
+        holder: "editorjs",
+        tools: {
+            header: Header,
+            list: List,
+            code: Code,
+            image: {
+                class: ImageTool,
+                config: {
+                    endpoints: {
+                        byFile: "",  // backend endpoint for image uploads
+                        byUrl: ""  // backend endpoints for url uploads
+                    },
+                },
+            },
+        },
+    });
+  }
+
+  return () => {
+    editorInstance.current?.destroy();
+    editorInstance.current = null;
+  };
+}, [] );
 
   const handleSubmit = async (e) => {
   e.preventDefault();
@@ -27,7 +55,12 @@ const CreateBlog = () => {
         throw new Error("Please fill the mandatory fields")
       }
 
-      const response = await axios.post('', {
+      const saveData = await editorInstance.current.save();
+      console.log("blog Data:", saveData);
+
+      const response = await axios.post('http://localhost:8080/api/blog/create', {
+        title,
+        saveData,  // JSON resposne of editor js
       });
 
       if(response.status != 200) {
@@ -68,7 +101,7 @@ const CreateBlog = () => {
 <div className="w-full px-4 py-15 flex flex-col items-start bg-sky-100 gap-15">
     <div className="text-black text-5xl font-normal font-'Poor_Story' mb-8 text-center">
     Create Blog
-  </div>
+    </div>
 
   <div className="w-1/2 flex flex-col items-start gap-20">
     <label className="text-black text-xl font-'Poor_Story' mb-[-25px]" htmlFor="title">Title</label>
@@ -84,7 +117,7 @@ const CreateBlog = () => {
     <textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          className="w-full border border-black bg-white p-2 rounded h-40"
+          className="w-full border border-black bg-white p-2 rounded h-40" id='editorjs'
           required
     />
   </div>
