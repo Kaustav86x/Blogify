@@ -7,7 +7,7 @@ const router = express.Router()
 // router.use(requireAuth)
 
 // routes
-// router.post('/create', createBlog)
+router.post('/create', createBlog)
 router.get('/blogs', getAllBlog)
 // router.get('/:id', getBlogById)
 router.get('/:title', getBlogByName) // get blog by title

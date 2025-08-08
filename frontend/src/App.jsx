@@ -1,13 +1,10 @@
 import { BrowserRouter, useRoutes, Routes, Route} from 'react-router-dom'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import Blogs from './pages/allBlogs'
 import SignUp from './pages/SignUp'
 import Welcome from './pages/welcome'
 import BlogDetails from './pages/BlogDetails'
 import AllBlogs from './pages/allBlogs'
 import Home from './pages/Home'
+import CreateBlog from './pages/admin/CreateBlog'
 
 
 function App() {
@@ -19,6 +16,7 @@ function App() {
         <Route path='/' element={<Home/>}/>
         <Route path="/blog/:title" element={<BlogDetails/>}/>
         <Route path="/blog/all-blogs" element={<AllBlogs/>}/>
+        <Route path="/admin/create-blog" element={<CreateBlog/>}/>
       </Routes>
     </BrowserRouter>
   )
