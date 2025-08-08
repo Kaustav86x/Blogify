@@ -10,10 +10,10 @@ const router = express.Router()
 // router.use(requireAuth)
 
 // routes
-router.post('/api/signup', upload.single('profilePicture'), SignUp)
-router.post('/api/login', login)
-router.post('/api/forget-password', protect, forgetPassword)
-router.post('/api/verify-user/:token', protect, verifySignUp)
-router.post('/api/reset-password/:token', protect, resetPassword)
+router.post('/signup', upload.single('profilePicture'), SignUp)
+router.post('/login', login)
+router.post('/forget-password', protect, forgetPassword)
+router.post('/verify-user/:token', protect, verifySignUp)
+router.post('/reset-password/:token', protect, resetPassword)
 
 module.exports = router

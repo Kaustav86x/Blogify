@@ -38,7 +38,7 @@ app.use((req, res, next) => {
 })
 
 // routes
-// app.use('/api/users', userRoutes)
+app.use('/api/users', userRoutes)
 app.use('/api/blog', blogRoutes);
 app.use('/api/contact', contactRoutes);
 

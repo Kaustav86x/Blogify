@@ -14,7 +14,7 @@ const SignUp = async(req, res) => {
     var profilePictureUrl = ''
     var profilePictureId = ''
         
-    const {name, email, password} = req.body
+    const {name, email, password, profilePicture} = req.body
 
     try {  
         
@@ -55,7 +55,16 @@ const SignUp = async(req, res) => {
         const hash = await bcrypt.hash(password,salt)
 
         // returning the user along with the profilepicture
-        const user = await User.create({email, password: hash, name, profilePictureUrl: profilePictureUrl, profilePictureId: profilePictureId})
+        const user = await User.create({
+            name, 
+            email, 
+            password: hash, 
+            profilePicture: {
+                url: profilePicture?.url || "", 
+                id: profilePicture?.id || ""
+            }
+        });
+
         console.log(user)
 
         // token without expiration time
