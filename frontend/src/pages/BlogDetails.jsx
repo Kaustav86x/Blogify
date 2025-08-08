@@ -82,16 +82,16 @@ const BlogDetails = () => {
     <div className="min-h-screen w-full bg-sky-100">
   <ToastContainer/>
   <nav className="w-full px-4 shadow-md bg-sky-100 py-10">
-  <div className="max-w-[1356px] w-full mx-auto flex flex-wrap items-center justify-center gap-y-4">
-
-    <div className="flex flex-wrap gap-25 items-center text-black text-2xl font-poor-story">
-      <button className='cursor-pointer' onClick={() => navigate('/')}>Home</button>
-      <button className='cursor-pointer' onClick={blogScrollToSection}>Blogs</button>
-      <button className='cursor-pointer' onClick={aboutScrollToSection}>About</button>
-      <button className='cursor-pointer' onClick={contactScrollToSection}>Contact</button>
+    <div className="max-w-[1356px] w-full mx-auto flex flex-wrap items-center justify-center gap-y-4">
+  
+      <div className="flex flex-wrap gap-25 items-center text-black text-2xl font-poor-story">
+        <a href="#">Home</a>
+        <button className='cursor-pointer' onClick={() => navigate('/blog/all-blogs')}>Blogs</button>
+        <Link to='/#about' className='cursor-pointer'>About</Link>
+        <Link to='/#contact' className='cursor-pointer'>Contact</Link>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
 <div className="w-11/12 flex flex-col h-0 border-t border-black ml-20 mt-10"></div>
 
