@@ -22,7 +22,7 @@ const blogSchema = new Schema({
   },
   tags: {
     type: Array,
-    required: true
+    // required: true
   },
   content: {
   type: Object, // Stores the Editor.js output (JSON)
