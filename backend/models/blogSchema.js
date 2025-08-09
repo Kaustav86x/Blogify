@@ -12,10 +12,10 @@ const blogSchema = new Schema({
     type: String, 
     required: true 
   },
-  userId: {
+  /*userId: {
     type: Types.ObjectId, ref: "User", 
     required: true
-  },
+  },*/
   likes: {
     type: Number, 
     default: 0

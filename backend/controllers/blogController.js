@@ -6,10 +6,14 @@ const helper = require('../utility/helper')
 
 const createBlog = async(req, res) => {
 
-    const { title, content, tags } = req.body
+    const { title, content, tags } = req.body;
 
     try { 
         const findTitle = await Blog.findOne({title})
+
+        if(findTitle) {
+            throw new Error('Blog title already exists !');
+        }
 
         // creating a new blog
         const newBlog = await Blog.create({
