@@ -5,7 +5,8 @@ import EditorJS from "@editorjs/editorjs";
 import Header from "@editorjs/header";
 import List from "@editorjs/list";
 import ImageTool from "@editorjs/image";
-import Code from "@editorjs/code"
+import Code from "@editorjs/code";
+import axios from 'axios';
 
 const CreateBlog = () => {
     
@@ -40,10 +41,17 @@ const CreateBlog = () => {
     });
   }
 
+  // return () => {
+  //   editorInstance.current?.destroy();
+  //   editorInstance.current = null;
+  // };
   return () => {
-    editorInstance.current?.destroy();
-    editorInstance.current = null;
-  };
+      // Destroy only if instance exists
+      if (editorInstance.current && typeof editorInstance.current.destroy === "function") {
+        editorInstance.current.destroy();
+        editorInstance.current = null;
+      }
+    };
 }, [] );
 
   const handleSubmit = async (e) => {
@@ -117,7 +125,7 @@ const CreateBlog = () => {
     <textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          className="w-full border border-black bg-white p-2 rounded h-40" id='editorjs'
+          className="w-full border border-black bg-white p-2 rounded h-40" id="editorjs"
           required
     />
   </div>

@@ -88,18 +88,45 @@ const Home = () => {
     }
   }
 
-  const EstimatedReadTime = (content) => {
-    const wordsPerMinute = 200; // average for an adult
-    const words = content.trim().split(/\s+/).length;
-    const time = Math.ceil(words / wordsPerMinute)
-    return time;
-  }
+  // const EstimatedReadTime = (content) => {
+  //   const wordsPerMinute = 200; // average for an adult
+  //   const words = content.trim().split(/\s+/).length;
+  //   const time = Math.ceil(words / wordsPerMinute)
+  //   return time;
+  // }
+
+  // convert content to html
+  const convertContentToHtml = (blocks) => {
+  return blocks.map((block, index) => {
+    switch (block.type) {
+      case 'header':
+        const H = `h${block.data.level}`;
+        return <H key={index}>{block.data.text}</H>;
+
+      case 'paragraph':
+        return <p key={index}>{block.data.text}</p>;
+
+      case 'image':
+        return (
+          <div key={index}>
+            <img
+              src={block.data.file.url}
+              alt={block.data.caption || "Image"}
+            />
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  });
+};
 
   useEffect(() => {
     axios.get('http://localhost:8080/api/blog/blogs')
     .then((res) => {
       setBlogs(res.data);
-      // console.log(res.data[0])
+      //console.log(res.data);
     }) 
     .catch((err) => {
       console.log(err);
@@ -185,14 +212,11 @@ const Home = () => {
     Recent blogs
   </div>
 
-  <div
+  {/* <div
   className={`w-full max-w-4xl flex flex-col items-center gap-10 transition-all duration-700 ease-in-out transform origin-top ${
     showMoreBlogs ? 'scale-y-100 opacity-100' : 'scale-y-0 opacity-100'
   }`}
 >
-  {/* Blog Section */}
-  {/* <div className=""> */}
-    {/* Blog Entry */}
     {blogs && blogs.length > 0 && 
      blogs.slice(0, 2).map((blog) => (
     <div
@@ -205,9 +229,6 @@ const Home = () => {
         alt="Blog thumbnail"
       />
         <div className="flex flex-col items-start justify-center gap-10 px-2">
-        <div className="text-black text-xl font-normal font-'Poor_Story' items-center">
-          {new Date(blog.createdAt).toLocaleDateString()}  .  {EstimatedReadTime(blog.mainContent)} min read
-        </div>
         <div
           className="text-black text-4xl font-normal font-'Poor_Story' items-center cursor-pointer"
           onClick={() => {
@@ -224,7 +245,6 @@ const Home = () => {
       </div>
     ))}
 
-  {/* 3rd Container */}
   <div
     className={`transition-all duration-700 ease-in-out overflow-hidden ${
       showMoreBlogs ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'
@@ -261,7 +281,35 @@ const Home = () => {
       </div>
     ))}
   </div>
-  </div>
+
+  </div> */}
+  {blogs && blogs.length > 0 && 
+   blogs.slice(0, 2).map((blog) => (
+    <div
+      key={blog._id}
+      className="w-full flex flex-row items-center gap-4 p-4 border border-gray-300 rounded-lg bg-sky-100 shadow-sm transition-all duration-500"
+    >
+        <img
+        className="w-full max-w-sm h-auto object-cover rounded"
+        src={img3}
+        alt="Blog thumbnail"
+      />
+        <div className="flex flex-col items-start justify-center gap-10 px-2">
+        <div
+          className="text-black text-4xl font-normal font-'Poor_Story' items-center cursor-pointer"
+          onClick={() => {
+            const encodedTitle = encodeURIComponent(blog.title);
+            navigate(`/blog/${encodedTitle}`);
+          }}
+        >
+          {blog.title}
+        </div>
+        <p className="text-black text-xl font-normal font-'Poor_Story' line-clamp-3">
+          {convertContentToHtml(blog.content.blocks)}
+        </p>
+        </div>
+      </div>
+  ))}
 </div>
 
 {blogs && blogs.length > 2 && (
