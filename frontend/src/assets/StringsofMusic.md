@@ -1,4 +1,4 @@
-## Strings of Music
+**Strings of Music**
 
 
 The way music connects dots is really fascinating, no ?? I mean imagine listening to a song at a certain point of your life, particularly a moment to be cherished in the future, a moment to be remembered for a long time, surprisingly makes it better and believe me....I've had plenty of experiences like that, haha !!
