@@ -14,6 +14,8 @@ import Footer from '../components/Footer';
 import { NavLink } from 'react-router-dom';
 import Markdown from 'react-markdown';
 import strOfMusic from '../assets/StringsofMusic.md?raw';
+import TheCure from '../assets/TheCure.md?raw';
+import ArtKills from '../assets/ArtKills.md?raw';
 import remarkGfm from 'remark-gfm';
 
 // const Marked = require('react-markdown');
@@ -94,6 +96,8 @@ const Home = () => {
     }
   }
 
+  // const blogPreview({ content }) => {}
+
   // const EstimatedReadTime = (content) => {
   //   const wordsPerMinute = 200; // average for an adult
   //   const words = content.trim().split(/\s+/).length;
@@ -115,6 +119,12 @@ const Home = () => {
 //   })
 //   }, [])
 // }, [] ); 
+
+const strsOfBlogs = [
+  strOfMusic,
+  TheCure,
+  ArtKills
+]
 
   return (
     <>
@@ -195,26 +205,17 @@ const Home = () => {
     Recent blogs
   </div>
 
- <div className='w-10/11 flex flex-row justify-center gap-10 mb-10'>
-  {/* 1st div */}
-  <div className='w-1/3 flex flex-col gap-10'>
+<div className='w-10/11 flex flex-row justify-center gap-10 mb-10'>
+  
+{strsOfBlogs.length > 0 && strsOfBlogs.map((blogContent, index) => (
+<div className='w-1/3 flex flex-col gap-10'>
   <ReactMarkdown remarkPlugins={[remarkGfm]} >
-    {strOfMusic}
+    {blogContent}
   </ReactMarkdown>
-  </div>
-  {/* 2nd div */}
-  <div className='w-1/3 flex flex-col gap-10'>
-  <ReactMarkdown remarkPlugins={[remarkGfm]} >
-    {strOfMusic}
-  </ReactMarkdown>
-  </div>
-  {/* 3rd div */}
-  <div className='w-1/3 flex flex-col gap-10'>
-  <ReactMarkdown remarkPlugins={[remarkGfm]} >
-    {strOfMusic}
-  </ReactMarkdown>
-  </div>
-  </div>
+</div>
+))}
+
+</div>
 
 </div>
 
@@ -339,7 +340,7 @@ const Home = () => {
 
   {/* toggle button */}
 <button onClick={() => setShowMorePics(!showMorePics)} 
-className="px-8 py-3 bg-sky-200 border border-black shadow-[inset_0px_4px_4px_0px_rgba(0,0,0,0.25)] text-lg mx-auto block cursor-pointer">
+className="px-8 py-3 bg-sky-200 border border-black shadow-md text-lg mx-auto block cursor-pointer">
   {showMorePics ? 'Show Less' : 'Explore More'}
 </button>
 </div>
@@ -386,7 +387,7 @@ className="px-8 py-3 bg-sky-200 border border-black shadow-[inset_0px_4px_4px_0p
   </div>
 
   {/* Submit Button */}
-  <button className="mt-8 px-10 py-1 bg-sky-200 border border-black shadow-[inset_0px_4px_4px_0px_rgba(0,0,0,0.25)] text-lg cursor-pointer" onClick={handleSubmit} disabled={loading}>
+  <button className="mt-8 px-10 py-1 bg-sky-200 border border-black shadow-md text-lg cursor-pointer" onClick={handleSubmit} disabled={loading}>
     {loading ? `Loading...` : `Submit`}
   </button>
 </div>
