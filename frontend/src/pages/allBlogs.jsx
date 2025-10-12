@@ -87,8 +87,8 @@ const AllBlogs = () => {
 
 
     <div className="p-6 max-w-5xl mx-auto font-poor-story">
-      <h1 className="text-4xl font-bold text-center mb-6">Blogs</h1>
-      <div className="flex items-center justify-center min-h-[350px] gap-10">
+      <h1 className="text-4xl font-bold text-center mb-10">Blogs</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 w-full px-4 mb-10">
         {SlugBlogs.length > 0 &&
           SlugBlogs.map((blogContent, index) => (
             <motion.div 
@@ -97,23 +97,31 @@ const AllBlogs = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <Card className="rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition duration-30 relative blog">
-                <CardBody className="p-4 blogBody">
-                  <div className='w-full flex flex-col gap-10' key={blogContent.slug}>
-                    <ReactMarkdown rehypePlugins={[[rehypeRaw], [rehypeSanitize, schema]]} >
-                      {stripHtml(blogContent.content).slice(0, NoOfChar) + (stripHtml(blogContent.content).length > NoOfChar ? '...' : '')}
-                    </ReactMarkdown>
-                    {(SlugBlogs.length > 0 && SlugBlogs.some(blog => blog.content === blogContent.content)) ? (
-                      <div className="cursor-pointer relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-black after:transition-all after:duration-300 hover:after:w-full font-bold" >
-                      <Link to={`/blog/${SlugBlogs.find(blog => blog.content === blogContent.content).slug}`} >Read More →</Link>
-                    </div>
-                    ) : (
-                      <div className='cursor-pointer hover:underline font-bold' >
-                      </div>
-                    )
-                    }
-                  </div>
-                </CardBody>
+              <Card className="rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300 relative blog flex flex-col justify-between h-full max-h-[450px]">
+                <CardBody className="p-4 flex flex-col justify-between flex-grow">
+        <div className="flex flex-col gap-6 flex-grow">
+          <ReactMarkdown rehypePlugins={[[rehypeRaw], [rehypeSanitize, schema]]}>
+            {stripHtml(blogContent.content).slice(0, NoOfChar) +
+              (stripHtml(blogContent.content).length > NoOfChar ? "..." : "")}
+          </ReactMarkdown>
+        </div>
+
+        {SlugBlogs.length > 0 &&
+        SlugBlogs.some((blog) => blog.content === blogContent.content) ? (
+          <div className="cursor-pointer relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-black after:transition-all after:duration-300 hover:after:w-full font-bold mt-4">
+            <Link
+              to={`/blog/${
+                SlugBlogs.find((blog) => blog.content === blogContent.content)
+                  .slug
+              }`}
+            >
+              Read More →
+            </Link>
+          </div>
+        ) : (
+          <div className="cursor-pointer hover:underline font-bold"></div>
+        )}
+      </CardBody>
               </Card>
             </motion.div>
           ))
