@@ -7,10 +7,16 @@ import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
+import { SlugBlogs } from "../helper/TitleToSlug";
+import remarkGfm from 'remark-gfm';
+import rehypeRaw from "rehype-raw";
+import rehypeSanitize from "rehype-sanitize";
+import { defaultSchema } from 'hast-util-sanitize';
+import DOMPurify from 'dompurify';
+import ReactMarkdown from 'react-markdown';
 
 const AllBlogs = () => {
   const [blogs, setBlogs] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
   
@@ -34,28 +40,43 @@ const AllBlogs = () => {
       window.scrollTo(0, 0);
     }, []);
 
-  useEffect(() => {
-    axios.get("http://localhost:8080/api/blog/blogs") // Replace with actual API URL
-      .then((response) => {
-        setBlogs(response.data)
-        // console.log(response.data)
-      })
-      .catch((error) => {
-        console.error("Error fetching blogs:", error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
+  // useEffect(() => {
+  //   const blogData = SlugBlogs.find(blog => blog.slug === slug);
+    
+  //   if(!blogData) {
+  //     console.log("No blog found for the slug:", slug);
+  //     return;
+  //   }
+  //   const title = blogData.title;
+  //   const content = blogData.content;
+  //   setBlogs(content);
+  // }, [slug]);
 
+  const schema = {
+        ...defaultSchema,
+        attributes: {
+          ...defaultSchema.attributes,
+          span: [...(defaultSchema.attributes?.span || []), "style"],
+        }
+      };
+
+  const NoOfChar = 200;
+
+  const stripHtml = ( content ) => {
+  const cleanHtml = DOMPurify.sanitize(content);
+  const tmp = document.createElement("div");
+  tmp.innerHTML = cleanHtml;
+  return tmp.textContent || tmp.innerText || "";
+}
+      
   return (
     <div className="min-h-screen w-full bg-sky-100">
     <nav className="w-full px-4 shadow-md bg-sky-100 py-10">
     <div className="max-w-[1356px] w-full mx-auto flex flex-wrap items-center justify-center gap-y-4">
 
     <div className="flex flex-wrap gap-25 items-center text-black text-2xl font-poor-story">
-      <button className='cursor-pointer' onClick={() => navigate('/')}>Home</button>
-      <button className='cursor-pointer' onClick={() => navigate('/blog/all-blogs')}>Blogs</button>
+      <Link to='/' className='cursor-pointer'>Home</Link>
+      <Link to='/blogs' className='cursor-pointer'>Blogs</Link>
       <Link to='/#about' className='cursor-pointer'>About</Link>
       <Link to='/#contact' className='cursor-pointer'>Contact</Link>
     </div>
@@ -66,50 +87,37 @@ const AllBlogs = () => {
 
 
     <div className="p-6 max-w-5xl mx-auto font-poor-story">
-      <h1 className="text-4xl font-bold text-center mb-6">Latest Blogs</h1>
+      <h1 className="text-4xl font-bold text-center mb-6">Blogs</h1>
       <div className="flex items-center justify-center min-h-[350px] gap-10">
-        {loading ? (
-          Array.from({ length: 6 }).map((_, index) => (
-            <Placeholder key={index} className="h-60 w-full rounded-lg" />
-          ))
-        ) : (
-          blogs.map((blog) => (
+        {SlugBlogs.length > 0 &&
+          SlugBlogs.map((blogContent, index) => (
             <motion.div 
-              key={blog._id} 
+              key={index} 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
               <Card className="rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition duration-30 relative blog">
                 <CardBody className="p-4 blogBody">
-                  <h2 className="text-xl font-semibold mb-2 title">{blog.title}</h2>
-                  { !blog.mainContent ? (
-                    <div className="flex justify-center items-center text-black">
-                      <div>
-                        {blog.subHeadings.map((sub, index) => (
-                          <div key={index}>
-                            <h1 className="col-span-2 text-xl font-semibold mb-2 title">{sub.title}</h1>
-                            <div className="text-gray-600 col-span-2 line-clamp-3 content">{sub.content}</div>
-                          </div>
-                        ))}
-                      </div>
+                  <div className='w-full flex flex-col gap-10' key={blogContent.slug}>
+                    <ReactMarkdown rehypePlugins={[[rehypeRaw], [rehypeSanitize, schema]]} >
+                      {stripHtml(blogContent.content).slice(0, NoOfChar) + (stripHtml(blogContent.content).length > NoOfChar ? '...' : '')}
+                    </ReactMarkdown>
+                    {(SlugBlogs.length > 0 && SlugBlogs.some(blog => blog.content === blogContent.content)) ? (
+                      <div className="cursor-pointer relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-black after:transition-all after:duration-300 hover:after:w-full font-bold" >
+                      <Link to={`/blog/${SlugBlogs.find(blog => blog.content === blogContent.content).slug}`} >Read More →</Link>
                     </div>
-                    ) : (<div className="text-gray-600 line-clamp-3 content ">{blog.mainContent}</div>)}
-                  {/* <a href={`/blog/${blog._id}`} className="text-blue-500 mt-2 inline-block">Read More</a> */}
+                    ) : (
+                      <div className='cursor-pointer hover:underline font-bold' >
+                      </div>
+                    )
+                    }
+                  </div>
                 </CardBody>
               </Card>
-              <div className="flex flex-row absolute cursor-pointer ml-3" onClick={() => {
-                {
-                const encodedTitle = encodeURIComponent(blog.title);
-                navigate(`/blog/${encodedTitle}`);
-                }
-              }}>
-                  <img src="" alt=""></img>
-                <div className="">Read More</div>
-              </div>
             </motion.div>
           ))
-        )}
+        }
       </div>
     </div>
 
