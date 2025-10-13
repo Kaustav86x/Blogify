@@ -1,0 +1,44 @@
+<br>
+
+# **Invisible**
+<br>
+<br>
+
+This isn’t just a story. It’s not a cry for help. It’s not even mine alone. This is a voice — raw, quiet, unpolished — echoing the thoughts of many who sit quietly at the back, unnoticed. If you’ve ever felt unseen in a room full of people, if your presence has ever felt like a shadow fading behind louder footsteps — this is for you. For the unheard, the uninvited, the misfit souls who did everything to belong and still ended up invisible. I don’t claim to have answers. But maybe, just maybe, you’ll see a piece of yourself in these words.
+<br>
+<br>
+When I was a child — or maybe just too young to understand the weight of human complexities — life felt simpler. I had friends. I fought with them. Laughed with them. Hung out like the world outside our little bubble didn’t exist. It was uncomplicated, innocent — untouched by the quiet cruelty of being “different.” But as the years went by, things began to change. The world slowly revealed its layers. I wasn’t particularly good at anything, even from the start. I didn’t stand out — unless it was to be pointed at, laughed at, or pushed aside. My appearance became a punchline. My silence became space others filled with their own noise. I don’t remember the exact moment I started feeling like a misfit. Maybe it was when I began retracing my steps, realizing how none of my choices ever led me where I thought they would. It wasn’t one mistake — it was the slow accumulation of wrong turns and unanswered questions. And somewhere along that journey, I found comfort in things others called melancholy — poetry, coffee, and cigarettes. They didn’t ask anything of me. They just… existed. And I surrendered. That’s when I began to see it — the void. The stone kept rolling. Days turned to months, years passed like smoke slipping through fingers. And no matter how hard I tried, I couldn’t shake the feeling — the void was born.
+<br>
+<br>
+Deep, dark, and echoing with the howls of some unknown creature slicing through the air. I think no one is insane enough to peek inside, or maybe no one has the courage to. No one ever looked into the abyss and told me, "You are something." No one ever asked me my favorite song, my favorite food, my favorite color, my favorite film. Someone could have asked. Someone, while I was still waiting… patiently waiting for a knock on the door. But today, I no longer have the answers. I no longer care if someone asks. Maybe I lost them. Or maybe… I was never meant to have them. Maybe I was different. Maybe I never had that “x-factor” that makes someone say hi and stay. Lost in a crowd of ordinary happy people, I kept hearing: “All this… just because of a girl? Hahaha.” And I laughed with them. But for a moment, I couldn’t hear my voice — it was drowned out by theirs. And in the next moment, my voice was the only thing echoing. I was in a room. Wait — the people were still talking… but I could no longer hear them. All I could hear was my own remorseful tone. I wasn’t sad. But I don’t know why I was screaming. 
+<br>
+<br>
+I never got the answer.
+<br>
+<br>
+Believe me, readers — I tried. I tried to be normal. I tried to blend in. I tried to mirror them, just for someone to notice me. But the clock never waited. The world never stopped to look back. Eventually, I’ve done it now. No, don’t get me wrong. I didn’t become like them — I became me. An absurd entity to the outside world. A glitch in the matrix of happy routines and everyday conversations. I no longer seek human connection. I no longer dream of a woman by my side. I’ve made peace with the idea that I can’t afford those things. And whenever I say this, people still laugh, they don’t realize the truth. It was never about a particular person. It’s about the defeat of effort — the crushing silence that follows countless failed attempts to connect. To simply matter. Shallow? Maybe, to those who never had to try so hard to be seen. But not for the ones like me — the ones whose efforts vanished into thin air. The ones who weren’t worthy enough to be peeked into — because the darkness inside them might just be addicting… or too terrifying.
+<br>
+<br>
+This is what I am. This is who I’ve become. There’s no war anymore. No inner conflict. Just this version of me — standing guard at the doors of my own solitude. Maybe it’s this “me” that’s keeping the other “me” from reaching out for that human touch I’ve craved for so long. Maybe it’s not a conflict anymore because the other “me” doesn’t exist. With all these unsolved equations rattling in my head, with all the misaligned paths leading nowhere, I know now — this is not who I am. This is what I am.
+<br>
+<br>
+Invisibility doesn’t always come in silence. Sometimes it comes in the form of a question —
+“What do you bring to the table?” And if your answer isn’t what they expect, congratulations — you’re invisible. It’s strange how much value is placed on “presence” — but only the kind they find useful, desirable, entertaining. Some people just walk into a room and become the moment. Others — like me — try so hard to be part of it, only to become a footnote. It’s not that people don’t talk to us. It’s just that whether we’re there or not doesn’t make a difference.
+<br>
+<br>
+Now, I’m saturated with my own presence. Not lonely — just full. Full of thoughts, reflections, echoes that no longer scare me. I’ve made peace with the silence inside. There are no enemies left — not in the world, not in me. Just quiet. Just stillness. Just… me.
+<br>
+<br>
+This isn’t just about me.
+<br>
+<br>
+This is for every person who’s ever sat at the edge of a crowd, smiled at the right times, spoke when they were supposed to — and still felt like air. It’s for those who tried — not to be loud, not to be perfect — but simply to be seen. And when the world failed to look, they turned inward, slowly fading into themselves. I am not just telling my story. I am speaking for all of us who live in the margins — the invisible ones. You are not alone. You were never alone.
+<br>
+<br>
+Maybe I was never meant to stand out. Maybe invisibility wasn’t something that happened to me — maybe it’s something I became. 
+<br>
+<br>
+But if these words reached you, even for a fleeting moment, then maybe — just maybe — I wasn’t so invisible after all. 
+<br>
+<br>
+And neither are you.
