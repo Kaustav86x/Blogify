@@ -1,41 +1,33 @@
-import React, { useEffect, useState } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import axios from 'axios';
 import img1 from '../assets/1st Image.png';
 import img2 from '../assets/2nd Image.png';
-import img3 from '../assets/3rd Image.png';
 import img4 from '../assets/4th Image.png';
 import img5 from '../assets/5th Image.png';
-import img6 from '../assets/6th Image.png';
 import { useRef } from 'react';
 import { toast, ToastContainer } from "react-toastify";
 import ReactMarkdown from 'react-markdown';
 import Footer from '../components/Footer';
-import { NavLink } from 'react-router-dom';
-import Markdown from 'react-markdown';
-import strOfMusic from '../assets/StringsofMusic.md?raw';
-import TheCure from '../assets/TheCure.md?raw';
-import ArtKills from '../assets/ArtKills.md?raw';
-import remarkGfm from 'remark-gfm';
-
-// const Marked = require('react-markdown');
+import rehypeRaw from "rehype-raw";
+import rehypeSanitize from "rehype-sanitize";
+import { defaultSchema } from 'hast-util-sanitize';
+import DOMPurify from 'dompurify';
+import { SlugBlogs } from '../helper/TitleToSlug';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import RandomImage from '../components/RandomImage';
+import ScrollToTopButton from '../components/ScrollToTop';
+import validator from 'validator';
+import Navbar from '../components/navbar';
 
 const Home = () => {
 
-  const navigate = useNavigate();
   const location = useLocation();
 
   const blogSectionRef = useRef(null);
   const contactSectionRef = useRef(null);
   const aboutSectionRef = useRef(null);
-
-  const blogScrollToSection = () => {
-    blogSectionRef.current.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const contactScrollToSection = () => {
-    contactSectionRef.current.scrollIntoView({behavior: "smooth" });
-  }
 
   useEffect(() => {
     if (location.hash) {
@@ -53,15 +45,20 @@ const Home = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const[blogs, setBlogs] = useState(null);
+  useEffect(() => {
+    AOS.init({ 
+      duration: 1400, 
+      once: true 
+    });
+      AOS.refresh();
+  }, []);
+
+  // const[blogs, setBlogs] = useState(null);
   const[name, setName] = useState("");
   const[email, setEmail] = useState("");
   const[message, setMessage] = useState("");
-  const [showMoreBlogs, setShowMoreBlogs] = useState(false);
-  const [showMorePics, setShowMorePics] = useState(false);
 
   const [loading, setLoading] = useState(false);
-  const [content, setContent] = useState("");
 
   const handleSubmit = async (e) => {
   e.preventDefault();
@@ -71,6 +68,12 @@ const Home = () => {
       if(!name || !email ) {
         throw new Error("Please fill the mandatory fields")
       }
+
+      if(validator.isEmail(email) === false) {
+        throw new Error("Please enter a valid email address")
+      }
+
+
 
       const response = await axios.post('http://localhost:8080/api/contact/contact-us', {
         name,
@@ -90,63 +93,51 @@ const Home = () => {
       await new Promise((resolve) => setTimeout(resolve, 2000))
     }
     catch(err) {
-      toast.error(err.message)
+      // if(err.response && err.response.data && err.response.data.message) 
+        // {
+        toast.error(err.message)
+        // return;
+      // }
     } finally {
       setLoading(false);
     }
   }
 
-  // const blogPreview({ content }) => {}
+const NoOfChar = 200;
 
-  // const EstimatedReadTime = (content) => {
-  //   const wordsPerMinute = 200; // average for an adult
-  //   const words = content.trim().split(/\s+/).length;
-  //   const time = Math.ceil(words / wordsPerMinute)
-  //   return time;
-  // }
+const stripHtml = ( content ) => {
+  const cleanHtml = DOMPurify.sanitize(content);
+  const tmp = document.createElement("div");
+  tmp.innerHTML = cleanHtml;
+  return tmp.textContent || tmp.innerText || "";
+}
 
-//   useEffect(() => {
-//     import('../assets/StringsofMusic.md?raw').then(res => {
-//     fetch(res.default)
-//     .then(response => response.text())
-//   .then(markdownResult => 
-//     {
-//       console.log(markdownResult); // checking if the result is coming or not !
-//       setContent(markdownResult);
-//     })
-//   .catch(error => {
-//     console.log(error);
-//   })
-//   }, [])
-// }, [] ); 
+// sorting the blogs based on publish date
+SlugBlogs.sort((a,b) => b.publishDate - a.publishDate);
+// console.log(SlugBlogs);
 
-const strsOfBlogs = [
-  strOfMusic,
-  TheCure,
-  ArtKills
-]
+const schema = {
+      ...defaultSchema,
+      attributes: {
+        ...defaultSchema.attributes,
+        span: [...(defaultSchema.attributes?.span || []), "style"],
+      }
+    };
 
   return (
     <>
-  <div className="min-h-screen w-full bg-sky-100">
   <ToastContainer/>
-  <nav className="w-full px-4 shadow-md bg-sky-100 py-10">
-  <div className="max-w-[1356px] w-full mx-auto flex flex-wrap items-center justify-center gap-y-4">
+  <div className='bg-sky-100'>
+  <div className="min-h-screen w-full bg-sky-100">
+  
+  <Navbar/>
 
-    <div className="flex flex-wrap gap-25 items-center text-black text-2xl font-poor-story">
-      <a href="#">Home</a>
-      {/* <button className='cursor-pointer' onClick={() => navigate('/blog/all-blogs')}>Blogs</button> */}
-      <Link to='/#about' className='cursor-pointer'>About</Link>
-      <Link to='/#contact' className='cursor-pointer'>Contact</Link>
-    </div>
-  </div>
-</nav>
-
+<div className='' data-aos="fade-down">
 <div className="w-11/12 flex flex-col h-0 border-t border-black ml-20 mt-10"></div>
 
 <div className="flex flex-col md:flex-row w-full min-h-screen gap-20 py-10">
   {/* Left section */}
-  <div className="md:w-1/2 w-full flex justify-start items-center mb-10">
+  <div className="md:w-1/2 w-full flex justify-start items-center mb-10" data-aos="fade-right">
     <img
       className="w-full max-w-[636px] h-auto object-cover shadow-md"
       src={img1}
@@ -173,7 +164,7 @@ const strsOfBlogs = [
   <img
     className="w-[80%] max-w-md h-auto mb-6 shadow-md"
     src={img2}
-    alt="Main Visual"
+    alt="Main Visual" data-aos="fade-left"
   />
 
   {/* Title */}
@@ -187,9 +178,11 @@ const strsOfBlogs = [
   </div>
 
   {/* CTA Button */}
-  <button className="bg-sky-200 text-2xl md:text-2xl font-poor-story border border-black px-6 py-3 shadow-md cursor-pointer">
-    All Posts
+  <Link to="/pieces">
+  <button className="bg-sky-200 text-sm md:text-md font-poor-story border border-black px-4 py-2 shadow-md cursor-pointer">
+    Explore
   </button>
+  </Link>
 
 </div>
 
@@ -199,20 +192,33 @@ const strsOfBlogs = [
 
 
 {/* recent blogs */}
-<div className="w-full px-4 py-15 flex flex-col items-center bg-sky-100" ref={blogSectionRef}>
+<div className="w-full px-4 py-15 flex flex-col items-center bg-sky-100" ref={blogSectionRef} data-aos="zoom-in" duration="1000000">
   {/* Section Title */}
   <div className="text-black text-5xl font-normal font-'Poor_Story' mb-20 text-center">
     Recent blogs
   </div>
 
-<div className='w-10/11 flex flex-row justify-center gap-10 mb-10'>
+<div className='w-full flex flex-row justify-center gap-10 mb-10'>
   
-{strsOfBlogs.length > 0 && strsOfBlogs.map((blogContent, index) => (
-<div className='w-1/3 flex flex-col gap-10'>
-  <ReactMarkdown remarkPlugins={[remarkGfm]} >
-    {blogContent}
+{SlugBlogs.slice(0,3).length > 0 && SlugBlogs.slice(0,3).map((blogContent, index) => (
+
+<div className='w-1/4 flex flex-col gap-10' key={blogContent.slug}>
+  <ReactMarkdown rehypePlugins={[[rehypeRaw], [rehypeSanitize, schema]]} >
+    {stripHtml(blogContent.content).slice(0, NoOfChar) + (stripHtml(blogContent.content).length > NoOfChar ? '...' : '')}
   </ReactMarkdown>
+  
+  {(SlugBlogs.length > 0 && SlugBlogs.some(blog => blog.content === blogContent.content)) ? (
+    <div className="cursor-pointer relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-black after:transition-all after:duration-300 hover:after:w-full font-bold" >
+    <Link to={`/blog/${SlugBlogs.find(blog => blog.content === blogContent.content).slug}`} >Read More →</Link>
+  </div>
+  ) : (
+    <div className='cursor-pointer hover:underline font-bold' >
+    </div>
+  )
+  }
+  
 </div>
+
 ))}
 
 </div>
@@ -226,7 +232,7 @@ const strsOfBlogs = [
 
 <div className="w-1/2 flex flex-row items-center justify-end pr-10 gap-10">
     {/* Quote */}
-    <div className="w-96">
+    <div className="w-96" data-aos="fade-right">
       <div className="text-black text-4xl font-normal font-'Poor_Story' mb-2">
         “Do not go gentle into that good night. Rage, rage against the dying of the light.”
       </div>
@@ -244,7 +250,7 @@ const strsOfBlogs = [
   <img
     className="max-w-3xl shadow-md object-cover"
     src={img4}
-    alt="Visual"
+    alt="Visual" data-aos="fade-left"
   />
 </div>
 </div>
@@ -258,7 +264,7 @@ const strsOfBlogs = [
   {/* Flex Centered Image */}
   <div className="absolute inset-0 flex items-center justify-center">
     <img
-      className="w-[419px] h-[448px] object-cover"
+      className="w-[419px] h-[448px] object-cover" data-aos="fade-left"
       src={img5}
       alt="Placeholder"
     />
@@ -276,75 +282,25 @@ const strsOfBlogs = [
   </div>
 
   {/* Right section: text content */}
-  <div className="flex flex-col justify-center items-center w-[35%] px-6 space-y-10" id='about' ref={aboutSectionRef}>
+  <div className="flex flex-col justify-center items-center w-[35%] px-6 space-y-10" data-aos="fade-right" id='about' ref={aboutSectionRef}>
     <div className="text-black text-4xl font-'Poor_Story'">Hi, I'm Kaustav</div>
     <div className="text-black text-3xl font-'Poor_Story'">
       A software engineer by profession and blogger by passion. I write on complex human thoughts
       and random topics people find “weird” and “different”.
     </div>
-    <div className="bg-sky-200 px-8 py-3 border border-black shadow-md cursor-pointer">Read More
-    </div>
+    <Link to='/about/Kaustav'>
+    <button className="bg-sky-200 px-8 py-3 border border-black shadow-md cursor-pointer">
+      Read More
+    </button>
+    </Link>
   </div>
 </div>
 
 <div className="w-11/12 flex flex-col h-0 border-t border-black ml-20 mt-10"></div>
 
 {/* things stir up my thoughts */}
+<RandomImage/>
 
-<div className="w-full px-4 py-15 flex flex-col items-center bg-sky-100">
-<div className="text-center justify-start text-black text-4xl font-normal font-'Poor_Story' mb-15">
-  Every picture tells a story, tell me which one you like the most !
-</div>
-
-<div className="w-full flex flex-col justify-center items-center gap-10 transition-all duration-700 ease-in-out">
-  <div className='w-full flex flex-row justify-center gap-5'>
-    <div className="flex flex-row justify-center gap-5">
-    {[...Array(4)].map((_, i) => (
-    <img key={i} className="w-72 h-56 cursor-pointer rounded-sm" src={img6} />
-    ))}
-    </div>
-  </div>
-  
-  <div className='w-full flex flex-row justify-center gap-5'>
-    <div className="flex flex-row justify-center gap-5">
-    {[...Array(4)].map((_, i) => (
-    <img key={i} className="w-72 h-56 cursor-pointer rounded-sm" src={img6} />
-    ))}
-    </div>
-  </div>
-
-  <div
-    className={`transition-all duration-700 ease-in-out overflow-hidden ${
-      showMorePics ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'
-    }`}
-  > 
-  {/* {showMorePics && */}
-  <>
-  <div className='w-full flex flex-row justify-center gap-5'>
-    <div className="flex flex-row justify-center gap-5">
-    {[...Array(4)].map((_, i) => (
-    <img key={i} className="w-72 h-56 cursor-pointer rounded-sm" src={img6} />
-    ))}
-    </div>
-  </div>
-
-  <div className='w-full flex flex-row justify-center gap-5 mt-10'>
-    <div className="flex flex-row justify-center gap-5">
-    {[...Array(4)].map((_, i) => (
-    <img key={i} className="w-72 h-56 cursor-pointer rounded-sm" src={img6} />
-    ))}
-    </div>
-  </div>
-  </>
-</div>
-
-  {/* toggle button */}
-<button onClick={() => setShowMorePics(!showMorePics)} 
-className="px-8 py-3 bg-sky-200 border border-black shadow-md text-lg mx-auto block cursor-pointer">
-  {showMorePics ? 'Show Less' : 'Explore More'}
-</button>
-</div>
-</div>
 
 <div className="w-11/12 flex flex-col h-0 border-t border-black ml-20 mt-10"></div>
 
@@ -387,7 +343,7 @@ className="px-8 py-3 bg-sky-200 border border-black shadow-md text-lg mx-auto bl
   </div>
 
   {/* Submit Button */}
-  <button className="mt-8 px-10 py-1 bg-sky-200 border border-black shadow-md text-lg cursor-pointer" onClick={handleSubmit} disabled={loading}>
+  <button className="mt-8 px-10 py-1 bg-sky-200 border border-black shadow-md text-sm cursor-pointer" onClick={handleSubmit} disabled={loading}>
     {loading ? `Loading...` : `Submit`}
   </button>
 </div>
@@ -397,8 +353,12 @@ className="px-8 py-3 bg-sky-200 border border-black shadow-md text-lg mx-auto bl
 
 <Footer/>
 
+
 </div>
-    </>
+<ScrollToTopButton/>
+</div>
+</div>
+  </>
   )
 }
 
