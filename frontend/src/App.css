@@ -1,0 +1,35 @@
+.perspective-1000 {
+  perspective: 1000px;
+}
+.transform-style-preserve-3d {
+  transform-style: preserve-3d;
+}
+.backface-hidden {
+  backface-visibility: visible;
+}
+
+
+.white-space-pre-line {
+  white-space: pre-line;
+}
+
+.typewriter h1 {
+  overflow: hidden; /* Ensures the text is not revealed until the animation */
+  border-right: .15em solid rgb(108, 201, 255); /* The typewriter cursor */
+  white-space: nowrap; /* Keeps the content on a single line */
+  animation: 
+    typing 3.5s steps(30, end),
+    blink-caret .75s step-end infinite;
+}
+
+/* The typing animation effect */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: rgb(108, 201, 255); }
+}
