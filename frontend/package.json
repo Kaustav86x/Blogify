@@ -17,6 +17,7 @@
     "@editorjs/image": "^2.10.3",
     "@editorjs/list": "^2.0.8",
     "@tailwindcss/vite": "^4.0.1",
+    "aos": "^2.3.4",
     "axios": "^1.8.1",
     "dompurify": "^3.2.7",
     "editorjs-html": "^4.0.5",

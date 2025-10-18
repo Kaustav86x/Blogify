@@ -25,3 +25,5 @@ admin
 *.njsproj
 *.sln
 *.sw?
+
+welcome.jsx

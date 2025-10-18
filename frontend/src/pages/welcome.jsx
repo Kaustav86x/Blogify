@@ -16,6 +16,7 @@ const Welcome = () => {
     <Navbar/>
   {/*login/signup button  */}
   <div className="w-full flex justify-end pr-6 pt-5">
+    <div></div>
   <div className="flex items-center gap-2 rounded-[10px] p-1">
     <button className="text-black text-xl font-'Poor_Story' px-3 py-1 rounded hover:bg-white/20 cursor-pointer">
       <a href="" target="_blank">Log in</a>
