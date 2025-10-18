@@ -7,15 +7,15 @@ const Navbar = () => {
 
   
   const location = useLocation();
-  const { pathname } = location
+  // const { pathname } = location;
 
   const [isOpen, setIsOpen] = useState(false)
 
   const navItems = [
     { label: 'Home', path: '/'},
-    { label: 'Blogs', path: '/blog/all-blogs'},
-    { label: 'About', path: ''},
-    { label: 'Contact', path: ''}
+    { label: 'Pieces', path: '/pieces'},
+    { label: 'About', path: '/#about'},
+    { label: 'Contact', path: '/#contact'}
   ]
 
   return (
@@ -26,7 +26,10 @@ const Navbar = () => {
           <NavLink 
           key={item.path} 
           to={item.path}
-          className="cursor-pointer">
+          className={`cursor-pointer"
+            ${location.pathname === item.path ? 
+            "underline font-bold" : 
+            ""}`}>
             {item.label}
           </NavLink>
         ))}
