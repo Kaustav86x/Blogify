@@ -75,7 +75,7 @@ const Home = () => {
 
 
 
-      const response = await axios.post('http://localhost:8080/api/contact/contact-us', {
+      const response = await axios.post('https://blogify-backend-nine.vercel.app/api/contact-us', {
         name,
         email,
         message,
