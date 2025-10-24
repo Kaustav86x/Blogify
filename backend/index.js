@@ -14,8 +14,8 @@ app.use(express.json())
 
 // cors
 const allowedOrigins = [
-    'http://localhost:5173', 
-     process.env.CLIENT_URL
+    'https://blogify-frontend.vercel.app',
+    'http://localhost:5173'
 ];
 
 app.use(cors({
