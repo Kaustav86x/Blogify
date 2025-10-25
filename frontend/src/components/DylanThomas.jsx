@@ -16,7 +16,7 @@ const DylanThomas = () => {
             </span>
           </div>
           
-          <div className="hidden md:block left-0 top-24 lg:h-[520px] border-l border-black"></div>
+          <div className="hidden md:block left-0 top-24 lg:h-[520px] border-l border-black ipad-pro-height"></div>
 
           <div className="lg:w-1/2 w-full flex lg:justify-end justify-center">
             <img

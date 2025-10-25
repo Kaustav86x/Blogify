@@ -1,2 +1,9 @@
 /* @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap'); */
 @import "tailwindcss";
+
+/* in your global.css or index.css */
+@media (width: 1024px) and (height: 1366px) {
+  .ipad-pro-height {
+    height: 100px !important; /* your custom value */
+  }
+}
