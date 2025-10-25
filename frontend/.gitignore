@@ -26,4 +26,4 @@ admin
 *.sln
 *.sw?
 
-src/pages/welcome.jsx
+src/**/welcome.jsx
