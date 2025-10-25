@@ -49,118 +49,114 @@ const AllBlogs = () => {
       
   return (
     <div className="min-h-screen w-full bg-sky-100">
-    <Navbar/>
+  <Navbar />
 
-  <div className="w-11/12 flex flex-col h-0 border-t border-black ml-20 mt-10"></div>
-  
-  <h1 className="text-5xl font-bold text-center mt-10 mb-10 font-'Poor_Story'">Pick up the pieces and complete the puzzle!</h1>
+  {/* Top border */}
+  <div className="w-11/12 mx-auto border-t border-black mt-6 sm:mt-10"></div>
 
-    <div className="p-6 max-w-5xl mx-auto font-poor-story">
-      {/* blogs */}
-      <h1 className="text-4xl font-bold text-center mb-10">Blogs</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 w-full px-4 mb-10">
-        {SlugBlogs.length > 0 &&
-          SlugBlogs.map((blogContent, index) => (
-            <motion.div 
-              key={index} 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <Card className="rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300 relative blog flex flex-col justify-between h-full max-h-[470px]">
-                <CardBody className="p-6 flex flex-col justify-between flex-grow">
-          <div className="flex flex-col gap-6 flex-grow">
+  {/* Heading */}
+  <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-center mt-8 mb-10 font-'Poor_Story' px-4">
+    Pick up the pieces and complete the puzzle!
+  </h1>
 
-          <div className="flex items-center gap-2 text-gray-600 text-sm font-medium mb-4">
-          <span className="italic tracking-wide">
-          {EstimatedReadTime(blogContent.content)}
-          </span>
-          </div>
+  {/* Main content container */}
+  <div className="flex-grow w-full max-w-6xl mx-auto p-4 sm:p-6 font-poor-story">
+    {/* Blogs Section */}
+    <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-8">Blogs</h1>
 
-          <ReactMarkdown rehypePlugins={[[rehypeRaw], [rehypeSanitize, schema]]}>
-            {stripHtml(blogContent.content).slice(0, NoOfCharForBlog) +
-              (stripHtml(blogContent.content).length > NoOfCharForBlog ? "..." : "")}
-          </ReactMarkdown>
-        </div>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 lg:gap-12">
+      {SlugBlogs.map((blogContent, index) => (
+        <motion.div
+          key={index}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Card className="rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300 flex flex-col justify-between h-full max-h-[470px]">
+            <CardBody className="p-4 sm:p-6 flex flex-col justify-between flex-grow">
+              <div className="flex flex-col gap-4 sm:gap-6 flex-grow">
+                <div className="flex items-center gap-2 text-gray-600 text-xs sm:text-sm font-medium mb-2 sm:mb-4">
+                  <span className="italic tracking-wide">
+                    {EstimatedReadTime(blogContent.content)}
+                  </span>
+                </div>
 
-        {SlugBlogs.length > 0 &&
-        SlugBlogs.some((blog) => blog.content === blogContent.content) ? (
-          <div className="cursor-pointer relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-black after:transition-all after:duration-300 hover:after:w-full font-bold mt-4">
-            <Link
-              to={`/blog/${
-                SlugBlogs.find((blog) => blog.content === blogContent.content)
-                  .slug
-              }`}
-            >
-              Read More →
-            </Link>
-          </div>
-        ) : (
-          <div className="cursor-pointer hover:underline font-bold"></div>
-        )}
-      </CardBody>
-              </Card>
-            </motion.div>
-          ))
-        }
-      </div>
+                <ReactMarkdown rehypePlugins={[[rehypeRaw], [rehypeSanitize, schema]]}>
+                  {stripHtml(blogContent.content).slice(0, NoOfCharForBlog) +
+                    (stripHtml(blogContent.content).length > NoOfCharForBlog ? "..." : "")}
+                </ReactMarkdown>
+              </div>
 
-      {/* poems */}
-      <h1 className="text-4xl font-bold text-center mb-10 mt-10">Poems</h1>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 w-full px-4 mb-10">
-        {SlugPieces.length > 0 &&
-          SlugPieces.map((blogContent, index) => (
-            <motion.div 
-              key={index} 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <Card className="rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300 relative blog flex flex-col justify-between h-full max-h-[450px]">
-                <CardBody className="p-6 flex flex-col justify-between flex-grow">
-        <div className="flex flex-col gap-6 flex-grow">
-          <div className="flex items-center gap-2 text-gray-600 text-sm font-medium mb-4">
-          <span className="italic tracking-wide">
-          {EstimatedReadTime(blogContent.content)}
-          </span>
-          </div>
-          <ReactMarkdown rehypePlugins={[[rehypeRaw], [rehypeSanitize, schema]]}>
-            {stripHtml(blogContent.content).slice(0, NoOfCharForPoem) +
-              (stripHtml(blogContent.content).length > NoOfCharForPoem ? "..." : "")}
-          </ReactMarkdown>
-        </div>
-
-        {SlugPieces.length > 0 &&
-        SlugPieces.some((blog) => blog.content === blogContent.content) ? (
-          <div className="cursor-pointer relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-black after:transition-all after:duration-300 hover:after:w-full font-bold mt-4">
-            <Link
-              to={`/poem/${
-                SlugPieces.find((blog) => blog.content === blogContent.content)
-                  .slug
-              }`}
-            >
-              Read More →
-            </Link>
-          </div>
-        ) : (
-          <div className="cursor-pointer hover:underline font-bold"></div>
-        )}
-      </CardBody>
-              </Card>
-            </motion.div>
-          ))
-        }
-      </div>
-
+              {SlugBlogs.some((blog) => blog.content === blogContent.content) && (
+                <div className="cursor-pointer relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-black after:transition-all after:duration-300 hover:after:w-full font-bold mt-4 text-sm sm:text-base">
+                  <Link
+                    to={`/blog/${
+                      SlugBlogs.find((blog) => blog.content === blogContent.content).slug
+                    }`}
+                  >
+                    Read More →
+                  </Link>
+                </div>
+              )}
+            </CardBody>
+          </Card>
+        </motion.div>
+      ))}
     </div>
 
-    <div className="w-11/12 flex flex-col h-0 border-t border-black ml-20"></div>
-    
-    {/* footer */}
-    <Footer/>
-    
-    <ScrollToTop/>
+    {/* Poems Section */}
+    <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center mt-16 mb-8">Poems</h1>
+
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 lg:gap-12">
+      {SlugPieces.map((poemContent, index) => (
+        <motion.div
+          key={index}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Card className="rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300 flex flex-col justify-between h-full max-h-[450px]">
+            <CardBody className="p-4 sm:p-6 flex flex-col justify-between flex-grow">
+              <div className="flex flex-col gap-4 sm:gap-6 flex-grow">
+                <div className="flex items-center gap-2 text-gray-600 text-xs sm:text-sm font-medium mb-2 sm:mb-4">
+                  <span className="italic tracking-wide">
+                    {EstimatedReadTime(poemContent.content)}
+                  </span>
+                </div>
+
+                <ReactMarkdown rehypePlugins={[[rehypeRaw], [rehypeSanitize, schema]]}>
+                  {stripHtml(poemContent.content).slice(0, NoOfCharForPoem) +
+                    (stripHtml(poemContent.content).length > NoOfCharForPoem ? "..." : "")}
+                </ReactMarkdown>
+              </div>
+
+              {SlugPieces.some((poem) => poem.content === poemContent.content) && (
+                <div className="cursor-pointer relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-black after:transition-all after:duration-300 hover:after:w-full font-bold mt-4 text-sm sm:text-base">
+                  <Link
+                    to={`/poem/${
+                      SlugPieces.find((poem) => poem.content === poemContent.content).slug
+                    }`}
+                  >
+                    Read More →
+                  </Link>
+                </div>
+              )}
+            </CardBody>
+          </Card>
+        </motion.div>
+      ))}
     </div>
+  </div>
+
+  {/* Bottom border */}
+  <div className="w-11/12 mx-auto border-t border-black mt-6 sm:mt-10"></div>
+
+  {/* Footer */}
+  <Footer />
+
+  <ScrollToTop />
+    </div>
+
     
   );
 }

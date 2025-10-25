@@ -43,50 +43,63 @@ const AboutMe = () => {
 
   return (
     <div className="min-h-screen w-full bg-sky-100">
-      <Navbar />
+    <Navbar />
 
-      <div className="w-11/12 flex flex-col h-0 border-t border-black ml-20 mt-10"></div>
+    <div className="w-11/12 mx-auto border-t border-black mt-4 sm:mt-8"></div>
 
-      <div className="min-h-screen flex items-center justify-center bg-sky-100">
-        <div className="w-full max-w-3xl px-6 text-left">
-          <div className="typewriter">
-            <h1 className="text-5xl font-bold mb-6 font-poor-story text-center mt-10">
-              Hi, This is Kaustav
-            </h1>
-          </div>
-
-          {loading ? (
-            <p className="text-center mt-10 text-gray-500">Loading content...</p>
-          ) : (
-            <div data-aos="fade-up" data-aos-duration="1000" className="mt-10">
-              <h2 className="text-2xl font-semibold mb-4 font-poor-story text-center">
-                A Software Engineer and Passionate Blogger
-              </h2>
-
-              <ReactMarkdown
-                rehypePlugins={[[rehypeRaw], [rehypeSanitize, schema], remarkGfm]}
-                components={{
-                  h1: ({ node, ...props }) => (
-                    <h1 className="text-5xl font-bold text-gray-900 mb-6" {...props} />
-                  ),
-                  h2: ({ node, ...props }) => (
-                    <h2 className="text-3xl font-semibold text-gray-800 mb-4" {...props} />
-                  ),
-                  p: ({ node, ...props }) => (
-                    <p className="text-lg leading-relaxed text-gray-700 mb-4" {...props} />
-                  ),
-                }}
-              >
-                {content}
-              </ReactMarkdown>
-            </div>
-          )}
-        </div>
+  {/* Main content area */}
+  <main className="flex-grow flex items-center justify-center bg-sky-100 px-4 sm:px-6">
+    <div className="w-full max-w-3xl text-left">
+      <div className="typewriter">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 font-poor-story text-center mt-6 sm:mt-10">
+          Hi, This is Kaustav
+        </h1>
       </div>
 
-      <Footer />
-      <ScrollToTop />
+      {loading ? (
+        <p className="text-center mt-8 text-gray-500 text-base sm:text-lg">
+          Loading content...
+        </p>
+      ) : (
+        <div data-aos="fade-up" data-aos-duration="1000" className="mt-6 sm:mt-10">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold mb-4 font-poor-story text-center">
+            A Software Engineer and Passionate Blogger
+          </h2>
+
+          <ReactMarkdown
+            rehypePlugins={[[rehypeRaw], [rehypeSanitize, schema], remarkGfm]}
+            components={{
+              h1: ({ node, ...props }) => (
+                <h1
+                  className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 sm:mb-6"
+                  {...props}
+                />
+              ),
+              h2: ({ node, ...props }) => (
+                <h2
+                  className="text-xl sm:text-2xl font-semibold text-gray-800 mb-3 sm:mb-4"
+                  {...props}
+                />
+              ),
+              p: ({ node, ...props }) => (
+                <p
+                  className="text-base sm:text-lg leading-relaxed text-gray-700 mb-3 sm:mb-4"
+                  {...props}
+                />
+              ),
+            }}
+          >
+            {content}
+          </ReactMarkdown>
+        </div>
+      )}
     </div>
+  </main>
+
+  <Footer />
+  <ScrollToTop />
+    </div>
+
   );
 };
 
