@@ -23,6 +23,7 @@
     "editorjs-html": "^4.0.5",
     "editorjs-react-renderer": "^3.5.1",
     "framer-motion": "^12.4.7",
+    "lucide-react": "^0.548.0",
     "mathjs": "^14.6.0",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.9",
