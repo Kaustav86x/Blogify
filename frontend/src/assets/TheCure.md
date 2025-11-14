@@ -31,4 +31,5 @@ I never thought I'd become so possessive about a mere village. I don't know what
 **The lesson and the commitment**
 
 With the break of dawn, we made our way to the station, fueled by a glimmer of hope that soon, very soon, I would return. It was my journey, destined to find the cure. Drawn to unravel the mystery and magic, I vowed to come back. My soul was ready to be offered to the shadows.
-
+<br>
+<br>

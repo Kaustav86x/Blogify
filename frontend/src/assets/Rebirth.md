@@ -1,3 +1,5 @@
+<br>
+
 # **Rebirth**
 
 Some treasures are better hidden, 
@@ -9,3 +11,5 @@ He was tired.
 He offered something to the protector 
 Two souls clashed, the lightning fell from the sky, nature witnessed.
 The tomb remained guarded for eternity.
+<br>
+<br>
