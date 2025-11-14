@@ -1,8 +1,6 @@
 <br>
 
 # **Unplugged in a Concrete Jungle**
-<br>
-<br>
 
 It was a normal day, mostly raining.
 When I woke up that morning, the sky was already pouring like it had something to prove. And all I could think about was how I'd drag myself through this weather to the bus stop.
