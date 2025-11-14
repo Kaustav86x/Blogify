@@ -132,12 +132,12 @@ const schema = {
   
   <Navbar/>
 
-<div className='' data-aos="fade-down">
+<div className=''>
 <div className="w-11/12 flex flex-col h-0 border-t border-black ml-20 mt-10"></div>
 
 <div className="flex flex-col md:flex-row w-full min-h-screen gap-20 py-10">
   {/* Left section */}
-  <div className="md:w-1/2 w-full flex justify-start items-center mb-10" data-aos="fade-right">
+  <div className="md:w-1/2 w-full flex justify-start items-center mb-10">
     <img
       className="w-full max-w-[636px] h-auto object-cover shadow-md"
       src={img1}
@@ -164,7 +164,7 @@ const schema = {
   <img
     className="w-[80%] max-w-md h-auto mb-6 shadow-md"
     src={img2}
-    alt="Main Visual" data-aos="fade-left"
+    alt="Main Visual"
   />
 
   {/* Title */}
@@ -192,7 +192,7 @@ const schema = {
 
 
 {/* recent blogs */}
-<div className="w-full px-4 py-15 flex flex-col items-center bg-sky-100" ref={blogSectionRef} data-aos="zoom-in" duration="1000000">
+<div className="w-full px-4 py-15 flex flex-col items-center bg-sky-100" ref={blogSectionRef} duration="1000000">
   {/* Section Title */}
   <div className="text-black text-5xl font-normal font-'Poor_Story' mb-20 text-center">
     Recent blogs
@@ -232,7 +232,7 @@ const schema = {
 
 <div className="w-1/2 flex flex-row items-center justify-end pr-10 gap-10">
     {/* Quote */}
-    <div className="w-96" data-aos="fade-right">
+    <div className="w-96">
       <div className="text-black text-4xl font-normal font-'Poor_Story' mb-2">
         “Do not go gentle into that good night. Rage, rage against the dying of the light.”
       </div>
@@ -250,7 +250,7 @@ const schema = {
   <img
     className="max-w-3xl shadow-md object-cover"
     src={img4}
-    alt="Visual" data-aos="fade-left"
+    alt="Visual" 
   />
 </div>
 </div>
@@ -264,7 +264,7 @@ const schema = {
   {/* Flex Centered Image */}
   <div className="absolute inset-0 flex items-center justify-center">
     <img
-      className="w-[419px] h-[448px] object-cover" data-aos="fade-left"
+      className="w-[419px] h-[448px] object-cover"
       src={img5}
       alt="Placeholder"
     />
@@ -282,7 +282,7 @@ const schema = {
   </div>
 
   {/* Right section: text content */}
-  <div className="flex flex-col justify-center items-center w-[35%] px-6 space-y-10" data-aos="fade-right" id='about' ref={aboutSectionRef}>
+  <div className="flex flex-col justify-center items-center w-[35%] px-6 space-y-10" id='about' ref={aboutSectionRef}>
     <div className="text-black text-4xl font-'Poor_Story'">Hi, I'm Kaustav</div>
     <div className="text-black text-3xl font-'Poor_Story'">
       A software engineer by profession and blogger by passion. I write on complex human thoughts

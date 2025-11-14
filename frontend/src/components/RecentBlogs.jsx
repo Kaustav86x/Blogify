@@ -36,7 +36,6 @@ const schema = {
     <div
       className="w-full px-4 py-10 flex flex-col items-center bg-sky-100"
       ref={blogSectionRef}
-      data-aos="zoom-in"
     >
       <h2 className="text-black text-4xl sm:text-5xl font-poor-story mb-20 text-center">
         Recent blogs

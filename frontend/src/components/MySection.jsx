@@ -13,13 +13,12 @@ const MySection = () => {
     <div className="flex flex-col md:flex-row w-full p-2">
       {/* Left Image */}
       <div className="relative md:w-1/2 h-[400px] md:h-[666px] flex justify-center items-center bg-sky-300">
-        <img className="w-2/3 max-w-sm h-auto object-cover" src={img5} alt="Kaustav" data-aos="fade-left" />
+        <img className="w-2/3 max-w-sm h-auto object-cover" src={img5} alt="Kaustav"/>
       </div>
 
       {/* Right Text */}
       <div
         className="flex flex-col justify-center items-center md:items-start w-full md:w-1/2 px-6 py-10 space-y-6 text-center md:text-left"
-        data-aos="fade-right"
         id="about"
         ref={aboutSectionRef}
       >

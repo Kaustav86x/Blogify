@@ -8,7 +8,7 @@ const HeroSection = () => {
     <div className="flex flex-col md:flex-row w-full min-h-screen gap-10 sm:gap-20 py-10 px-4 sm:px-8">
 
       {/* Left Section */}
-      <div className="md:w-1/2 w-full flex justify-center items-center mb-8 md:mb-0" data-aos="fade-right">
+      <div className="md:w-1/2 w-full flex justify-center items-center mb-8 md:mb-0">
         <img
           className="w-full max-w-[600px] h-auto object-cover shadow-md"
           src={img1}
@@ -31,7 +31,6 @@ const HeroSection = () => {
           className="w-4/5 max-w-md h-auto mb-6 shadow-md"
           src={img2}
           alt="Main Visual"
-          data-aos="fade-left"
         />
 
         <h2 className="text-2xl sm:text-3xl font-poor-story text-black mb-4">
