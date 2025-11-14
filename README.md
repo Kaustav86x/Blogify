@@ -1,10 +1,10 @@
 # Blogify
 
-**Blogify** is my personal blogging space - built from scratch because I can :)
+**Blogify** is my personal blogging space - Because I don't want to use a third-party tool to post my unhinged thoughts :)
 
 ## 🚧 Status
 
-- **Landing Page**: Currently doomed 💀 - I'm work on fixing the UI.
+- **Landing Page**: Working pretty good after removing the AOS syntaxes.
 
 ## 🧠 Why Blogify?
 
