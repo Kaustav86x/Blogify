@@ -153,7 +153,7 @@ const schema = {
   {/* Side border on large screens */}
 
   <div className="w-[622px] h-0 left-0 top-0 absolute border-t border-black mb-6"></div>
-  <div className="w-[622px] h-0 left-[640px] top-[105px] absolute origin-top-left rotate-90 border-t border-black"></div>
+  <div className="w-[622px] h-0 left-[640px] top-[105px] absolute origin-top-left rotate-90 border-t border-black ml-10"></div>
   
   {/* Welcome Text */}
   <div className="text-4xl md:text-5xl font-poor-story text-black mb-6 text-center">
