@@ -14,18 +14,17 @@ import rehypeSanitize from "rehype-sanitize";
 import { defaultSchema } from 'hast-util-sanitize';
 import DOMPurify from 'dompurify';
 import { SlugBlogs } from '../helper/TitleToSlug';
-import AOS from 'aos';
 import 'aos/dist/aos.css';
 import RandomImage from '../components/RandomImage';
 import ScrollToTopButton from '../components/ScrollToTop';
 import validator from 'validator';
 import Navbar from '../components/navbar';
+import { motion } from "framer-motion";
 
 const HomeDesktop = () => {
 
   const location = useLocation();
 
-  const blogSectionRef = useRef(null);
   const contactSectionRef = useRef(null);
   const aboutSectionRef = useRef(null);
 
@@ -45,15 +44,6 @@ const HomeDesktop = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  useEffect(() => {
-    AOS.init({ 
-      duration: 1400, 
-      once: true 
-    });
-      AOS.refresh();
-  }, []);
-
-  // const[blogs, setBlogs] = useState(null);
   const[name, setName] = useState("");
   const[email, setEmail] = useState("");
   const[message, setMessage] = useState("");
@@ -133,168 +123,229 @@ const schema = {
   <Navbar/>
 
 <div className=''>
-<div className="w-11/12 flex flex-col h-0 border-t border-black ml-20 mt-10"></div>
+<div className="w-11/12 flex flex-col h-0 border-t border-black ml-20 mt-10"/>
 
-<div className="flex flex-col md:flex-row w-full min-h-screen gap-20 py-10">
-  {/* Left section */}
-  <div className="md:w-1/2 w-full flex justify-start items-center mb-10">
-    <img
-      className="w-full max-w-[636px] h-auto object-cover shadow-md"
-      src={img1}
-      alt="Left section"
-    />
+<motion.section
+  className="flex flex-col lg:flex-row min-h-[600px]"
+  initial={{ opacity: 0, y: 30 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true, amount: 0.2 }}
+  transition={{ duration: 0.9, ease: "easeOut" }}
+>
+
+  <div className="flex-1 flex items-center justify-center p-12 lg:p-20">
+    <div className="w-144 h-108 flex items-center justify-center text-dark text-lg">
+      <div className="relative overflow-hidden rounded-lg shadow-xl group 
+                transition-all duration-500 ease-out w-full max-w-[636px]">
+
+        {/* Image */}
+        <img
+          src={img1}
+          alt="Left section"
+          className="w-full h-auto object-cover rounded-lg shadow-md
+                     transition-transform duration-700 ease-out
+                     group-hover:scale-110 group-hover:rotate-[1deg]"
+        />
+
+        {/* Glass Shine */}
+        <div className="absolute inset-0 bg-gradient-to-r 
+                        from-transparent via-white/10 to-transparent
+                        opacity-0 group-hover:opacity-100
+                        transition-all duration-700 pointer-events-none
+                        translate-x-[-200%] group-hover:translate-x-[200%]"></div>
+      </div>
+    </div>
   </div>
 
-  {/* Right section */}
-  <div className="w-full lg:w-1/2 flex flex-col items-center px-4 py-6 relative">
+  <div className="hidden lg:block w-px h-180 bg-black"></div>
 
-  {/* Top border */}
+  <div className="flex-1 flex flex-col items-center justify-center p-12 lg:p-20 space-y-8">
+    <h1 className="text-4xl lg:text-5xl font-light text-center text-dark tracking-wide">Welcome</h1>
 
-  {/* Side border on large screens */}
+    <div className="relative overflow-hidden rounded-lg shadow-xl group 
+                transition-all duration-500 ease-out w-[80%] max-w-md mb-6">
 
-  <div className="w-[622px] h-0 left-0 top-0 absolute border-t border-black mb-6"></div>
-  <div className="w-[622px] h-0 left-[640px] top-[105px] absolute origin-top-left rotate-90 border-t border-black ml-10"></div>
-  
-  {/* Welcome Text */}
-  <div className="text-4xl md:text-5xl font-poor-story text-black mb-6 text-center">
-    Welcome....
+      {/* Main Image */}
+      <img
+        src={img2}
+        alt="Main Visual"
+        className="w-full h-auto object-cover rounded-sm
+                   transition-transform duration-700 ease-out
+                   group-hover:scale-110 group-hover:rotate-[1deg]"
+      />
+
+      {/* Glass Shine Effect */}
+      <div className="absolute inset-0 bg-gradient-to-r 
+                      from-transparent via-white/10 to-transparent
+                      opacity-0 group-hover:opacity-100
+                      transition-all duration-700 pointer-events-none
+                      translate-x-[-200%] group-hover:translate-x-[200%]"></div>
+    </div>
+
+    <h2 className="text-2xl lg:text-3xl font-medium text-center text-dark">Take a deep breath</h2>
+    <p className="text-center max-w-md text-gray-600 leading-relaxed text-lg">Welcome to the world of randomness</p>
+
+    <Link to="/pieces">
+      <button className="px-8 py-3 bg-blue-100 border border-dark text-dark rounded transition-all hover:-translate-y-0.5 hover:bg-blue-200 font-medium cursor-pointer">
+        Explore
+      </button>
+    </Link>
   </div>
 
-  {/* Image */}
-  <img
-    className="w-[80%] max-w-md h-auto mb-6 shadow-md"
-    src={img2}
-    alt="Main Visual"
-  />
+</motion.section>
 
-  {/* Title */}
-  <div className="text-2xl md:text-4xl font-poor-story text-black mb-4 text-center">
-    Dive into the oblivion
-  </div>
-
-  {/* Description */}
-  <div className="text-base md:text-xl font-poor-story text-black mb-6 text-center px-4 md:px-0 max-w-lg">
-    Diving deep into the world of peace, far far away from humanity. Leave everything....
-  </div>
-
-  {/* CTA Button */}
-  <Link to="/pieces">
-  <button className="bg-sky-200 text-sm md:text-md font-poor-story border border-black px-4 py-2 shadow-md cursor-pointer">
-    Explore
-  </button>
-  </Link>
-
-</div>
-
-</div>
 
 <div className="w-11/12 flex flex-col h-0 border-t border-black ml-20 mt-10"></div>
 
 
 {/* recent blogs */}
-<div className="w-full px-4 py-15 flex flex-col items-center bg-sky-100" ref={blogSectionRef} duration="1000000">
-  {/* Section Title */}
-  <div className="text-black text-5xl font-normal font-'Poor_Story' mb-20 text-center">
-    Recent blogs
+<div className="w-full px-4 py-15 flex flex-col items-center bg-sky-100">
+
+  <h2 className="text-black text-5xl font-poor-story mb-20 text-center">
+    Recent Blogs
+  </h2>
+
+  <div className="w-full flex flex-wrap justify-center gap-12">
+    {SlugBlogs.slice(0, 3).map((blogContent, index) => {
+
+      const preview =
+        stripHtml(blogContent.content).slice(0, NoOfChar) +
+        (stripHtml(blogContent.content).length > NoOfChar ? "..." : "");
+
+      return (
+        <motion.div
+          key={blogContent.slug}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: index * 0.18 }}
+          viewport={{ once: true }}
+          className="w-full md:w-1/3 max-w-[320px] flex flex-col gap-6 p-6
+                     rounded-xl bg-blue-100/10 backdrop-blur-md shadow-lg
+                     border border-black/10 hover:shadow-xl hover:bg-blue-100 hover:-translate-y-1
+                     transition-all duration-300"
+        >
+          <div className="text-gray-800 text-md leading-relaxed mb-2">
+          <ReactMarkdown
+            rehypePlugins={[[rehypeRaw], [rehypeSanitize, schema]]}
+          >
+            {preview}
+          </ReactMarkdown>
+          </div>
+
+          <Link
+            to={`/blog/${
+              SlugBlogs.find((blog) => blog.content === blogContent.content).slug
+            }`}
+            className="font-semibold text-black relative inline-block group"
+          >
+            Read More →
+            <span className="block h-[2px] bg-black w-0 group-hover:w-full transition-all duration-300"></span>
+          </Link>
+        </motion.div>
+      );
+    })}
   </div>
-
-<div className='w-full flex flex-row justify-center gap-10 mb-10'>
-  
-{SlugBlogs.slice(0,3).length > 0 && SlugBlogs.slice(0,3).map((blogContent, index) => (
-
-<div className='w-1/4 flex flex-col gap-10' key={blogContent.slug}>
-  <ReactMarkdown rehypePlugins={[[rehypeRaw], [rehypeSanitize, schema]]} >
-    {stripHtml(blogContent.content).slice(0, NoOfChar) + (stripHtml(blogContent.content).length > NoOfChar ? '...' : '')}
-  </ReactMarkdown>
-  
-  {(SlugBlogs.length > 0 && SlugBlogs.some(blog => blog.content === blogContent.content)) ? (
-    <div className="cursor-pointer relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-black after:transition-all after:duration-300 hover:after:w-full font-bold" >
-    <Link to={`/blog/${SlugBlogs.find(blog => blog.content === blogContent.content).slug}`} >Read More →</Link>
-  </div>
-  ) : (
-    <div className='cursor-pointer hover:underline font-bold' >
-    </div>
-  )
-  }
-  
-</div>
-
-))}
-
-</div>
-
 </div>
 
 <div className="w-11/12 flex flex-col h-0 border-t border-black ml-20 mt-10 mb-20"></div>
 
-{/* dylan thomas section */}
-<div className='flex flex-row py-10 gap-50'>
+<motion.section
+  className="flex flex-col lg:flex-row min-h-[400px] mb-10 overflow-hidden"
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true, amount: 0.2 }}
+  transition={{ duration: 0.9, ease: "easeOut" }}
+>
 
-<div className="w-1/2 flex flex-row items-center justify-end pr-10 gap-10">
-    {/* Quote */}
-    <div className="w-96">
-      <div className="text-black text-4xl font-normal font-'Poor_Story' mb-2">
-        “Do not go gentle into that good night. Rage, rage against the dying of the light.”
-      </div>
-      <br/>
-      <span className="text-black text-xl font-normal font-'Poor_Story' ">
-        - Dylan Thomas
-      </span>
+  {/* Left: Quote Section */}
+  <div 
+    className="flex-1 flex flex-col justify-center p-12 lg:p-20 
+               animate-fade-in-up [animation-delay:200ms]"
+  >
+    <div className="text-2xl lg:text-3xl italic mb-6 text-dark leading-relaxed
+                    bg-gradient-to-r from-black/90 to-black/40 bg-clip-text text-transparent">
+      “Do not go gentle into that good night. Rage, rage against the dying of the light.”
     </div>
 
-    {/* Vertical line */}
-    <div className="w-px h-170 bg-black mr-[-118px]" />
+    <div className="text-lg text-gray-600 text-right font-medium">
+      —Dylan Thomas
+    </div>
   </div>
 
-<div className="h-[650px] flex justify-end w-1/2">
-  <img
-    className="max-w-3xl shadow-md object-cover"
-    src={img4}
-    alt="Visual" 
-  />
-</div>
-</div>
+  {/* Animated Vertical Divider (only on lg screens) */}
+  <div className="hidden lg:flex justify-center">
+    <div className="w-px bg-black animate-divider-grow"></div>
+  </div>
 
-{/* kaustav's section */}
-<div className="flex flex-row w-full">
+  {/* Right: Image Section */}
+  <div 
+    className="flex-1 flex items-center justify-center p-12 lg:p-20 
+               animate-fade-in-up [animation-delay:400ms]"
+  >
+    <div className="relative overflow-hidden rounded-lg shadow-xl group 
+                    transition-all duration-500 ease-out">
+
+      {/* Main Image */}
+      <img
+        className="object-cover rounded-sm 
+                  transition-transform duration-700 ease-out
+                  group-hover:scale-110 group-hover:rotate-[1deg]"
+        src={img4}
+        alt="Visual"
+      />
+
+      {/* Glass Shine Effect on hover */}
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent 
+                      opacity-0 group-hover:opacity-100 
+                      transition-all duration-700 pointer-events-none
+                      translate-x-[-200%] group-hover:translate-x-[200%]"></div>
+    </div>
+  </div>
+
+</motion.section>
+
+<motion.div
+  className="flex flex-row w-full"
+  initial={{ opacity: 0, y: 30 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true, amount: 0.2 }}
+  transition={{ duration: 0.9, ease: "easeOut" }}
+>
+
   {/* Left section: 50% of screen */}
   <div className="w-1/2 h-[666px] relative">
-  {/* Background Box */}
-  <div className="absolute inset-0 bg-sky-300" />
-  {/* Flex Centered Image */}
-  <div className="absolute inset-0 flex items-center justify-center">
-    <img
-      className="w-[419px] h-[448px] object-cover"
-      src={img5}
-      alt="Placeholder"
-    />
+    <div className="absolute inset-0 bg-sky-300" />
+    <div className="absolute inset-0 flex items-center justify-center">
+      <img
+        className="w-[419px] h-[448px] object-cover"
+        src={img5}
+        alt="Placeholder"
+      />
+    </div>
   </div>
-</div>
-
-
 
   {/* Middle section: lines and spacing */}
   <div className="relative w-[100px] flex flex-col items-center justify-start pt-6 ml-15">
-    {/* Horizontal Line */}
     <div className="w-[622px] h-0 left-0 top-0 absolute border-t border-black mb-6"></div>
-    {/* Vertical Line */}
     <div className="w-px h-150 bg-black rotate-0" />
   </div>
 
   {/* Right section: text content */}
-  <div className="flex flex-col justify-center items-center w-[35%] px-6 space-y-10" id='about' ref={aboutSectionRef}>
-    <div className="text-black text-4xl font-'Poor_Story'">Hi, I'm Kaustav</div>
-    <div className="text-black text-3xl font-'Poor_Story'">
+  <div className="flex flex-col justify-center items-center w-[35%] px-6 space-y-10" id="about" ref={aboutSectionRef}>
+    <div className="text-black text-4xl font-medium">Hi, I'm Kaustav</div>
+    <div className="text-gray-600 text-3xl font-'Poor_Story'">
       A software engineer by profession and blogger by passion. I write on complex human thoughts
       and random topics people find “weird” and “different”.
     </div>
-    <Link to='/about/Kaustav'>
-    <button className="bg-sky-200 px-8 py-3 border border-black shadow-md cursor-pointer">
-      Read More
-    </button>
+
+    <Link to="/about/Kaustav">
+      <button className="px-8 py-3 bg-blue-100 border border-dark text-dark rounded transition-all hover:-translate-y-0.5 hover:bg-blue-200 font-medium cursor-pointer">
+        Read More
+      </button>
     </Link>
   </div>
-</div>
+
+</motion.div>
 
 <div className="w-11/12 flex flex-col h-0 border-t border-black ml-20 mt-10"></div>
 
@@ -306,7 +357,16 @@ const schema = {
 
 {/* contact me */}
 
-<div className="w-full px-4 py-15 flex flex-col items-center bg-sky-100 gap-15" id='contact' ref={contactSectionRef}>
+<motion.div
+  className="w-full px-4 py-15 flex flex-col items-center bg-sky-100 gap-15"
+  id="contact"
+  ref={contactSectionRef}
+  initial={{ opacity: 0, y: 40 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true, amount: 0.2 }}
+  transition={{ duration: 0.9, ease: "easeOut" }}
+>
+
   {/* Heading */}
   <div className="text-black text-5xl font-normal font-'Poor_Story' mb-8 text-center">
     Drop a thought, comment or anything you’d like to say!
@@ -314,39 +374,55 @@ const schema = {
 
   {/* Form Fields Container */}
   <div className="w-1/2 flex flex-col items-start gap-20">
-    <label className="text-black text-xl font-'Poor_Story' mb-[-25px]" htmlFor="name">Name</label>
+
+    <label className="text-black text-xl font-'Poor_Story' mb-[-25px]" htmlFor="name">
+      Name
+    </label>
     <input
       id="name"
       value={name}
       type="text"
-      onChange={(e) => setName(e.target.value)} required
+      onChange={(e) => setName(e.target.value)}
+      required
       className="w-full border-b border-black bg-transparent focus:outline-none text-black placeholder:text-gray-500 mb-[-10px]"
     />
 
-    <label className="text-black text-xl font-'Poor_Story' mb-[-25px]" htmlFor="name">Email</label>
+    <label className="text-black text-xl font-'Poor_Story' mb-[-25px]" htmlFor="email">
+      Email
+    </label>
     <input
-      id="name"
+      id="email"
       value={email}
       type="email"
-      onChange={(e) => setEmail(e.target.value)} required
+      onChange={(e) => setEmail(e.target.value)}
+      required
       className="w-full border-b border-black bg-transparent focus:outline-none text-black placeholder:text-gray-500 mb-[-10px]"
     />
 
-    <label className="text-black text-xl font-'Poor_Story' mb-[-25px]" htmlFor="name">Message</label>
+    <label className="text-black text-xl font-'Poor_Story' mb-[-25px]" htmlFor="message">
+      Message
+    </label>
     <input
-      id="name"
+      id="message"
       value={message}
       type="text"
       onChange={(e) => setMessage(e.target.value)}
       className="w-full border-b border-black bg-transparent focus:outline-none text-black placeholder:text-gray-500 mb-[-10px]"
     />
+
   </div>
 
   {/* Submit Button */}
-  <button className="mt-8 px-10 py-1 bg-sky-200 border border-black shadow-md text-sm cursor-pointer" onClick={handleSubmit} disabled={loading}>
+  <button
+    className="px-8 py-3 bg-blue-100 border border-dark text-dark rounded transition-all hover:-translate-y-0.5 hover:bg-blue-200 font-medium cursor-pointer"
+    onClick={handleSubmit}
+    disabled={loading}
+  >
     {loading ? `Loading...` : `Submit`}
   </button>
-</div>
+
+</motion.div>
+
 {/* </div> */}
 
 <div className="w-11/12 flex flex-col h-0 border-t border-black ml-20"></div>

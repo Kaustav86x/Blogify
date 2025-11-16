@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 // import Logo from '../assets/niximo_group.png'
-import { NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
+import Logo from '../assets/nib.png';
 
 const Navbar = () => {
 
@@ -22,7 +23,16 @@ const Navbar = () => {
       <div className="max-w-[1356px] w-full mx-auto flex items-center justify-between">
         
         {/* Logo / Title */}
-        <h1 className="text-3xl font-poor-story text-black select-none">Kaustav Dey</h1>
+        <Link to="/">
+        <div className="flex items-center gap-2">
+          <img
+            className="object-cover rounded-sm w-10 h-10"
+            src={Logo}
+            alt="Visual" 
+          />
+        {/* <h1 className="text-xl font-poor-story text-black select-none"></h1> */}
+        </div>
+        </Link>
 
         {/* Hamburger Button (mobile) */}
         <button
