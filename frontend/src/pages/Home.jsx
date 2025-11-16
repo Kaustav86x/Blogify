@@ -14,6 +14,7 @@ import MySection from '../components/MySection';
 import ContactForm from '../components/ContactForm';
 import HeroSection from '../components/HeroSection';
 import HomeDesktop from './HomeDesktop';
+import NotFound from './NotFound';
 
 import { useMediaQuery } from 'react-responsive';
 
@@ -51,48 +52,49 @@ const Home = () => {
   return (
     <>
   {isMobile ? (
-  <div className="bg-sky-100">
-  <div className="min-h-screen w-full bg-sky-100 flex flex-col">
-    <ToastContainer />
-    <Navbar />
+  // <div className="bg-sky-100">
+  // <div className="min-h-screen w-full bg-sky-100 flex flex-col">
+  //   <ToastContainer />
+  //   <Navbar />
 
-    {/* Top Divider */}
-    <div className="w-11/12 mx-auto border-t border-black mt-6 sm:mt-10"></div>
+  //   {/* Top Divider */}
+  //   <div className="w-11/12 mx-auto border-t border-black mt-6 sm:mt-10"></div>
 
-    {/* Hero Section */}
-    <HeroSection/>
+  //   {/* Hero Section */}
+  //   <HeroSection/>
 
-    {/* Divider */}
-    <div className="w-11/12 mx-auto border-t border-black mt-10"></div>
+  //   {/* Divider */}
+  //   <div className="w-11/12 mx-auto border-t border-black mt-10"></div>
 
-    {/* Recent Blogs Section */}
-    <RecentBlogs/>
+  //   {/* Recent Blogs Section */}
+  //   <RecentBlogs/>
 
-    <div className="w-11/12 mx-auto border-t border-black mt-10"></div>
+  //   <div className="w-11/12 mx-auto border-t border-black mt-10"></div>
 
-    {/* Dylan Thomas Section */}
-    <DylanThomas/>
+  //   {/* Dylan Thomas Section */}
+  //   <DylanThomas/>
 
-    {/* Divider */}
-    <div className="w-11/12 mx-auto border-t border-black mt-10 mb-10"></div>
+  //   {/* Divider */}
+  //   <div className="w-11/12 mx-auto border-t border-black mt-10 mb-10"></div>
 
-    {/* Kaustav Section */}
-    <MySection/>
+  //   {/* Kaustav Section */}
+  //   <MySection/>
 
-    {/* Divider */}
-    <div className="w-11/12 mx-auto border-t border-black mt-10"></div>
+  //   {/* Divider */}
+  //   <div className="w-11/12 mx-auto border-t border-black mt-10"></div>
 
-    {/* Random Image Section */}
-    <RandomImage />
+  //   {/* Random Image Section */}
+  //   <RandomImage />
 
-    {/* Contact Form */}
-    <ContactForm/>
+  //   {/* Contact Form */}
+  //   <ContactForm/>
 
-    {/* Footer */}
-    <Footer />
-    <ScrollToTopButton />
-  </div>
-  </div>
+  //   {/* Footer */}
+  //   <Footer />
+  //   <ScrollToTopButton />
+  // </div>
+  // </div>
+  <NotFound />
 ) : (<HomeDesktop />)} 
   </>
   )
