@@ -47,6 +47,7 @@ const HomeDesktop = () => {
   const[name, setName] = useState("");
   const[email, setEmail] = useState("");
   const[message, setMessage] = useState("");
+  const [emailError, setEmailError] = useState("");
 
   const [loading, setLoading] = useState(false);
 
@@ -92,6 +93,14 @@ const HomeDesktop = () => {
       setLoading(false);
     }
   }
+
+  const validateEmail = () => {
+  if (!email.trim()) {
+    setEmailError("Email is required");
+  } else {
+    setEmailError("");
+  }
+};
 
 const NoOfChar = 200;
 
@@ -388,16 +397,26 @@ const schema = {
     />
 
     <label className="text-black text-xl font-'Poor_Story' mb-[-25px]" htmlFor="email">
-      Email
-    </label>
-    <input
-      id="email"
-      value={email}
-      type="email"
-      onChange={(e) => setEmail(e.target.value)}
-      required
-      className="w-full border-b border-black bg-transparent focus:outline-none text-black placeholder:text-gray-500 mb-[-10px]"
-    />
+  Email<span className="text-red-500"> *</span>
+</label>
+
+<input
+  id="email"
+  value={email}
+  type="email"
+  onChange={(e) => {
+    setEmail(e.target.value);
+    if (emailError) setEmailError(""); // clear error on typing
+  }}
+  onBlur={validateEmail}
+  className={`w-full border-b bg-transparent focus:outline-none placeholder:text-gray-500 mb-[-10px] 
+    text-black border-black 
+    ${emailError ? "border-red-500" : "border-black"}`}
+/>
+
+{emailError && (
+  <p className="text-red-500 text-sm font-medium">{emailError}</p>
+)}
 
     <label className="text-black text-xl font-'Poor_Story' mb-[-25px]" htmlFor="message">
       Message
