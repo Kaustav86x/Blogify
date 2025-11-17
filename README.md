@@ -4,7 +4,7 @@
 
 ## 🚧 Status
 
-- **Landing Page**: Working pretty good after removing the AOS syntaxes.
+- **Landing Page**: Optimized with Framer Motion.
 
 ## 🧠 Why Blogify?
 
