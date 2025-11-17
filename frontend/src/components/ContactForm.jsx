@@ -3,6 +3,7 @@ import { useRef, useState } from 'react';
 import { toast } from "react-toastify";
 import axios from 'axios';
 import validator from 'validator';
+import { motion } from "framer-motion";
 
 const ContactForm = () => {
 
@@ -11,6 +12,7 @@ const ContactForm = () => {
   const[name, setName] = useState("");
   const[email, setEmail] = useState("");
   const[message, setMessage] = useState("");
+  const [emailError, setEmailError] = useState("");
 
   const [loading, setLoading] = useState(false);
 
@@ -55,7 +57,24 @@ const ContactForm = () => {
     }
   }
 
+  const validateEmail = () => {
+  if (!email.trim()) {
+    setEmailError("Email is required");
+  } else {
+    setEmailError("");
+  }
+};
+
   return (
+  <motion.div
+  className="w-full px-4 py-15 flex flex-col items-center bg-sky-100 gap-15"
+  id="contact"
+  ref={contactSectionRef}
+  initial={{ opacity: 0, y: 40 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true, amount: 0.2 }}
+  transition={{ duration: 0.9, ease: "easeOut" }}
+>
     <div className="w-full px-4 py-16 flex flex-col items-center bg-sky-100 gap-15" id="contact" ref={contactSectionRef}>
       <h2 className="text-black text-3xl sm:text-4xl md:text-5xl font-poor-story mb-4 text-center">
         Drop a thought, comment or anything you’d like to say!
@@ -71,13 +90,20 @@ const ContactForm = () => {
           required
         />
 
-        <label className="text-black text-lg sm:text-xl font-poor-story">Email</label>
+        <label className="text-black text-lg sm:text-xl font-poor-story">Email
+          <span className="text-red-500"> *</span>
+        </label>
         <input
           type="email"
           value={email}
-          onChange={e => setEmail(e.target.value)}
-          className="w-full border-b border-black bg-transparent focus:outline-none text-black"
-          required
+          onChange={(e) => {
+    setEmail(e.target.value);
+    if (emailError) setEmailError(""); // clear error on typing
+  }}
+    onBlur={validateEmail}
+    className={`w-full border-b bg-transparent focus:outline-none placeholder:text-gray-500 mb-[-10px] 
+    text-black border-black 
+    ${emailError ? "border-red-500" : "border-black"}`}
         />
 
         <label className="text-black text-lg sm:text-xl font-poor-story">Message</label>
@@ -90,13 +116,14 @@ const ContactForm = () => {
       </div>
 
       <button
-        className="mt-8 px-8 py-2 bg-sky-200 border border-black shadow-md text-sm cursor-pointer"
-        onClick={handleSubmit}
-        disabled={loading}
-      >
-        {loading ? "Loading..." : "Submit"}
-      </button>
+    className="px-8 py-3 bg-blue-100 border border-dark text-dark rounded transition-all hover:-translate-y-0.5 hover:bg-blue-200 font-medium cursor-pointer"
+    onClick={handleSubmit}
+    disabled={loading}
+  >
+    {loading ? `Loading...` : `Submit`}
+  </button>
     </div>
+    </motion.div>
   )
 }
 

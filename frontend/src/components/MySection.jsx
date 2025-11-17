@@ -40,9 +40,9 @@ const MySection = () => {
           and random topics people find “weird” and “different”.
         </p>
         <Link to="/about/Kaustav">
-          <button className="bg-sky-200 px-6 py-2 border border-black shadow-md cursor-pointer">
-            Read More
-          </button>
+          <button className="px-8 py-3 bg-blue-100 border border-dark text-dark rounded transition-all hover:-translate-y-0.5 hover:bg-blue-200 font-medium cursor-pointer">
+        Read More
+      </button>
         </Link>
         </div>
         

@@ -6,10 +6,9 @@ import { SlugBlogs } from '../helper/TitleToSlug';
 import { useRef } from 'react';
 import { defaultSchema } from 'hast-util-sanitize';
 import DOMPurify from 'dompurify';
+import { motion } from 'framer-motion';
 
 const RecentBlogs = () => {
-
- const blogSectionRef = useRef(null);
 
  const NoOfChar = 200;
 
@@ -33,33 +32,53 @@ const schema = {
     };
 
   return (
-    <div
-      className="w-full px-4 py-10 flex flex-col items-center bg-sky-100"
-      ref={blogSectionRef}
-    >
-      <h2 className="text-black text-4xl sm:text-5xl font-poor-story mb-20 text-center">
-        Recent blogs
-      </h2>
+    <div className="w-full px-4 py-15 flex flex-col items-center bg-sky-100">
 
-      <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-10">
-        {SlugBlogs.slice(0, 3).map((blogContent, index) => (
-          <div className="w-full sm:w-[45%] lg:w-1/4 flex flex-col gap-6" key={blogContent.slug}>
-            <ReactMarkdown rehypePlugins={[[rehypeRaw], [rehypeSanitize, schema]]}>
-              {stripHtml(blogContent.content).slice(0, NoOfChar) +
-                (stripHtml(blogContent.content).length > NoOfChar ? '...' : '')}
-            </ReactMarkdown>
+  <h2 className="text-black text-5xl font-poor-story mb-20 text-center">
+    Recent Blogs
+  </h2>
 
-            {SlugBlogs.some(blog => blog.content === blogContent.content) && (
-              <div className="cursor-pointer relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-black after:transition-all after:duration-300 hover:after:w-full font-bold text-center sm:text-left">
-                <Link to={`/blog/${SlugBlogs.find(blog => blog.content === blogContent.content).slug}`}>
-                  Read More →
-                </Link>
-              </div>
-            )}
+  <div className="w-full flex flex-wrap justify-center gap-12">
+    {SlugBlogs.slice(0, 3).map((blogContent, index) => {
+
+      const preview =
+        stripHtml(blogContent.content).slice(0, NoOfChar) +
+        (stripHtml(blogContent.content).length > NoOfChar ? "..." : "");
+
+      return (
+        <motion.div
+          key={blogContent.slug}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: index * 0.18 }}
+          viewport={{ once: true }}
+          className="w-full md:w-1/3 max-w-[320px] flex flex-col gap-6 p-6
+                     rounded-xl bg-blue-100/10 backdrop-blur-md shadow-lg
+                     border border-black/10 hover:shadow-xl hover:bg-blue-100 hover:-translate-y-1
+                     transition-all duration-300"
+        >
+          <div className="text-gray-800 text-md leading-relaxed mb-2">
+          <ReactMarkdown
+            rehypePlugins={[[rehypeRaw], [rehypeSanitize, schema]]}
+          >
+            {preview}
+          </ReactMarkdown>
           </div>
-        ))}
-      </div>
-    </div>
+
+          <Link
+            to={`/blog/${
+              SlugBlogs.find((blog) => blog.content === blogContent.content).slug
+            }`}
+            className="font-semibold text-black relative inline-block group"
+          >
+            Read More →
+            <span className="block h-[2px] bg-black w-0 group-hover:w-full transition-all duration-300"></span>
+          </Link>
+        </motion.div>
+      );
+    })}
+  </div>
+</div>
   )
 }
 
