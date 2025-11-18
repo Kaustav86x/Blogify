@@ -50,6 +50,6 @@ jobs:
 
       - name: Build-backend
         working-directory: ./backend
-        run: npm run build
+        run: node index.js
       
     
