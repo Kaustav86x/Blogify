@@ -18,17 +18,19 @@ jobs:
       - name: Setup Node js
         uses: actions/setup-node@v5
         with:
-          node_version: '22'
+          node-version: '22'
+          cache: 'npm'
 
       - name: Install dependencies for frontend
         working-directory: ./frontend
-        run: npm install
+        run: npm ci
 
       - name: Build-frontend
         working-directory: ./frontend
         run: npm run build
   
-  build-the-backend:
+  validate-the-backend:
+    needs: build-the-frontend              # frontend needs to be built before validating backend
     runs-on: ubuntu-latest
     env:
       NODE_ENV: production
@@ -43,13 +45,14 @@ jobs:
         uses: actions/setup-node@v5
         with:
           node-version: '22'
+          cache: 'npm'
 
       - name: Install dependencies for the backend
         working-directory: ./backend
-        run: npm install
+        run: npm ci
 
-      - name: Build-backend
+      - name: Validate-backend-start
         working-directory: ./backend
-        run: node index.js
+        run: node -e "require('./index.js')"
       
     
