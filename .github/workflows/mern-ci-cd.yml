@@ -53,6 +53,6 @@ jobs:
 
       - name: Validate-backend-start
         working-directory: ./backend
-        run: node -c index.js"             # checks for syntax errors without executing the code
+        run: node -c index.js         # checks for syntax errors without executing the code
       
     
