@@ -1,0 +1,50 @@
+name: MERN CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main      #triggers on pushes to the main branch
+  pull_request:
+    branches:
+      - main      #triggers on pull request to the main branch
+
+jobs:
+  build-the-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Setup Node js
+        uses: actions/setup-node@v5
+        with:
+          node_version: '22'
+
+      - name: Install dependencies for frontend
+        working-directory: ./frontend
+        run: npm install
+
+      - name: Build-frontend
+        working-directory: ./frontend
+        run: npm run build
+  
+  build-the-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Setup Node js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+
+      - name: Install dependencies for the backend
+        working-directory: ./backend
+        run: npm install
+
+      - name: Build-backend
+        working-directory: ./backend
+        run: npm start
+      
+    
