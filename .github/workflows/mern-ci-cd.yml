@@ -19,7 +19,7 @@ jobs:
         uses: actions/setup-node@v5
         with:
           node-version: '22'
-          cache: 'npm'
+          # cache: 'npm'
 
       - name: Install dependencies for frontend
         working-directory: ./frontend
@@ -45,7 +45,7 @@ jobs:
         uses: actions/setup-node@v5
         with:
           node-version: '22'
-          cache: 'npm'
+          # cache: 'npm'
 
       - name: Install dependencies for the backend
         working-directory: ./backend
