@@ -51,8 +51,8 @@ jobs:
         working-directory: ./backend
         run: npm ci
 
-      # - name: Validate-backend-start
-      #   working-directory: ./backend
-      #   run: node -e "require('./index.js')"
+      - name: Validate-backend-start
+        working-directory: ./backend
+        run: node -c index.js"             # checks for syntax errors without executing the code
       
     
