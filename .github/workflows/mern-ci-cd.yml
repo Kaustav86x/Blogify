@@ -54,6 +54,6 @@ jobs:
       - name: Validate-backend-start
         working-directory: ./backend
         run: |
-            run --check index.js         # checks for syntax errors without executing the code
+          node --check index.js         # checks for syntax errors without executing the code
       
     
