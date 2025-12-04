@@ -1,0 +1,18 @@
+# Ignore version control artifacts
+.git/
+.svn/
+
+# Ignore build output and temporary files
+target/
+build/
+*.pyc
+*.log
+
+# Ignore Node.js dependencies if installed during build
+node_modules/
+
+# Ignore sensitive environment variables
+.env
+
+# Ignore documentation
+docs/
