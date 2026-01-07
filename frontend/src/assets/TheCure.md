@@ -2,7 +2,6 @@
 
 # **The Cure**
 <br>
-<br>
 
 **The Introduction**
 

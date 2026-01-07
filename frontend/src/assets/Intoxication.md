@@ -1,3 +1,8 @@
+<br>
+
+# **Intoxication**
+<br>
+
 This is something I've been trying to write for a while. This happens to most of us, knowingly or unknowingly we indulge ourselvs in the act of self-sabotage caused mostly by our exhaused brain and mind. But we never call it self-sabotage, rather we coined a fancy term for it...Escape, and with every passing day, we are trapping ourselves worse than before with the failed attempts of escape from ourselves.
 
 To escape, we drink. We smoke. We laugh...just enough to let a fraction of that emptiness out so that it can be filled with a heavier burden. We take breaks, do nothing, scroll through that illuminated screen long enough to lose a part of our soul. We validate these rituals, fill ourselves with broken promises and we repeat. 
