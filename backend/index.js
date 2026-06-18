@@ -5,6 +5,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 
 const contactRoutes = require('./routes/contactRoutes')
+const commentRoutes = require('./routes/commentRoutes')
 
 // express app creation
 const app = express()
@@ -39,6 +40,7 @@ app.use((req, res, next) => {
 
 
 app.use('/api', contactRoutes);
+app.use('/api', commentRoutes);
 
 // database connection
 mongoose.connect(process.env.MONGO_URI)
