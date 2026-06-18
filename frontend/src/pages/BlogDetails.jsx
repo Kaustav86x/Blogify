@@ -9,8 +9,11 @@ import Navbar from "../components/navbar";
 import Footer from "../components/Footer";
 import ScrollToTop from "../components/ScrollToTop";
 import { SlugBlogs } from "../helper/TitleToSlug";
+// import GiscusComments from "../components/GiscusComments";
+// import CusdisComments from "../components/CusdisComments";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import Comments from "../components/Comments";
 
 const BlogDetails = () => {
   const { slug } = useParams();
@@ -106,6 +109,8 @@ const BlogDetails = () => {
 
         <div className="w-11/12 mx-auto border-t border-black mt-6 sm:mt-10"></div>
 
+        {/* comment section */}
+        <Comments postId={slug}/>
         <Footer />
       </div>
 
