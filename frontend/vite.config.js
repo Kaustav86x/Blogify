@@ -7,5 +7,11 @@ export default defineConfig({
   plugins: [react(),
     tailwindcss()
   ],
-  assestsInclude: ['**/*.md']
+  assestsInclude: ['**/*.md'],
+  // adding server proxy to mimic the production level activity locally
+  server: {
+    proxy: {
+      "/api": "http://localhost:8080",
+    },
+  },
 })
