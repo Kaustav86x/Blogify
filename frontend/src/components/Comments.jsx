@@ -1,8 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from 'axios';
 import validator from 'validator';
+import { toast } from "react-toastify";
+import { motion } from "framer-motion";
 
 const Comments = ({ postId }) => {
+
+    const commentSectionRef = useRef(null);
 
     const[comments, setComments] = useState([]);
     const[name, setName] = useState("");
@@ -10,6 +14,7 @@ const Comments = ({ postId }) => {
     const[comment, setComment] = useState("");
     const[loading, setLoading] = useState("");
     const[error, setError] = useState("");
+    const [emailError, setEmailError] = useState("");
 
     useEffect(() => {
         fetch(`/api/comments/${postId}`)
@@ -26,85 +31,106 @@ const Comments = ({ postId }) => {
     try {
         setLoading(true);
         
+
         if(!name || !email || !comment) {
             throw new Error("Please fill the mandatory fields");
         }
 
         if(validator.isEmail(email) === false) {
-                throw new Error("Please enter a valid email address")
+            throw new Error("Please enter a valid email address")
         }
 
-        // console.log("hello");
-        
         const response = await axios.post("/api/comments", {
           postId: postId,
           name: name,
           email: email,
           comment: comment
-        })
-        .then((response) => response)
-        .catch((err) => console.log(err));
-
-      console.log(response);
-      
-      // console.log("huku")
-
-      if (!response) throw new Error();
+        });
+    
+      if (response.status != 201) throw new Error("An error occured", response.status);
 
       const newComment = response.data;
-      // console.log(newComment);
 
       setComments([newComment, ...comments]);   // prepend instantly
-      setName("");
-      setEmail("");
-      setComment("");
-    } catch {
-      setError("Failed to post comment. Please try again.");
+      setName("")
+      setEmail("")
+      setComment("")
+      
+      toast.success("Posted successfully");
+
+    } catch(err) {
+      toast.error(err.message);
     } finally {
       setLoading(false);
     }
   };
-  return (
-    <div>
-      <h2>Comments</h2>
 
-      {/* Form */}
-      <div className="comment-form">
-        <div className="form-row">
+  const validateEmail = () => {
+  if (!email.trim()) {
+    setEmailError("Email is required");
+  } else {
+    setEmailError("");
+  }
+};
+
+  return (
+    <motion.div
+  className="w-full px-4 py-15 flex flex-col items-center bg-sky-100 gap-15"
+  id="contact"
+  ref={commentSectionRef}
+  initial={{ opacity: 0, y: 40 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true, amount: 0.2 }}
+  transition={{ duration: 0.9, ease: "easeOut" }}
+>
+    <div className="w-full px-4 py-16 flex flex-col items-left bg-sky-100 gap-15" id="comment" ref={commentSectionRef}>
+       <h2 className="text-black text-3xl sm:text-4xl md:text-5xl font-poor-story mb-4 text-left">
+        Comments
+      </h2>
+
+      <div className="w-full sm:w-3/4 md:w-1/2 flex flex-col gap-10">
+      <label className="text-black text-lg sm:text-xl font-poor-story">Name</label>
           <input
-            className="form-input"
-            type="text"
-            placeholder="Your name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-          <input
-            className="form-input"
-            type="email"
-            placeholder="Email (kept private)"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <textarea
-          className="form-textarea"
-          placeholder="Leave a comment..."
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
+          type="text"
+          value={name}
+          onChange={e => setName(e.target.value)}
+          className="w-full border-b border-black bg-transparent focus:outline-none text-black"
           required
+          />
+
+        <label className="text-black text-lg sm:text-xl font-poor-story">Email
+          <span className="text-red-500"> *</span>
+        </label>
+          <input
+          type="email"
+          value={email}
+          onChange={(e) => {
+      setEmail(e.target.value);
+      if (emailError) setEmailError(""); // clear error on typing
+    }}
+    onBlur={validateEmail}
+    className={`w-full border-b bg-transparent focus:outline-none placeholder:text-gray-500 mb-[-10px] 
+    text-black border-black 
+    ${emailError ? "border-red-500" : "border-black"}`}
         />
-        {error && <p style={{ color: "red", fontSize: "13px" }}>{error}</p>}
-        <div className="form-actions">
-          <button
-            className="btn-submit"
-            onClick={handleSubmit}
-            disabled={loading}
-          >
-            {loading ? "Posting..." : "Post comment"}
-          </button>
+
+        <label className="text-black text-lg sm:text-xl font-poor-story">Comment</label>
+        <textarea
+          value={comment}
+          onChange={e => setComment(e.target.value)}
+          className="w-full border-b border-black bg-transparent focus:outline-none text-black"
+          rows="1"
+        ></textarea>
         </div>
+
+        <div className="items-left">
+        <button
+        className="px-8 py-3 bg-blue-100 border border-dark text-dark rounded transition-all hover:-translate-y-0.5 hover:bg-blue-200 font-medium cursor-pointer"
+        onClick={handleSubmit}
+        disabled={loading}
+        >
+      {loading ? `Loading...` : `Submit`}
+      </button>
       </div>
 
       {/* Comments list */}
@@ -133,6 +159,7 @@ const Comments = ({ postId }) => {
         </p>
       )}
     </div>
+    </motion.div>
   );
 }
 
