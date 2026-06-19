@@ -9,6 +9,7 @@ import Navbar from "../components/navbar";
 import Footer from "../components/Footer";
 import ScrollToTop from "../components/ScrollToTop";
 import { SlugBlogs } from "../helper/TitleToSlug";
+import { toast, ToastContainer } from "react-toastify";
 // import GiscusComments from "../components/GiscusComments";
 // import CusdisComments from "../components/CusdisComments";
 import AOS from "aos";
@@ -57,6 +58,7 @@ const BlogDetails = () => {
 
   return (
     <>
+    <ToastContainer/>
       <div className="min-h-screen w-full bg-sky-100">
         <Navbar />
 
