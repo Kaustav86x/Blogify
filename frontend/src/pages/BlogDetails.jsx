@@ -10,8 +10,6 @@ import Footer from "../components/Footer";
 import ScrollToTop from "../components/ScrollToTop";
 import { SlugBlogs } from "../helper/TitleToSlug";
 import { toast, ToastContainer } from "react-toastify";
-// import GiscusComments from "../components/GiscusComments";
-// import CusdisComments from "../components/CusdisComments";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Comments from "../components/Comments";
@@ -101,7 +99,7 @@ const BlogDetails = () => {
           </div>
 
           <div className="mt-10 sm:mt-12 text-center text-black text-sm sm:text-base md:text-xl font-normal font-'Poor_Story'">
-            Written and sketched by{" "}
+            Written by{" "}
             <span className="relative ml-1 cursor-pointer group">
               <Link to="/about/Kaustav">Kaustav</Link>
               <span className="absolute left-0 -bottom-0.5 h-[2px] w-0 bg-black transition-all duration-300 group-hover:w-full"></span>
