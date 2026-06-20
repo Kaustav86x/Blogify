@@ -42,13 +42,13 @@ const HeroSection = () => {
     <h1 className="text-4xl lg:text-5xl font-light text-center text-dark tracking-wide">Welcome</h1>
 
     <div className="relative overflow-hidden rounded-lg shadow-xl group 
-                transition-all duration-500 ease-out w-[80%] max-w-md mb-6">
+                transition-all duration-500 ease-out w-[80%] max-w-md mb-6 aspect-[4/3]">
 
       {/* Main Image */}
       <img
         src={img2}
         alt="Main Visual"
-        className="w-full h-auto object-cover rounded-sm
+        className="w-full h-full object-cover rounded-sm
                    transition-transform duration-700 ease-out
                    group-hover:scale-110 group-hover:rotate-[1deg]"
       />
