@@ -18,7 +18,9 @@ const Comments = ({ postId }) => {
     const [emailError, setEmailError] = useState("");
 
     useEffect(() => {
-        fetch(`/api/comments/${postId}`)
+        fetch(`https://blogify-backend-snowy.vercel.app/api/comments/${postId}`,{
+          cache: "no-store"   // to prevent caching and always get the latest comments
+        })
         .then((res) => res.json())
         .then((data) => setComments(data))
         .catch(() => setError("Failed to load comments"));

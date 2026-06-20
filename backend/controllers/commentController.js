@@ -5,6 +5,11 @@ const GetBlogComments = async(req, res) => {
         const comments = await Comment.find({ postId: req.params.postId })
         .sort({createdAt: -1})
         .select("-email")    // not exposing email to frontend
+        
+        // not cachable since we want the latest comments to be fetched every time, and not the stale ones
+        res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+        res.setHeader("Pragma", "no-cache");
+        res.setHeader("Expires", "0");
 
         res.status(200).json(comments);    // successfully fetching all the comments
     }
