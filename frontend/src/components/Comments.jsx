@@ -41,7 +41,7 @@ const Comments = ({ postId }) => {
             throw new Error("Please enter a valid email address")
         }
 
-        const response = await axios.post("/api/comments", {
+        const response = await axios.post("https://blogify-backend-snowy.vercel.app/api/comments", {
           postId: postId,
           name: name,
           email: email,

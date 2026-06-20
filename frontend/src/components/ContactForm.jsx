@@ -29,7 +29,7 @@ const ContactForm = () => {
         throw new Error("Please enter a valid email address")
       }
 
-      const response = await axios.post('https://blogify-backend-one.vercel.app/api/contact-us', {
+      const response = await axios.post('https://blogify-backend-snowy.vercel.app/api/contact-us', {
         name,
         email,
         message,
