@@ -17,8 +17,10 @@ app.use(express.json())
 const allowedOrigins = [
     'https://blogify-frontend.vercel.app',
     'http://localhost:5173',
-    'www.kaustavdey.com',
-    'kaustavdey.com'
+    "https://www.kaustavdey.com",
+    "https://kaustavdey.com",        // without www as well
+    "http://localhost:5173",          // keep for local dev
+    "http://localhost:8080",
 ];
 
 app.use(cors({
