@@ -55,3 +55,7 @@
   width: 100% !important;
   border: none !important;
 }
+
+h1, h2, h3 {
+  font-family: 'Poor Story', Georgia, serif;
+}
