@@ -66,7 +66,7 @@ const HomeDesktop = () => {
 
 
 
-      const response = await axios.post('https://blogify-backend-one.vercel.app/api/contact-us', {
+      const response = await axios.post('https://blogify-backend-snowy.vercel.app/api/contact-us', {
         name,
         email,
         message,

@@ -10,11 +10,13 @@ const contactUs = async(req, res) => {
             throw new Error('Invalid email');
         }
 
-        const mail = await Contact.findOne({ email });
+        // const mail = await Contact.findOne({ email });
 
-        if(mail) {
-            throw new Error('Email already exists');
-        }
+        // if(mail) {
+        //     throw new Error('Email already exists');
+        // }
+
+        // a user with the same email can contact multiple times, so not putting a check for existing email
 
         const user = await Contact.create({ name: name, email: email, message: message });
 
