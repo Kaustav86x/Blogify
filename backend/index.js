@@ -13,6 +13,7 @@ const app = express()
 // middlewares
 app.use(express.json())
 
+app.options("*", cors()); //handle preflight requests
 // cors
 const allowedOrigins = [
     'https://blogify-frontend.vercel.app',
