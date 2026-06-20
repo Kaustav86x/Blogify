@@ -3,6 +3,7 @@ import axios from 'axios';
 import validator from 'validator';
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
+import { TimeAgo } from "../helper/TimeStamp";
 
 const Comments = ({ postId }) => {
 
@@ -85,7 +86,7 @@ const Comments = ({ postId }) => {
 >
     <div className="w-full px-4 py-16 flex flex-col items-left bg-sky-100 gap-15" id="comment" ref={commentSectionRef}>
        <h2 className="text-black text-3xl sm:text-4xl md:text-5xl font-poor-story mb-4 text-left">
-        Comments
+        Post a comment
       </h2>
 
       <div className="w-full sm:w-3/4 md:w-1/2 flex flex-col gap-10">
@@ -114,6 +115,15 @@ const Comments = ({ postId }) => {
     ${emailError ? "border-red-500" : "border-black"}`}
         />
 
+      <p className="text-gray-500 text-xs">
+      Your email is kept private.
+      </p>
+
+    {/* Validation error */}
+    {emailError && (
+    <p className="text-red-500 text-xs">{emailError}</p>
+)}
+
         <label className="text-black text-lg sm:text-xl font-poor-story">Comment</label>
         <textarea
           value={comment}
@@ -129,29 +139,42 @@ const Comments = ({ postId }) => {
         onClick={handleSubmit}
         disabled={loading}
         >
-      {loading ? `Loading...` : `Submit`}
+      {loading ? `Posting...` : `Post`}
       </button>
       </div>
 
+      <div className="w-11/12 mx-auto border-t border-black mt-6 sm:mt-10"></div>
+
       {/* Comments list */}
-      {comments.map((c) => (
-        <div key={c._id} className="comment-item">
-          <div className="comment-meta">
-            <div className="comment-avatar">
-              {c.name.charAt(0).toUpperCase()}
-            </div>
-            <div>
-              <span className="comment-author">{c.name}</span>
-              <span className="comment-date">
-                {" "}· {new Date(c.createdAt).toLocaleDateString("en-IN", {
-                  day: "numeric", month: "short", year: "numeric"
-                })}
-              </span>
-            </div>
-          </div>
-          <p className="comment-body">{c.comment}</p>
+      {comments.map((c, index) => (
+    <div key={c._id}>
+    <div className="py-4 sm:py-6">
+
+      {/* Name + date row */}
+      <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center gap-2">
+          <span className="text-black font-poor-story text-base sm:text-lg">
+            {c.name}
+          </span>
         </div>
-      ))}
+
+        <span className="text-gray-400 text-xs sm:text-sm">
+          {TimeAgo(c.createdAt)}
+        </span>
+      </div>
+
+      {/* Comment body */}
+      <p className="text-black text-sm sm:text-base leading-relaxed pl-10">
+        {c.comment}
+      </p>
+    </div>
+
+    {/* Divider — skip after last comment */}
+    {index < comments.length - 1 && (
+      <div className="w-11/12 mx-auto border-t border-black opacity-10" />
+    )}
+    </div>
+    ))}
 
       {comments.length === 0 && (
         <p style={{ fontSize: "13px", color: "#64748b", textAlign: "center", marginTop: "1rem" }}>
