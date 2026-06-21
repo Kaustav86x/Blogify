@@ -1,5 +1,5 @@
 import React from 'react'
-import img4 from '../assets/4th Image.png';
+import img4 from '../assets/4th Image.webp';
 import { motion } from 'framer-motion';
 
 const DylanThomas = () => {
