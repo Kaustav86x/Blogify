@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { lazy, Suspense } from "react";
+import PageLoader from './components/PageLoader';
 
 
 const Home = lazy(() => import('./pages/Home'));
@@ -12,7 +13,7 @@ const NotFound = lazy(() => import('./pages/NotFound'));
 function App() {
   return (
     <BrowserRouter>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<PageLoader />}>
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/blog/:slug' element={<BlogDetails />} />
