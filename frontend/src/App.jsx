@@ -1,33 +1,29 @@
-import { BrowserRouter, useRoutes, Routes, Route} from 'react-router-dom'
-import BlogDetails from './pages/BlogDetails'
-import AllBlogs from './pages/allBlogs'
-import Home from './pages/Home'
-import PoemDetails from './pages/PoemDetails'
-import AboutMe from './pages/AboutMe'
-import NotFound from './pages/NotFound'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { lazy, Suspense } from "react";
 
+
+const Home = lazy(() => import('./pages/Home'));
+const BlogDetails = lazy(() => import('./pages/BlogDetails'));
+const AllBlogs = lazy(() => import('./pages/allBlogs'));
+const PoemDetails = lazy(() => import('./pages/PoemDetails'));
+const AboutMe = lazy(() => import('./pages/AboutMe'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
 function App() {
-
-  const routeList = [
-    
-    { path: '/', element: <Home/> },
-    { path: '/blog/:slug', element: <BlogDetails/> },
-    { path: '/poem/:slug', element: <PoemDetails/> },
-    { path: '/pieces', element: <AllBlogs/> },
-    { path: '/about/Kaustav', element: <AboutMe/> },
-    { path: '*', element: <NotFound/> }
-  ]
-
   return (
     <BrowserRouter>
-      <Routes>
-        {routeList.map((route, index) => (
-          <Route key={index} path={route.path} element={route.element} />
-        ))}
-      </Routes>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/blog/:slug' element={<BlogDetails />} />
+          <Route path='/poem/:slug' element={<PoemDetails />} />
+          <Route path='/pieces' element={<AllBlogs />} />
+          <Route path='/about/Kaustav' element={<AboutMe />} />
+          <Route path='*' element={<NotFound />} />
+        </Routes>
+      </Suspense>
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;
