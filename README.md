@@ -4,7 +4,8 @@
 
 ## 🚧 Status
 
-- **Landing Page**: Optimized with Framer Motion.
+- **Comment Section**: The comment section has been added.
+- Currently working on to optimize the Lighthouse score.
 
 ## 🧠 Why Blogify?
 
