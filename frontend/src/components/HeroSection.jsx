@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import img1 from '../assets/1st Image.webp';
-import img2 from '../assets/2nd Image.png';
+import img2 from '../assets/2nd Image.webp';
 import { motion } from 'framer-motion';
 
 const HeroSection = () => {
