@@ -7,6 +7,14 @@ export default defineConfig({
   plugins: [react(),
     tailwindcss()
   ],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks() {
+          vendor: ['react', 'react-dom', 'react-router-dom', 'axios', 'validator', 'framer-motion', 'react-toastify']
+      }
+    }
+  },
   assestsInclude: ['**/*.md'],
   // adding server proxy to mimic the production level activity locally
   server: {
@@ -14,4 +22,5 @@ export default defineConfig({
       "/api": "http://localhost:8080",
     },
   },
+}
 })
