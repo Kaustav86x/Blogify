@@ -22,6 +22,7 @@ const allowedOrigins = [
     'https://kdey.blog/',           // without www as well
     "http://localhost:5173",          // keep for local dev
     "http://localhost:8080",
+    'https://blogify-backend-ochre.vercel.app',
 ];
 
 app.use(cors({
