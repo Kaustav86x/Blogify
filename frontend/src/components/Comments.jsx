@@ -18,7 +18,7 @@ const Comments = ({ postId }) => {
     const [emailError, setEmailError] = useState("");
 
     useEffect(() => {
-        fetch(`https://blogify-backend-snowy.vercel.app/api/comments/${postId}`,{
+        fetch(`https://blogify-backend-ochre.vercel.app/api/comments/${postId}`,{
           cache: "no-store"   // to prevent caching and always get the latest comments
         })
         .then((res) => res.json())
@@ -43,7 +43,7 @@ const Comments = ({ postId }) => {
             throw new Error("Please enter a valid email address")
         }
 
-        const response = await axios.post("https://blogify-backend-snowy.vercel.app/api/comments", {
+        const response = await axios.post("https://blogify-backend-ochre.vercel.app/api/comments", {
           postId: postId,
           name: name,
           email: email,
