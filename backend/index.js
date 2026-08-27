@@ -18,8 +18,8 @@ app.options("*", cors()); //handle preflight requests
 const allowedOrigins = [
     'https://blogify-frontend.vercel.app',
     'http://localhost:5173',
-    'https://www.kdey.blog/',
-    'https://kdey.blog/',           // without www as well
+    'https://www.kdey.blog',
+    'https://kdey.blog',           // without www as well
     "http://localhost:5173",          // keep for local dev
     "http://localhost:8080",
     'https://blogify-backend-ochre.vercel.app',
